@@ -1,0 +1,7 @@
+{
+  "name": "lushka-beauty",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
