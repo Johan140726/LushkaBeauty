@@ -1,0 +1,212 @@
+<ion-header class="cart-header">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/catalogo"
+        text="">
+      </ion-back-button>
+    </ion-buttons>
+
+    <div class="header-logo">
+      <img src="assets/logo/logo_lushka.png" alt="Lushka Beauty">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        🛒
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <section class="cart-container">
+
+    <div class="cart-title">
+      <p>TU SELECCIÓN</p>
+      <h1>Mi carrito</h1>
+      <span>
+        {{ productos.length }}
+        {{ productos.length === 1 ? 'producto' : 'productos' }}
+      </span>
+    </div>
+
+    <!-- CARRITO CON PRODUCTOS -->
+
+    <div class="cart-products" *ngIf="productos.length > 0">
+
+      <article
+        class="cart-product"
+        *ngFor="let producto of productos">
+
+        <div class="product-image">
+          <img
+            [src]="producto.imagen"
+            [alt]="producto.nombre">
+        </div>
+
+        <div class="product-data">
+
+          <div class="product-top">
+
+            <div>
+              <span class="category">
+                {{ producto.categoria }}
+              </span>
+
+              <h2>
+                {{ producto.nombre }}
+              </h2>
+            </div>
+
+            <button
+              class="delete-button"
+              (click)="eliminar(producto.id)">
+              ×
+            </button>
+
+          </div>
+
+          <div
+            class="product-price"
+            *ngIf="producto.precio > 0">
+
+            ${{ producto.precio | number:'1.0-0' }}
+
+          </div>
+
+          <div
+            class="product-price pending"
+            *ngIf="producto.precio === 0">
+
+            Precio por definir
+
+          </div>
+
+          <div class="product-bottom">
+
+            <div class="quantity-control">
+
+              <button
+                (click)="disminuir(producto.id)">
+                −
+              </button>
+
+              <strong>
+                {{ producto.cantidad }}
+              </strong>
+
+              <button
+                (click)="aumentar(producto.id)">
+                +
+              </button>
+
+            </div>
+
+            <strong
+              class="subtotal"
+              *ngIf="producto.precio > 0">
+
+              ${{ producto.precio * producto.cantidad | number:'1.0-0' }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+      </article>
+
+      <!-- RESUMEN -->
+
+      <section class="summary">
+
+        <div class="summary-title">
+          <p>RESUMEN</p>
+          <h2>Tu pedido</h2>
+        </div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+
+          <strong>
+            ${{ subtotal | number:'1.0-0' }}
+          </strong>
+        </div>
+
+        <div class="summary-row shipping">
+          <span>Envío Bogotá / Soacha</span>
+
+          <strong>
+            ${{ costoEnvio | number:'1.0-0' }}
+          </strong>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="summary-row total-row">
+          <span>Total</span>
+
+          <strong>
+            ${{ total | number:'1.0-0' }}
+          </strong>
+        </div>
+
+        <ion-button
+          expand="block"
+          class="checkout-button">
+
+          CONTINUAR CON EL PEDIDO
+
+        </ion-button>
+
+        <button
+          class="continue-shopping"
+          routerLink="/catalogo">
+
+          ← Seguir comprando
+
+        </button>
+
+      </section>
+
+    </div>
+
+
+    <!-- CARRITO VACÍO -->
+
+    <section
+      class="empty-cart"
+      *ngIf="productos.length === 0">
+
+      <div class="empty-icon">
+        🛍️
+      </div>
+
+      <p>LUSHKA BEAUTY</p>
+
+      <h2>
+        Tu carrito está vacío
+      </h2>
+
+      <span>
+        Descubre nuestra colección y encuentra
+        tus nuevos favoritos.
+      </span>
+
+      <ion-button
+        routerLink="/catalogo"
+        class="catalog-button">
+
+        EXPLORAR CATÁLOGO
+
+      </ion-button>
+
+    </section>
+
+  </section>
+
+</ion-content>

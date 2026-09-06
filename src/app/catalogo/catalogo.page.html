@@ -1,0 +1,148 @@
+<ion-header class="catalog-header">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="volverInicio()">
+        <span class="back-icon">‹</span>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="header-logo">
+      <img src="assets/logo/logo_lushka.png" alt="Lushka Beauty">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink="/carrito">
+        <span class="cart-icon">🛒</span>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- ENCABEZADO -->
+
+  <section class="catalog-intro">
+
+    <p class="eyebrow">LUSHKA BEAUTY</p>
+
+    <h1>Descubre tu<br>esencia.</h1>
+
+    <p>
+      Encuentra productos seleccionados para
+      acompañar tu rutina de belleza y bienestar.
+    </p>
+
+  </section>
+
+
+  <!-- CATEGORÍAS -->
+
+  <section class="categories-section">
+
+    <div class="categories-scroll">
+
+      <button
+        *ngFor="let categoria of categorias"
+        [class.active]="categoriaSeleccionada === categoria"
+        (click)="seleccionarCategoria(categoria)">
+
+        {{ categoria }}
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- PRODUCTOS -->
+
+  <section class="products-section">
+
+    <div class="products-header">
+
+      <div>
+        <p class="small-title">COLECCIÓN</p>
+
+        <h2>
+          {{ categoriaSeleccionada }}
+        </h2>
+      </div>
+
+      <span>
+        {{ productosFiltrados.length }} productos
+      </span>
+
+    </div>
+
+
+    <div class="products-grid">
+
+      <article
+        class="product-card"
+        *ngFor="let producto of productosFiltrados"
+        (click)="verProducto(producto)">
+
+        <div class="product-image">
+
+          <img
+            [src]="producto.imagen"
+            [alt]="producto.nombre"
+          >
+
+          <div class="product-category">
+            {{ producto.categoria }}
+          </div>
+
+        </div>
+
+        <div class="product-info">
+
+          <h3>
+            {{ producto.nombre }}
+          </h3>
+
+          <p>
+            {{ producto.descripcion }}
+          </p>
+
+          <strong *ngIf="producto.precio > 0">
+            ${{ producto.precio | number:'1.0-0' }}
+          </strong>
+
+          <strong
+            class="price-pending"
+            *ngIf="producto.precio === 0">
+
+            Precio por definir
+
+          </strong>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- MENSAJE -->
+
+  <section class="catalog-message">
+
+    <span>✦</span>
+
+    <h2>
+      Todo lo que necesitas<br>
+      para sentirte bien.
+    </h2>
+
+    <p>LUSHKA BEAUTY</p>
+
+  </section>
+
+</ion-content>

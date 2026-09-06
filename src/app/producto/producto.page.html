@@ -1,0 +1,98 @@
+<ion-header class="product-header">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/catalogo"
+        text="">
+      </ion-back-button>
+    </ion-buttons>
+
+    <div class="header-logo">
+      <img src="assets/logo/logo_lushka.png" alt="Lushka Beauty">
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink="/carrito">
+        🛒
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="productoSeleccionado">
+
+  <section class="product-detail">
+
+    <div class="product-photo">
+      <img
+        [src]="productoSeleccionado.imagen"
+        [alt]="productoSeleccionado.nombre">
+    </div>
+
+    <div class="product-content">
+
+      <p class="category">
+        {{ productoSeleccionado.categoria }}
+      </p>
+
+      <h1>
+        {{ productoSeleccionado.nombre }}
+      </h1>
+
+      <div class="price" *ngIf="productoSeleccionado.precio > 0">
+        ${{ productoSeleccionado.precio | number:'1.0-0' }}
+      </div>
+
+      <div class="price pending" *ngIf="productoSeleccionado.precio === 0">
+        Precio por definir
+      </div>
+
+      <p class="description">
+        {{ productoSeleccionado.descripcion }}
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="availability">
+        <span class="dot"></span>
+        Disponible
+      </div>
+
+      <div class="quantity-section">
+
+        <span>Cantidad</span>
+
+        <div class="quantity-control">
+
+          <button (click)="disminuirCantidad()">
+            −
+          </button>
+
+          <strong>
+            {{ cantidad }}
+          </strong>
+
+          <button (click)="aumentarCantidad()">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+      <ion-button
+        expand="block"
+        class="add-cart-button"
+        (click)="agregarAlCarrito()">
+
+        AGREGAR AL CARRITO
+
+      </ion-button>
+
+    </div>
+
+  </section>
+
+</ion-content>

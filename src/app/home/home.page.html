@@ -1,22 +1,131 @@
-<ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title>Lushka Beauty</ion-title>
+<ion-header class="main-header">
+  <ion-toolbar>
+    <ion-title>LUSHKA</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink="/carrito">
+        🛒
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Bienvenido a Lushka Beauty</ion-card-title>
-      <ion-card-subtitle>Proyecto ABP - UCompensar</ion-card-subtitle>
-    </ion-card-header>
+<ion-content [fullscreen]="true">
 
-    <ion-card-content>
-      Esta vista fue maquetada utilizando la jerarquía semántica de Ionic Framework.
-    </ion-card-content>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">BELLEZA · CUIDADO · ESTILO</p>
 
-    <ion-button expand="block" color="secondary">
-      Ver Catálogo
-    </ion-button>
-  </ion-card>
+      <h1>Tu belleza,<br>tu esencia.</h1>
+
+      <p class="hero-text">
+        Descubre productos pensados para resaltar
+        lo mejor de ti.
+      </p>
+
+      <ion-button
+        class="catalog-button"
+        expand="block"
+        (click)="irAlCatalogo()">
+        VER CATÁLOGO
+      </ion-button>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="section">
+    <div class="section-title">
+      <h2>Explora por categoría</h2>
+      <span>Ver todo</span>
+    </div>
+
+    <div class="categories">
+
+      <div class="category-card">
+        <div class="category-icon">💄</div>
+        <h3>Maquillaje</h3>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon">✨</div>
+        <h3>Cuidado facial</h3>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon">🧴</div>
+        <h3>Cuidado corporal</h3>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon">💇‍♀️</div>
+        <h3>Cabello</h3>
+      </div>
+
+      
+      <div class="category-card">
+        <div class="category-icon">🌈</div>
+        <h3>Crecimiento Personal</h3>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DESTACADOS -->
+  <section class="section products-section">
+
+    <div class="section-title">
+      <h2>Productos destacados</h2>
+      <span (click)="irAlCatalogo()">Ver catálogo</span>
+    </div>
+
+    <div class="products">
+
+      <div class="product-card">
+        <div class="product-image makeup">
+          💄
+        </div>
+
+        <div class="product-info">
+          <p>MAQUILLAJE</p>
+          <h3>Labial Velvet</h3>
+          <strong>$25.000</strong>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image skincare">
+          🧴
+        </div>
+
+        <div class="product-info">
+          <p>CUIDADO FACIAL</p>
+          <h3>Serum Facial</h3>
+          <strong>$35.000</strong>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image body">
+          ✨
+        </div>
+
+        <div class="product-info">
+          <p>CUIDADO CORPORAL</p>
+          <h3>Crema Corporal</h3>
+          <strong>$30.000</strong>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FRASE -->
+  <section class="brand-message">
+    <span>✦</span>
+    <h2>La belleza comienza<br>cuando te eliges.</h2>
+    <p>LUSHKA BEAUTY</p>
+  </section>
+
 </ion-content>
