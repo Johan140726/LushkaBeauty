@@ -43,7 +43,7 @@ export class ProductosService {
       id: 4,
       nombre: 'Crema para Peinar',
       categoria: 'Capilar',
-      precio: 0,
+      precio: 13000,
       imagen: 'assets/productos/Capilar/CremaPeinar.png',
       descripcion: 'Crema para peinar y cuidar tu cabello.'
     },
@@ -51,7 +51,7 @@ export class ProductosService {
       id: 5,
       nombre: 'Shampoo',
       categoria: 'Capilar',
-      precio: 0,
+      precio: 20000,
       imagen: 'assets/productos/Capilar/shampoo.png',
       descripcion: 'Shampoo para complementar tu rutina de cuidado capilar.'
     },
@@ -59,49 +59,49 @@ export class ProductosService {
       id: 6,
       nombre: 'Espuma Facial',
       categoria: 'Facial',
-      precio: 0,
+      precio: 15000,
       imagen: 'assets/productos/Facial/espuma.jpg',
       descripcion: 'Espuma para la limpieza y cuidado facial.'
     },
     {
       id: 7,
-      nombre: 'Pestañas',
+      nombre: 'Tratamiento para Pestañas y Cejas',
       categoria: 'Facial',
-      precio: 0,
+      precio: 12000,
       imagen: 'assets/productos/Facial/pestañas.jpg',
-      descripcion: 'Producto para complementar tu look de belleza.'
+      descripcion: 'Producto para el cuidado de pestañas y cejas.'
     },
     {
       id: 8,
       nombre: 'Crema Corporal',
       categoria: 'Corporal',
-      precio: 0,
+      precio: 15000,
       imagen: 'assets/productos/Corporal/crema.png',
       descripcion: 'Crema para hidratar y cuidar la piel.'
     },
     {
       id: 9,
-      nombre: 'Almendra',
+      nombre: 'Aceite Corporal de Almendra',
       categoria: 'Corporal',
-      precio: 0,
+      precio: 18000,
       imagen: 'assets/productos/Corporal/almendra.jpg',
-      descripcion: 'Producto corporal con aroma de almendra.'
+      descripcion: 'Aceite corporal con aroma de almendra.'
     },
     {
       id: 10,
-      nombre: 'Chocolate',
+      nombre: 'Aceite Corporal de Chocolate',
       categoria: 'Corporal',
-      precio: 0,
+      precio: 18000,
       imagen: 'assets/productos/Corporal/chocolate.jpg',
-      descripcion: 'Producto corporal con aroma de chocolate.'
+      descripcion: 'Aceite corporal con aroma de chocolate.'
     },
     {
       id: 11,
-      nombre: 'Coco',
+      nombre: 'Aceite Corporal de Coco',
       categoria: 'Corporal',
-      precio: 0,
+      precio: 18000,
       imagen: 'assets/productos/Corporal/coco.jpg',
-      descripcion: 'Producto corporal con aroma de coco.'
+      descripcion: 'Aceite corporal con aroma de coco.'
     },
     {
       id: 12,
@@ -115,7 +115,7 @@ export class ProductosService {
       id: 13,
       nombre: 'Kit Bucal',
       categoria: 'Combos',
-      precio: 0,
+      precio: 25000,
       imagen: 'assets/productos/Combos/bucal.jpg',
       descripcion: 'Combo especial para el cuidado personal.'
     },
@@ -123,7 +123,7 @@ export class ProductosService {
       id: 14,
       nombre: 'Caja Capilar',
       categoria: 'Combos',
-      precio: 0,
+      precio: 35000,
       imagen: 'assets/productos/Combos/CajaCapilar.jpg',
       descripcion: 'Combo especial para el cuidado del cabello.'
     },
@@ -131,7 +131,7 @@ export class ProductosService {
       id: 15,
       nombre: 'Shine Box',
       categoria: 'Combos',
-      precio: 0,
+      precio: 30000,
       imagen: 'assets/productos/Combos/shineBox.jpg',
       descripcion: 'Combo especial de productos Lushka.'
     }

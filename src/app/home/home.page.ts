@@ -15,5 +15,9 @@ export class HomePage {
     this.router.navigate(['/catalogo']);
   }
 
+  verProducto(id: number) {
+    this.router.navigate(['/producto', id]);
+  }
+
 }
 

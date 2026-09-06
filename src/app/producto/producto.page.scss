@@ -10,6 +10,15 @@ ion-content {
     padding: 8px 12px;
   }
 
+  ion-back-button {
+    --color: #302523;
+    font-size: 22px;
+  }
+
+  ion-button {
+    font-size: 22px;
+  }
+
 }
 
 .header-logo {

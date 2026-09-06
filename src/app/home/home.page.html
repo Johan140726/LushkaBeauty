@@ -1,12 +1,22 @@
 <ion-header class="main-header">
   <ion-toolbar>
-    <ion-title>LUSHKA</ion-title>
+
+    <ion-title slot="start">
+      LUSHKA
+    </ion-title>
+
+    <div class="header-logo">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Lushka Beauty">
+    </div>
 
     <ion-buttons slot="end">
       <ion-button routerLink="/carrito">
         🛒
       </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -72,54 +82,60 @@
   </section>
 
   <!-- DESTACADOS -->
-  <section class="section products-section">
+<section class="section products-section">
 
-    <div class="section-title">
-      <h2>Productos destacados</h2>
-      <span (click)="irAlCatalogo()">Ver catálogo</span>
+  <div class="section-title">
+    <h2>Productos destacados</h2>
+    <span (click)="irAlCatalogo()">Ver catálogo</span>
+  </div>
+
+  <div class="products">
+
+    <div class="product-card" (click)="verProducto(1)">
+      <div class="product-image">
+        <img
+          src="assets/productos/Capilar/AceiteCapilar.jpg"
+          alt="Aceite Capilar">
+      </div>
+
+      <div class="product-info">
+        <p>CAPILAR</p>
+        <h3>Aceite Capilar</h3>
+        <strong>$13.000</strong>
+      </div>
     </div>
 
-    <div class="products">
-
-      <div class="product-card">
-        <div class="product-image makeup">
-          💄
-        </div>
-
-        <div class="product-info">
-          <p>MAQUILLAJE</p>
-          <h3>Labial Velvet</h3>
-          <strong>$25.000</strong>
-        </div>
+    <div class="product-card" (click)="verProducto(12)">
+      <div class="product-image">
+        <img
+          src="assets/productos/CrecimientoPersonal/diario.jpg"
+          alt="Diario de Agradecimiento">
       </div>
 
-      <div class="product-card">
-        <div class="product-image skincare">
-          🧴
-        </div>
-
-        <div class="product-info">
-          <p>CUIDADO FACIAL</p>
-          <h3>Serum Facial</h3>
-          <strong>$35.000</strong>
-        </div>
+      <div class="product-info">
+        <p>CRECIMIENTO PERSONAL</p>
+        <h3>Diario de Agradecimiento</h3>
+        <strong>$30.000</strong>
       </div>
-
-      <div class="product-card">
-        <div class="product-image body">
-          ✨
-        </div>
-
-        <div class="product-info">
-          <p>CUIDADO CORPORAL</p>
-          <h3>Crema Corporal</h3>
-          <strong>$30.000</strong>
-        </div>
-      </div>
-
     </div>
 
-  </section>
+    <div class="product-card" (click)="verProducto(12)">
+      <div class="product-image">
+        <img
+          src="assets/productos/Corporal/crema.png"
+          alt="Crema Corporal">
+      </div>
+
+      <div class="product-info">
+        <p>CUIDADO CORPORAL</p>
+        <h3>Crema Corporal</h3>
+        <strong>$15.000</strong>
+      </div>
+    </div>
+
+  </div>
+
+</section>
 
   <!-- FRASE -->
   <section class="brand-message">

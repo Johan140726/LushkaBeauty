@@ -48,8 +48,4 @@ export class CatalogoPage {
     this.router.navigate(['/producto', producto.id]);
   }
 
-  volverInicio() {
-    this.router.navigate(['/home']);
-  }
-
 }

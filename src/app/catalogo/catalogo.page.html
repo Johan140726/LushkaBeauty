@@ -2,9 +2,11 @@
   <ion-toolbar>
 
     <ion-buttons slot="start">
-      <ion-button (click)="volverInicio()">
-        <span class="back-icon">‹</span>
-      </ion-button>
+      <ion-back-button
+        defaultHref="/home"
+        text=""
+        icon="chevron-back-outline">
+      </ion-back-button>
     </ion-buttons>
 
     <div class="header-logo">
