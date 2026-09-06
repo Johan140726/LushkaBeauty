@@ -1,159 +1,269 @@
 # Lushka Beauty
 
-Aplicación híbrida para la gestión y comercialización de productos de **Lushka Beauty**, desarrollada como proyecto ABP de la Fundación Universitaria Compensar.
+Aplicación híbrida orientada a la visualización, gestión y comercialización de productos de **Lushka Beauty**, desarrollada como proyecto académico ABP de la Fundación Universitaria Compensar.
 
-## 📱 Descripción del proyecto
+## Descripción del proyecto
 
-**Lushka Beauty** busca facilitar el proceso de compra de productos y mejorar la gestión interna de los pedidos mediante una aplicación móvil.
+**Lushka Beauty** surge como una propuesta para facilitar la consulta y compra de productos de belleza, cuidado personal y bienestar, al mismo tiempo que se plantea una futura solución para apoyar la gestión interna de productos y pedidos.
 
-La propuesta contempla una solución que permita a los clientes consultar productos, organizar sus compras y realizar pedidos, mientras que el administrador podrá gestionar el catálogo y realizar seguimiento de los pedidos.
+La aplicación busca proporcionar a los clientes una interfaz intuitiva y visual desde la cual puedan explorar el catálogo, consultar información de los productos y administrar un carrito de compras.
+
+A medida que avance el proyecto se incorporarán funcionalidades para clientes y administradores, incluyendo gestión de pedidos, usuarios, productos e inventario.
 
 ### Pregunta guía
 
-> ¿Cómo mejorar la gestión de pedidos de Lushka Beauty y facilitar el proceso de compra de sus clientes?
+> ¿Cómo mejorar la gestión de pedidos de Lushka Beauty y facilitar el proceso de compra de sus clientes mediante una aplicación híbrida?
 
 ---
 
-## 🎯 Objetivo
+## Objetivo general
 
-Desarrollar una aplicación híbrida que permita centralizar la gestión de productos y pedidos de Lushka Beauty, ofreciendo una experiencia sencilla para los clientes y herramientas de administración para la gestión interna.
-
-## 📌 Alcance inicial
-
-Durante esta etapa del proyecto se contempla:
-
-* Diseño y construcción de la interfaz móvil.
-* Estructuración de las vistas principales.
-* Diseño del catálogo de productos.
-* Organización de productos por categorías.
-* Gestión de usuarios y roles.
-* Carrito de compras.
-* Creación y consulta de pedidos.
-* Consulta del estado de los pedidos.
-* Gestión administrativa.
-* Posterior integración con API y base de datos.
-* Pruebas y preparación de la aplicación para dispositivos móviles.
+Desarrollar una aplicación híbrida utilizando Ionic Framework y Angular que permita mejorar la experiencia de consulta y compra de productos de Lushka Beauty y que pueda evolucionar hacia una herramienta de gestión de productos, pedidos e inventario.
 
 ---
 
-## 👥 Equipo de trabajo
+## Justificación
 
-| Rol            | Integrante             |
-| -------------- | ---------------------- |
-| Tech Lead      | Danna Valentina Pulido |
-| UI/UX Frontend | Leidy Vanessa Zambrano |
-| Fullstack API  | Johan Stivens Rojas    |
-| QA & Release   | Johan Stivens Rojas    |
+Actualmente, la gestión de productos y pedidos puede requerir diferentes canales de comunicación y procesos manuales que dificultan la organización de la información.
+
+Lushka Beauty propone centralizar progresivamente estos procesos mediante una aplicación híbrida que permita presentar el catálogo de manera organizada y proporcionar herramientas digitales tanto para los clientes como para la administración.
+
+El uso de Ionic Framework permite desarrollar una solución basada en tecnologías web con posibilidad de adaptación a dispositivos móviles mediante Capacitor.
 
 ---
 
-## 👤 Roles del sistema
+## Alcance
+
+El proyecto contempla el desarrollo progresivo de las siguientes funcionalidades:
 
 ### Cliente
 
-El cliente podrá:
-
-* Consultar el catálogo de productos.
-* Visualizar productos por categorías.
-* Consultar el detalle de los productos.
-* Administrar su carrito.
-* Realizar pedidos.
-* Consultar el estado de sus pedidos.
-* Consultar su historial de compras.
+- Visualización de la página de inicio.
+- Consulta del catálogo de productos.
+- Filtrado de productos por categorías.
+- Visualización del detalle de un producto.
+- Selección de cantidades.
+- Carrito de compras.
+- Cálculo del subtotal y valor total del pedido.
+- Registro e inicio de sesión.
+- Creación de pedidos.
+- Consulta del estado e historial de pedidos.
 
 ### Administrador
 
-El administrador podrá:
+En etapas posteriores se contempla:
 
-* Gestionar el catálogo.
-* Crear, editar y eliminar productos.
-* Gestionar categorías.
-* Consultar pedidos.
-* Actualizar el estado de los pedidos.
-* Gestionar usuarios y roles.
-* Administrar la información del sistema.
-
----
-
-## 🛠️ Tecnologías utilizadas
-
-* **Ionic Framework**
-* **Angular**
-* **TypeScript**
-* **Capacitor**
-* **HTML5**
-* **SCSS**
-* **Node.js / npm**
-* **Git y GitHub**
-
-### Configuración de Capacitor
-
-La aplicación utiliza Capacitor para preparar el proyecto para su ejecución como aplicación móvil.
-
-Configuración actual:
-
-* **App ID:** `io.ionic.starter`
-* **Nombre:** `lushka-beauty`
-* **Web directory:** `www`
+- Inicio de sesión con rol administrativo.
+- Gestión del catálogo.
+- Registro de nuevos productos.
+- Edición de productos.
+- Gestión de precios.
+- Gestión de inventario.
+- Consulta y administración de pedidos.
+- Actualización del estado de los pedidos.
 
 ---
 
-## 📂 Estructura del proyecto
+## Estado actual del prototipo
+
+Para la primera entrega se encuentran implementadas las siguientes vistas y funcionalidades:
+
+- Página de inicio de Lushka Beauty.
+- Navegación mediante Angular Router.
+- Catálogo de productos.
+- Organización y filtrado por categorías.
+- Uso de imágenes reales de productos.
+- Vista de detalle de producto mediante rutas dinámicas.
+- Selección de cantidad.
+- Carrito de compras.
+- Modificación y eliminación de productos del carrito.
+- Persistencia temporal del carrito mediante LocalStorage.
+- Cálculo de subtotal.
+- Tarifa de envío para Bogotá y Soacha.
+- Cálculo del total del pedido.
+- Servicio centralizado para la información de productos.
+- Diseño responsive orientado a dispositivos móviles.
+
+---
+
+## Equipo de trabajo
+
+| Integrante | Rol principal |
+| --- | --- |
+| Leidy Vanessa Zambrano| Tech Lead |
+| Danna Valentina Pulido | UI/UX y Frontend |
+| Johan Stivens Rojas | Full Stack, API y QA |
+
+Los roles representan las responsabilidades principales dentro del proyecto y pueden complementarse entre los integrantes durante el desarrollo.
+
+---
+
+## Tecnologías utilizadas
+
+- Ionic Framework
+- Angular
+- TypeScript
+- HTML5
+- SCSS
+- Capacitor
+- Node.js
+- npm
+- Git
+- GitHub
+- LocalStorage
+
+---
+
+## Arquitectura inicial
+
+La aplicación utiliza una arquitectura modular basada en páginas de Ionic y Angular.
+
+Actualmente se encuentran organizadas las principales vistas en módulos independientes:
 
 ```text
-LushkaBeauty/
-│
-├── src/
-│   ├── app/
-│   │   ├── home/
-│   │   ├── app.component.html
-│   │   ├── app.component.ts
-│   │   ├── app-routing.module.ts
-│   │   └── app.module.ts
-│   │
-│   ├── assets/
-│   ├── environments/
-│   └── theme/
-│
-├── capacitor.config.ts
-├── angular.json
-├── package.json
-├── package-lock.json
-└── README.md
+src/
+|
++-- app/
+|   +-- home/
+|   +-- catalogo/
+|   +-- producto/
+|   +-- carrito/
+|   +-- services/
+|   |   +-- productos.ts
+|   |   +-- carrito.ts
+|   |
+|   +-- app-routing.module.ts
+|   +-- app.component.html
+|   +-- app.component.ts
+|   +-- app.module.ts
+|
++-- assets/
+|   +-- logo/
+|   +-- productos/
+|
++-- theme/
+```
+
+La estructura principal de Ionic se encuentra definida mediante:
+
+```html
+<ion-app>
+  <ion-router-outlet></ion-router-outlet>
+</ion-app>
+```
+
+Las diferentes vistas utilizan componentes de Ionic como:
+
+- `ion-app`
+- `ion-router-outlet`
+- `ion-header`
+- `ion-toolbar`
+- `ion-content`
+- `ion-button`
+- `ion-buttons`
+- `ion-back-button`
+
+---
+
+## Navegación actual
+
+El flujo principal implementado es:
+
+```text
+Inicio
+   |
+   v
+Catálogo
+   |
+   v
+Detalle del producto
+   |
+   v
+Carrito
+```
+
+El detalle de cada producto utiliza rutas dinámicas:
+
+```text
+/producto/:id
+```
+
+Por ejemplo:
+
+```text
+/producto/1
 ```
 
 ---
 
-## ▶️ Instalación y ejecución
+## Gestión actual de datos
+
+Durante esta primera etapa los productos se encuentran centralizados mediante un servicio de Angular.
+
+El servicio de productos permite que el catálogo y la vista de detalle consulten una misma fuente de información, evitando duplicar los datos.
+
+El carrito utiliza un servicio independiente y LocalStorage para conservar temporalmente la selección realizada por el usuario.
+
+Esta implementación corresponde al prototipo inicial. En fases posteriores se contempla integrar persistencia mediante una API y una base de datos.
+
+---
+
+## Capacitor
+
+El proyecto cuenta con Capacitor para permitir posteriormente su ejecución y empaquetado como aplicación móvil.
+
+Archivo de configuración:
+
+```text
+capacitor.config.ts
+```
+
+Configuración inicial:
+
+```text
+App ID: io.ionic.starter
+Nombre: lushka-beauty
+Web directory: www
+```
+
+Para verificar la configuración:
+
+```bash
+npx cap doctor
+```
+
+---
+
+## Instalación y ejecución
 
 ### Requisitos
 
-Se recomienda tener instalado:
+Para ejecutar el proyecto se requiere:
 
-* Node.js
-* npm
-* Ionic CLI
-* Git
+- Node.js
+- npm
+- Ionic CLI
+- Git
 
-### Clonar el repositorio
+### 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/Johan140726/LushkaBeauty.git
 ```
 
-Ingresar al proyecto:
+### 2. Ingresar al proyecto
 
 ```bash
 cd LushkaBeauty
 ```
 
-### Instalar dependencias
+### 3. Instalar las dependencias
 
 ```bash
 npm install
 ```
 
-### Ejecutar la aplicación
+### 4. Ejecutar la aplicación
 
 ```bash
 ionic serve
@@ -167,48 +277,53 @@ http://localhost:8100
 
 ---
 
-## 📱 Capacitor
+## Prototipado UX/UI
 
-El proyecto cuenta con Capacitor para permitir posteriormente la generación de aplicaciones móviles.
+El diseño de Lushka Beauty está orientado a una experiencia móvil y utiliza una identidad visual basada en la marca.
 
-Para verificar la configuración:
+### Color principal
 
-```bash
-npx cap doctor
+```text
+#8E183A
 ```
 
-Para agregar Android en una etapa posterior:
+La interfaz utiliza componentes de Ionic adaptados visualmente mediante SCSS.
 
-```bash
-npm install @capacitor/android
-npx cap add android
-```
+El proyecto contempla la elaboración de:
+
+- Sketches.
+- Wireframes.
+- Mockups.
+- Prototipo interactivo.
+- Sistema visual basado en componentes Ionic UI.
+
+**Enlace al prototipo:** pendiente de agregar.
 
 ---
 
-## 🚀 Proyección del proyecto
+## Evolución del proyecto
 
-Como evolución del proyecto se contempla:
+Las siguientes etapas contemplan continuar con:
 
-1. Finalizar las interfaces principales.
-2. Implementar el catálogo.
-3. Implementar usuarios y roles.
-4. Integrar una API.
-5. Integrar una base de datos.
-6. Implementar carrito y pedidos.
-7. Implementar funcionalidades administrativas.
-8. Realizar pruebas.
-9. Generar la aplicación Android mediante Capacitor.
-10. Preparar el proyecto para una posible publicación en Google Play Store.
+1. Registro e inicio de sesión.
+2. Diferenciación entre cliente y administrador.
+3. Área de usuario.
+4. Panel administrativo.
+5. Gestión de productos.
+6. Gestión de inventario.
+7. Gestión de pedidos.
+8. Persistencia mediante API y base de datos.
+9. Pruebas.
+10. Preparación de la aplicación para dispositivos móviles.
+
+También se contempla como mejora futura permitir variantes de productos, como colores, extractos, aromas o presentaciones.
 
 ---
 
-## 📚 Proyecto académico
+## Proyecto académico
 
-**Proyecto ABP — Fundación Universitaria Compensar**
+**Proyecto ABP - Fundación Universitaria Compensar**
 
 **Aplicación:** Lushka Beauty
-
-**Repositorio:** GitHub
 
 **Estado:** En desarrollo
