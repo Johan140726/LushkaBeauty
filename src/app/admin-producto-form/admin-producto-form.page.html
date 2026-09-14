@@ -1,0 +1,210 @@
+<ion-header class="admin-header">
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/admin-productos"
+        text=""
+        icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      {{ modoEdicion ? 'EDITAR PRODUCTO' : 'NUEVO PRODUCTO' }}
+    </ion-title>
+
+    <div class="header-logo">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Lushka Beauty">
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+
+  <div class="page-container">
+
+    <section class="page-heading">
+
+      <p>
+        ADMINISTRACIÓN
+      </p>
+
+      <h1>
+        {{ modoEdicion
+          ? 'Editar producto'
+          : 'Crear producto' }}
+      </h1>
+
+      <span>
+        {{
+          modoEdicion
+            ? 'Actualiza la información del producto.'
+            : 'Agrega un nuevo producto al catálogo.'
+        }}
+      </span>
+
+    </section>
+
+
+    <section class="form-card">
+
+      <div class="form-group">
+
+        <label>
+          Nombre del producto
+        </label>
+
+        <ion-input
+          [(ngModel)]="nombre"
+          placeholder="Ej. Perfume corporal">
+        </ion-input>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <div class="form-group">
+
+          <label>
+            Categoría
+          </label>
+
+          <ion-select
+            [(ngModel)]="categoria"
+            placeholder="Seleccionar">
+
+            <ion-select-option
+              *ngFor="let categoriaItem of categorias"
+              [value]="categoriaItem">
+
+              {{ categoriaItem }}
+
+            </ion-select-option>
+
+          </ion-select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Precio
+          </label>
+
+          <ion-input
+            type="number"
+            [(ngModel)]="precio"
+            placeholder="0">
+          </ion-input>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Stock
+          </label>
+
+          <ion-input
+            type="number"
+            [(ngModel)]="stock"
+            placeholder="0">
+          </ion-input>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Ruta de imagen
+        </label>
+
+        <ion-input
+          [(ngModel)]="imagen"
+          placeholder="assets/productos/...">
+        </ion-input>
+
+        <small>
+          Por ahora usamos imágenes guardadas en assets.
+        </small>
+
+      </div>
+
+
+      <div
+        class="image-preview"
+        *ngIf="imagen">
+
+        <span>
+          Vista previa
+        </span>
+
+        <img
+          [src]="imagen"
+          alt="Vista previa del producto">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Descripción
+        </label>
+
+        <ion-textarea
+          [(ngModel)]="descripcion"
+          rows="4"
+          placeholder="Describe el producto...">
+        </ion-textarea>
+
+      </div>
+
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="cancelar()">
+
+          Cancelar
+
+        </button>
+
+        <button
+          type="button"
+          class="save-button"
+          (click)="guardarProducto()">
+
+          <ion-icon
+            name="save-outline">
+          </ion-icon>
+
+          {{
+            modoEdicion
+              ? 'Guardar cambios'
+              : 'Crear producto'
+          }}
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</ion-content>

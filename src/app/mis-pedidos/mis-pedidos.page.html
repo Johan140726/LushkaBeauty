@@ -1,0 +1,295 @@
+<ion-header class="orders-header">
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+
+      <ion-back-button
+        defaultHref="/mi-cuenta"
+        text=""
+        icon="chevron-back-outline">
+      </ion-back-button>
+
+    </ion-buttons>
+
+    <div class="header-logo">
+
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Lushka Beauty">
+
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+
+  <div class="orders-container">
+
+
+    <!-- ENCABEZADO -->
+
+    <section class="orders-title">
+
+      <p>MIS COMPRAS</p>
+
+      <h1>
+        Mis pedidos
+      </h1>
+
+      <span>
+        Consulta tus pedidos y su estado.
+      </span>
+
+    </section>
+
+
+    <!-- SIN PEDIDOS -->
+
+    <section
+      class="empty-orders"
+      *ngIf="pedidos.length === 0">
+
+      <div class="empty-icon">
+
+        <ion-icon
+          name="bag-handle-outline">
+        </ion-icon>
+
+      </div>
+
+      <p>LUSHKA BEAUTY</p>
+
+      <h2>
+        Todavía no tienes pedidos
+      </h2>
+
+      <span>
+        Cuando realices una compra,
+        podrás consultar aquí su información
+        y estado.
+      </span>
+
+      <ion-button
+        routerLink="/catalogo"
+        class="catalog-button">
+
+        VER CATÁLOGO
+
+      </ion-button>
+
+    </section>
+
+
+    <!-- LISTADO DE PEDIDOS -->
+
+    <section
+      class="orders-list"
+      *ngIf="pedidos.length > 0">
+
+      <article
+        class="order-card"
+        *ngFor="let pedido of pedidos">
+
+        <!-- CABECERA -->
+
+        <div class="order-top">
+
+          <div>
+
+            <span class="order-label">
+              PEDIDO
+            </span>
+
+            <h2>
+              #{{ pedido.id }}
+            </h2>
+
+          </div>
+
+
+          <span
+            class="status"
+            [class.pending]="pedido.estado === 'Pendiente'"
+            [class.confirmed]="pedido.estado === 'Confirmado'"
+            [class.preparing]="pedido.estado === 'En preparación'"
+            [class.shipping]="pedido.estado === 'En camino'"
+            [class.delivered]="pedido.estado === 'Entregado'"
+            [class.cancelled]="pedido.estado === 'Cancelado'">
+
+            {{ pedido.estado }}
+
+          </span>
+
+        </div>
+
+
+        <!-- FECHA -->
+
+        <div class="order-date">
+
+          <ion-icon
+            name="calendar-outline">
+          </ion-icon>
+
+          <span>
+            {{ pedido.fecha | date:'dd/MM/yyyy - h:mm a' }}
+          </span>
+
+        </div>
+
+
+        <!-- PRODUCTOS -->
+
+        <div class="products">
+
+          <div
+            class="product"
+            *ngFor="let producto of pedido.productos">
+
+            <img
+              [src]="producto.imagen"
+              [alt]="producto.nombre">
+
+            <div class="product-info">
+
+              <strong>
+                {{ producto.nombre }}
+              </strong>
+
+              <span>
+                Cantidad:
+                {{ producto.cantidad }}
+              </span>
+
+            </div>
+
+
+            <span class="product-total">
+
+              ${{
+                producto.precio * producto.cantidad
+                | number:'1.0-0'
+              }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ENTREGA -->
+
+        <div class="delivery-info">
+
+          <div class="delivery-row">
+
+            <ion-icon
+              name="location-outline">
+            </ion-icon>
+
+            <div>
+
+              <span>
+                Entrega
+              </span>
+
+              <strong>
+                {{ pedido.direccion }},
+                {{ pedido.barrio }},
+                {{ pedido.ciudad }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="delivery-row"
+            *ngIf="pedido.observaciones">
+
+            <ion-icon
+              name="chatbubble-outline">
+            </ion-icon>
+
+            <div>
+
+              <span>
+                Observaciones
+              </span>
+
+              <strong>
+                {{ pedido.observaciones }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RESUMEN -->
+
+        <div class="order-summary">
+
+          <div>
+
+            <span>
+              Subtotal
+            </span>
+
+            <strong>
+              ${{ pedido.subtotal | number:'1.0-0' }}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Envío
+            </span>
+
+            <strong *ngIf="pedido.envio > 0">
+              ${{ pedido.envio | number:'1.0-0' }}
+            </strong>
+
+            <strong
+              class="shipping-pending"
+              *ngIf="pedido.envio === 0">
+
+              Por confirmar
+
+            </strong>
+
+          </div>
+
+
+          <div class="total">
+
+            <span>
+              Total
+            </span>
+
+            <strong>
+              ${{ pedido.total | number:'1.0-0' }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+  </div>
+
+</ion-content>

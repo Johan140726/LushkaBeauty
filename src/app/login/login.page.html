@@ -1,0 +1,93 @@
+<ion-content [fullscreen]="true" class="login-content">
+
+  <div class="login-container">
+
+    <div class="brand">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Logo Lushka Beauty"
+        class="logo"
+      >
+
+      <h1>LUSHKA</h1>
+      <p>Bienvenid@ de nuevo</p>
+    </div>
+
+    <div class="login-card">
+
+      <div class="title-section">
+        <h2>Iniciar sesión</h2>
+        <p>Ingresa tus datos para continuar.</p>
+      </div>
+
+      <div class="form-group">
+        <label>Correo electrónico</label>
+
+        <div class="input-container">
+          <ion-icon name="mail-outline"></ion-icon>
+
+          <ion-input
+            type="email"
+            placeholder="correo@ejemplo.com"
+            [(ngModel)]="correo">
+          </ion-input>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+
+        <div class="input-container">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+
+          <ion-input
+            [type]="mostrarPassword ? 'text' : 'password'"
+            placeholder="Ingresa tu contraseña"
+            [(ngModel)]="password">
+          </ion-input>
+
+          <ion-button
+            fill="clear"
+            class="password-button"
+            (click)="cambiarVisibilidadPassword()">
+
+            <ion-icon
+              slot="icon-only"
+              [name]="mostrarPassword ? 'eye-off-outline' : 'eye-outline'">
+            </ion-icon>
+
+          </ion-button>
+        </div>
+      </div>
+
+      <div class="forgot-password">
+        <span>¿Olvidaste tu contraseña?</span>
+      </div>
+
+      <ion-button
+        expand="block"
+        class="login-button"
+        (click)="iniciarSesion()">
+        Iniciar sesión
+      </ion-button>
+
+      <div class="register">
+        <span>¿Aún no tienes una cuenta?</span>
+
+        <button
+          type="button"
+          (click)="irARegistro()">
+          Regístrate
+        </button>
+      </div>
+
+    </div>
+
+    <div class="back-home" routerLink="/home">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <span>Volver a Lushka Beauty</span>
+    </div>
+
+  </div>
+
+</ion-content>

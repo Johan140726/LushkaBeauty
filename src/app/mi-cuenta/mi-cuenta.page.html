@@ -1,0 +1,167 @@
+<ion-header class="account-header">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/home"
+        text=""
+        icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+
+    <div class="header-logo">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Lushka Beauty">
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="account-content">
+
+  <div class="account-container" *ngIf="usuarioActual">
+
+    <section class="profile-card">
+
+      <div class="avatar">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+
+      <h1>{{ usuarioActual.nombre }}</h1>
+      <p>{{ usuarioActual.correo }}</p>
+
+      <span class="role-badge">
+        Cliente
+      </span>
+
+    </section>
+
+
+    <section class="info-card">
+
+      <div class="section-title">
+        <h2>Información personal</h2>
+        <p>Datos asociados a tu cuenta.</p>
+      </div>
+
+
+      <div class="info-item">
+
+        <div class="info-icon">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+
+        <div>
+          <span>Nombre completo</span>
+          <strong>{{ usuarioActual.nombre }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <div class="info-icon">
+          <ion-icon name="mail-outline"></ion-icon>
+        </div>
+
+        <div>
+          <span>Correo electrónico</span>
+          <strong>{{ usuarioActual.correo }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <div class="info-icon">
+          <ion-icon name="call-outline"></ion-icon>
+        </div>
+
+        <div>
+          <span>Teléfono</span>
+          <strong>{{ usuarioActual.telefono }}</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="options-card">
+
+      <button
+  type="button"
+  class="option-item"
+  routerLink="/mis-pedidos">
+
+        <div class="option-left">
+
+          <div class="option-icon">
+            <ion-icon name="bag-handle-outline"></ion-icon>
+          </div>
+
+          <div>
+            <strong>Mis pedidos</strong>
+            <span>Consulta tus compras y su estado</span>
+          </div>
+
+        </div>
+
+        <ion-icon
+          class="arrow"
+          name="chevron-forward-outline">
+        </ion-icon>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="option-item"
+        (click)="volverInicio()">
+
+        <div class="option-left">
+
+          <div class="option-icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+
+          <div>
+            <strong>Volver al inicio</strong>
+            <span>Regresa a Lushka Beauty</span>
+          </div>
+
+        </div>
+
+        <ion-icon
+          class="arrow"
+          name="chevron-forward-outline">
+        </ion-icon>
+
+      </button>
+
+    </section>
+
+
+    <ion-button
+      expand="block"
+      fill="outline"
+      class="logout-button"
+      (click)="cerrarSesion()">
+
+      <ion-icon
+        slot="start"
+        name="log-out-outline">
+      </ion-icon>
+
+      Cerrar sesión
+
+    </ion-button>
+
+  </div>
+
+</ion-content>

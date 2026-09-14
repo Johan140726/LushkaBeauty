@@ -1,0 +1,225 @@
+<ion-header class="admin-header">
+
+  <ion-toolbar>
+
+    <ion-title>
+      LUSHKA ADMIN
+    </ion-title>
+
+    <div class="header-logo">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Lushka Beauty">
+    </div>
+
+    <ion-buttons slot="end">
+
+      <ion-button
+        (click)="cerrarSesion()">
+
+        <ion-icon
+          name="log-out-outline">
+        </ion-icon>
+
+      </ion-button>
+
+    </ion-buttons>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+
+  <div class="admin-container">
+
+
+    <section class="welcome">
+
+      <p>
+        PANEL ADMINISTRATIVO
+      </p>
+
+      <h1>
+        Hola, Administrador
+      </h1>
+
+      <span>
+        Gestiona los pedidos y operaciones de Lushka Beauty.
+      </span>
+
+    </section>
+
+
+    <section class="stats-grid">
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          <ion-icon
+            name="bag-handle-outline">
+          </ion-icon>
+        </div>
+
+        <div>
+
+          <span>
+            Total pedidos
+          </span>
+
+          <strong>
+            {{ totalPedidos }}
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          <ion-icon
+            name="time-outline">
+          </ion-icon>
+        </div>
+
+        <div>
+
+          <span>
+            Pendientes
+          </span>
+
+          <strong>
+            {{ pedidosPendientes }}
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          <ion-icon
+            name="sync-outline">
+          </ion-icon>
+        </div>
+
+        <div>
+
+          <span>
+            En proceso
+          </span>
+
+          <strong>
+            {{ pedidosEnProceso }}
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article class="stat-card">
+
+        <div class="stat-icon">
+          <ion-icon
+            name="checkmark-circle-outline">
+          </ion-icon>
+        </div>
+
+        <div>
+
+          <span>
+            Entregados
+          </span>
+
+          <strong>
+            {{ pedidosEntregados }}
+          </strong>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <section class="admin-options">
+
+      <h2>
+        Gestión
+      </h2>
+
+
+      <article
+        class="option-card"
+        routerLink="/admin-pedidos">
+
+        <div class="option-icon">
+
+          <ion-icon
+            name="receipt-outline">
+          </ion-icon>
+
+        </div>
+
+        <div class="option-info">
+
+          <strong>
+            Gestionar pedidos
+          </strong>
+
+          <span>
+            Consulta pedidos y actualiza su estado.
+          </span>
+
+        </div>
+
+        <ion-icon
+          class="arrow"
+          name="chevron-forward-outline">
+        </ion-icon>
+
+      </article>
+
+
+      <article
+        class="option-card"
+        routerLink="/admin-productos">
+
+        <div class="option-icon">
+
+          <ion-icon
+            name="cube-outline">
+          </ion-icon>
+
+        </div>
+
+        <div class="option-info">
+
+          <strong>
+            Productos e inventario
+          </strong>
+
+          <span>
+            Administra productos, precios e inventario.
+          </span>
+
+        </div>
+
+        <ion-icon
+          class="arrow"
+          name="chevron-forward-outline">
+        </ion-icon>
+
+      </article>
+
+    </section>
+
+  </div>
+
+</ion-content>

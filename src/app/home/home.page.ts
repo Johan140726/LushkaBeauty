@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService, Usuario } from '../services/auth';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,16 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  constructor(private router: Router) {}
+  usuarioActual: Usuario | null = null;
+
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ionViewWillEnter() {
+    this.usuarioActual = this.authService.obtenerUsuarioActual();
+  }
 
   irAlCatalogo() {
     this.router.navigate(['/catalogo']);
@@ -19,5 +29,21 @@ export class HomePage {
     this.router.navigate(['/producto', id]);
   }
 
-}
+  irALogin() {
+    this.router.navigate(['/login']);
+  }
 
+  cerrarSesion() {
+    this.authService.cerrarSesion();
+    this.usuarioActual = null;
+  }
+
+  get primerNombre(): string {
+    if (!this.usuarioActual) {
+      return '';
+    }
+
+    return this.usuarioActual.nombre.split(' ')[0];
+  }
+
+}

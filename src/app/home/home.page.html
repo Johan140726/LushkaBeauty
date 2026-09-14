@@ -22,6 +22,70 @@
 
 <ion-content [fullscreen]="true">
 
+  <section class="session-bar">
+
+  <!-- Usuario no autenticado -->
+  <div
+    class="session-content"
+    *ngIf="!usuarioActual">
+
+    <div class="session-info">
+
+      <div class="session-icon">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+
+      <div>
+        <span>Mi cuenta</span>
+        <strong>Inicia sesión para continuar</strong>
+      </div>
+
+    </div>
+
+    <button
+      type="button"
+      class="session-action"
+      (click)="irALogin()">
+      Iniciar sesión
+    </button>
+
+  </div>
+
+
+  <!-- Usuario autenticado -->
+  <div
+    class="session-content"
+    *ngIf="usuarioActual">
+
+    <div
+      class="session-info clickable"
+      routerLink="/mi-cuenta">
+
+      <div class="session-icon logged">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+
+      <div>
+        <span>Bienvenida</span>
+        <strong>Hola, {{ primerNombre }} 💗</strong>
+      </div>
+
+    </div>
+
+    <button
+      type="button"
+      class="logout-button"
+      (click)="cerrarSesion()">
+
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>Cerrar sesión</span>
+
+    </button>
+
+  </div>
+
+</section>
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
@@ -105,7 +169,7 @@
       </div>
     </div>
 
-    <div class="product-card" (click)="verProducto(12)">
+    <div class="product-card" (click)="verProducto(8)">
       <div class="product-image">
         <img
           src="assets/productos/CrecimientoPersonal/diario.jpg"

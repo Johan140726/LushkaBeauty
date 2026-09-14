@@ -139,26 +139,34 @@
         </div>
 
         <div class="summary-row shipping">
-          <span>Envío Bogotá / Soacha</span>
 
-          <strong>
-            ${{ costoEnvio | number:'1.0-0' }}
+          <span>
+            Envío
+          </span>
+
+          <strong class="shipping-pending">
+            Se calcula al continuar
           </strong>
+
         </div>
 
         <div class="divider"></div>
 
         <div class="summary-row total-row">
-          <span>Total</span>
+
+          <span>
+            Total productos
+          </span>
 
           <strong>
-            ${{ total | number:'1.0-0' }}
+            ${{ subtotal | number:'1.0-0' }}
           </strong>
-        </div>
 
+        </div>
         <ion-button
           expand="block"
-          class="checkout-button">
+          class="checkout-button"
+          routerLink="/checkout">
 
           CONTINUAR CON EL PEDIDO
 

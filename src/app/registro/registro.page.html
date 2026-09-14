@@ -1,0 +1,148 @@
+<ion-content [fullscreen]="true" class="register-content">
+
+  <div class="register-container">
+
+    <div class="brand">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Logo Lushka Beauty"
+        class="logo"
+      >
+
+      <h1>LUSHKA</h1>
+      <p>Crea tu cuenta</p>
+    </div>
+
+    <div class="register-card">
+
+      <div class="title-section">
+        <h2>Registro</h2>
+        <p>Ingresa tus datos para crear una cuenta.</p>
+      </div>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label>Nombre completo</label>
+
+        <div class="input-container">
+          <ion-icon name="person-outline"></ion-icon>
+
+          <ion-input
+            type="text"
+            placeholder="Tu nombre completo"
+            [(ngModel)]="nombre">
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Correo -->
+      <div class="form-group">
+        <label>Correo electrónico</label>
+
+        <div class="input-container">
+          <ion-icon name="mail-outline"></ion-icon>
+
+          <ion-input
+            type="email"
+            placeholder="correo@ejemplo.com"
+            [(ngModel)]="correo">
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Teléfono -->
+      <div class="form-group">
+        <label>Teléfono</label>
+
+        <div class="input-container">
+          <ion-icon name="call-outline"></ion-icon>
+
+          <ion-input
+            type="tel"
+            placeholder="Número de contacto"
+            [(ngModel)]="telefono">
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label>Contraseña</label>
+
+        <div class="input-container">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+
+          <ion-input
+            [type]="mostrarPassword ? 'text' : 'password'"
+            placeholder="Mínimo 6 caracteres"
+            [(ngModel)]="password">
+          </ion-input>
+
+          <ion-button
+            fill="clear"
+            class="password-button"
+            (click)="cambiarVisibilidadPassword()">
+
+            <ion-icon
+              slot="icon-only"
+              [name]="mostrarPassword ? 'eye-off-outline' : 'eye-outline'">
+            </ion-icon>
+
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Confirmar contraseña -->
+      <div class="form-group">
+        <label>Confirmar contraseña</label>
+
+        <div class="input-container">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+
+          <ion-input
+            [type]="mostrarConfirmarPassword ? 'text' : 'password'"
+            placeholder="Repite tu contraseña"
+            [(ngModel)]="confirmarPassword">
+          </ion-input>
+
+          <ion-button
+            fill="clear"
+            class="password-button"
+            (click)="cambiarVisibilidadConfirmarPassword()">
+
+            <ion-icon
+              slot="icon-only"
+              [name]="mostrarConfirmarPassword ? 'eye-off-outline' : 'eye-outline'">
+            </ion-icon>
+
+          </ion-button>
+        </div>
+      </div>
+
+      <ion-button
+        expand="block"
+        class="register-button"
+        (click)="crearCuenta()">
+        Crear cuenta
+      </ion-button>
+
+      <div class="login-link">
+        <span>¿Ya tienes una cuenta?</span>
+
+        <button
+          type="button"
+          (click)="irALogin()">
+          Inicia sesión
+        </button>
+      </div>
+
+    </div>
+
+    <div class="back-home" routerLink="/home">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <span>Volver a Lushka Beauty</span>
+    </div>
+
+  </div>
+
+</ion-content>

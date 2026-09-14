@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CarritoService, ProductoCarrito } from '../services/carrito';
 
 @Component({
@@ -10,9 +11,11 @@ import { CarritoService, ProductoCarrito } from '../services/carrito';
 export class CarritoPage {
 
   productos: ProductoCarrito[] = [];
-  costoEnvio = 8500;
 
-  constructor(private carritoService: CarritoService) {}
+  constructor(
+    private carritoService: CarritoService,
+    private router: Router
+  ) {}
 
   ionViewWillEnter() {
     this.productos = this.carritoService.obtenerCarrito();
@@ -33,16 +36,12 @@ export class CarritoPage {
     this.productos = this.carritoService.obtenerCarrito();
   }
 
-  get subtotal(): number {
-  return this.carritoService.obtenerTotal();
-}
-
-get total(): number {
-  if (this.productos.length === 0) {
-    return 0;
+  irACheckout() {
+    this.router.navigate(['/checkout']);
   }
 
-  return this.subtotal + this.costoEnvio;
-}
+  get subtotal(): number {
+    return this.carritoService.obtenerTotal();
+  }
 
 }

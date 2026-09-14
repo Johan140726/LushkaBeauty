@@ -1,0 +1,630 @@
+.orders-header {
+
+  ion-toolbar {
+    --background: #faf7f5;
+    --border-width: 0;
+
+    min-height: 62px;
+  }
+
+  ion-back-button {
+    --color: #8e183a;
+  }
+
+}
+
+
+.header-logo {
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+}
+
+
+.header-logo img {
+
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+
+}
+
+
+ion-content {
+
+  --background: #faf7f5;
+
+}
+
+
+.orders-container {
+
+  width: 100%;
+
+  max-width: 900px;
+
+  margin: auto;
+
+  padding: 28px 16px 50px;
+
+}
+
+
+.orders-title {
+
+  margin-bottom: 24px;
+
+}
+
+
+.orders-title p {
+
+  margin: 0 0 7px;
+
+  color: #8e183a;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+}
+
+
+.orders-title h1 {
+
+  margin: 0 0 7px;
+
+  color: #352a27;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+}
+
+
+.orders-title span {
+
+  color: #8e7d78;
+
+  font-size: 14px;
+
+}
+
+
+/* VACÍO */
+
+.empty-orders {
+
+  padding: 45px 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #efe3df;
+
+  border-radius: 20px;
+
+}
+
+
+.empty-icon {
+
+  width: 70px;
+  height: 70px;
+
+  margin-bottom: 16px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f6e8ed;
+
+  border-radius: 50%;
+
+}
+
+
+.empty-icon ion-icon {
+
+  color: #8e183a;
+
+  font-size: 30px;
+
+}
+
+
+.empty-orders p {
+
+  margin: 0 0 5px;
+
+  color: #8e183a;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+}
+
+
+.empty-orders h2 {
+
+  margin: 0 0 9px;
+
+  color: #392e2b;
+
+  font-size: 21px;
+
+}
+
+
+.empty-orders span {
+
+  max-width: 380px;
+
+  color: #917f79;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+}
+
+
+.catalog-button {
+
+  --background: #8e183a;
+  --color: #ffffff;
+  --border-radius: 13px;
+  --box-shadow: none;
+
+  min-height: 46px;
+
+  margin-top: 20px;
+
+  text-transform: none;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+}
+
+
+/* PEDIDOS */
+
+.orders-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+}
+
+
+.order-card {
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #efe3df;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(60, 40, 35, 0.05);
+
+}
+
+
+.order-top {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+}
+
+
+.order-label {
+
+  color: #a08d87;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.order-top h2 {
+
+  margin: 3px 0 0;
+
+  color: #382e2b;
+
+  font-size: 16px;
+
+}
+
+
+.status {
+
+  padding: 7px 10px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+}
+
+
+.status.pending {
+  background: #fff3dd;
+  color: #946920;
+}
+
+
+.status.confirmed {
+  background: #eee7f7;
+  color: #684a8c;
+}
+
+
+.status.preparing {
+  background: #f7e8ed;
+  color: #8e183a;
+}
+
+
+.status.shipping {
+  background: #e7f0f6;
+  color: #41657d;
+}
+
+
+.status.delivered {
+  background: #e8f4ec;
+  color: #48715a;
+}
+
+
+.status.cancelled {
+  background: #f8e8e8;
+  color: #9a4545;
+}
+
+
+/* FECHA */
+
+.order-date {
+
+  margin: 12px 0 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #96857f;
+
+  font-size: 11px;
+
+}
+
+
+.order-date ion-icon {
+
+  font-size: 15px;
+
+}
+
+
+/* PRODUCTOS */
+
+.products {
+
+  padding: 4px 0;
+
+  border-top: 1px solid #f1e8e5;
+  border-bottom: 1px solid #f1e8e5;
+
+}
+
+
+.product {
+
+  padding: 11px 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+}
+
+
+.product img {
+
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 11px;
+
+}
+
+
+.product-info {
+
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+}
+
+
+.product-info strong {
+
+  overflow: hidden;
+
+  color: #443734;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+}
+
+
+.product-info span {
+
+  color: #9b8983;
+
+  font-size: 10px;
+
+}
+
+
+.product-total {
+
+  flex-shrink: 0;
+
+  color: #8e183a;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+}
+
+
+/* ENTREGA */
+
+.delivery-info {
+
+  padding: 15px 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  border-bottom: 1px solid #f1e8e5;
+
+}
+
+
+.delivery-row {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+}
+
+
+.delivery-row ion-icon {
+
+  margin-top: 2px;
+
+  flex-shrink: 0;
+
+  color: #8e183a;
+
+  font-size: 17px;
+
+}
+
+
+.delivery-row div {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+}
+
+
+.delivery-row span {
+
+  color: #a08d87;
+
+  font-size: 10px;
+
+}
+
+
+.delivery-row strong {
+
+  color: #564844;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  line-height: 1.4;
+
+}
+
+
+/* RESUMEN */
+
+.order-summary {
+
+  padding-top: 15px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 9px;
+
+}
+
+
+.order-summary > div {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+}
+
+
+.order-summary span {
+
+  color: #8a7772;
+
+  font-size: 11px;
+
+}
+
+
+.order-summary strong {
+
+  color: #4a3c38;
+
+  font-size: 11px;
+
+}
+
+
+.order-summary .total {
+
+  margin-top: 5px;
+
+  padding-top: 12px;
+
+  border-top: 1px solid #f1e8e5;
+
+}
+
+
+.order-summary .total span {
+
+  color: #352a27;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+}
+
+
+.order-summary .total strong {
+
+  color: #8e183a;
+
+  font-size: 17px;
+
+}
+
+
+.shipping-pending {
+
+  color: #8e183a !important;
+
+}
+
+
+@media (max-width: 600px) {
+
+  .orders-container {
+    padding:
+      22px
+      13px
+      40px;
+  }
+
+  .orders-title h1 {
+    font-size: 26px;
+  }
+
+  .order-card {
+    padding: 16px;
+  }
+
+  .order-top {
+    align-items: center;
+  }
+
+}

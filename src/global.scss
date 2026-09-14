@@ -35,3 +35,30 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+/* =====================================================
+   TOASTS - LUSHKA BEAUTY
+   Mensajes de confirmación y error
+   ===================================================== */
+
+ion-toast.lushka-toast {
+  --border-radius: 16px;
+  --box-shadow: 0 8px 25px rgba(60, 40, 35, 0.16);
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+ion-toast.toast-success {
+  --background: #ffffff;
+  --color: #3d332f;
+  --button-color: #8e183a;
+  border-left: 4px solid #8e183a;
+}
+
+ion-toast.toast-error {
+  --background: #ffffff;
+  --color: #3d332f;
+  --button-color: #8e183a;
+  border-left: 4px solid #b94b5e;
+}

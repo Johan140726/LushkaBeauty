@@ -1,0 +1,208 @@
+<ion-header class="admin-header">
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/admin"
+        text=""
+        icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      PRODUCTOS
+    </ion-title>
+
+    <div class="header-logo">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Lushka Beauty">
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+
+  <div class="page-container">
+
+    <section class="page-heading">
+
+      <div>
+
+        <p>ADMINISTRACIÓN</p>
+
+        <h1>
+          Productos e inventario
+        </h1>
+
+        <span>
+          Gestiona los productos disponibles en Lushka Beauty.
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="new-product-button"
+        routerLink="/admin-producto/nuevo">
+
+        <ion-icon
+          name="add-outline">
+        </ion-icon>
+
+        Nuevo producto
+
+      </button>
+
+    </section>
+
+
+    <section class="summary-card">
+
+      <div class="summary-icon">
+
+        <ion-icon
+          name="cube-outline">
+        </ion-icon>
+
+      </div>
+
+      <div>
+
+        <span>
+          Productos registrados
+        </span>
+
+        <strong>
+          {{ productos.length }}
+        </strong>
+
+      </div>
+
+    </section>
+
+
+    <section
+      class="products-list"
+      *ngIf="productos.length > 0">
+
+      <article
+        class="product-card"
+        *ngFor="let producto of productos">
+
+        <img
+          class="product-image"
+          [src]="producto.imagen"
+          [alt]="producto.nombre">
+
+
+        <div class="product-info">
+
+          <span class="category">
+            {{ producto.categoria }}
+          </span>
+
+          <h2>
+            {{ producto.nombre }}
+          </h2>
+
+          <p>
+            {{ producto.descripcion }}
+          </p>
+
+        </div>
+
+
+        <div class="product-price">
+
+          <span>
+            Precio
+          </span>
+
+          <strong>
+            ${{ producto.precio | number:'1.0-0' }}
+          </strong>
+
+        </div>
+
+
+        <div class="product-stock">
+
+          <span>
+            Stock
+          </span>
+
+          <strong
+            [class.no-stock]="producto.stock === 0">
+
+            {{ producto.stock }}
+
+          </strong>
+
+        </div>
+
+
+        <div class="product-actions">
+
+          <button
+            type="button"
+            class="edit-button"
+            [routerLink]="[
+              '/admin-producto/editar',
+              producto.id
+            ]">
+
+            <ion-icon
+              name="create-outline">
+            </ion-icon>
+
+            Editar
+
+          </button>
+
+
+          <button
+            type="button"
+            class="delete-button"
+            (click)="confirmarEliminar(producto)">
+
+            <ion-icon
+              name="trash-outline">
+            </ion-icon>
+
+            Eliminar
+
+          </button>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <section
+      class="empty-state"
+      *ngIf="productos.length === 0">
+
+      <ion-icon
+        name="cube-outline">
+      </ion-icon>
+
+      <h2>
+        No hay productos
+      </h2>
+
+      <p>
+        Crea el primer producto para comenzar.
+      </p>
+
+    </section>
+
+  </div>
+
+</ion-content>
