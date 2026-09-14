@@ -32,6 +32,8 @@ export interface Pedido {
 
   fecha: string;
   estado: EstadoPedido;
+
+  stockDevuelto: boolean;
 }
 
 @Injectable({
@@ -53,7 +55,7 @@ export class PedidosService {
     return JSON.parse(pedidosGuardados);
   }
 
-  crearPedido(pedido: Omit<Pedido, 'id' | 'fecha' | 'estado'>): Pedido {
+  crearPedido(pedido: Omit<Pedido, 'id' | 'fecha' | 'estado' | 'stockDevuelto'>): Pedido {
 
     const pedidos = this.obtenerPedidos();
 
@@ -61,7 +63,8 @@ export class PedidosService {
       ...pedido,
       id: Date.now(),
       fecha: new Date().toISOString(),
-      estado: 'Pendiente'
+      estado: 'Pendiente',
+      stockDevuelto: false
     };
 
     pedidos.push(nuevoPedido);
@@ -109,5 +112,31 @@ export class PedidosService {
 
     return true;
   }
+
+  marcarStockDevuelto(
+  id: number
+): boolean {
+
+  const pedidos =
+    this.obtenerPedidos();
+
+  const pedido =
+    pedidos.find(
+      pedido => pedido.id === id
+    );
+
+  if (!pedido) {
+    return false;
+  }
+
+  pedido.stockDevuelto = true;
+
+  localStorage.setItem(
+    this.clavePedidos,
+    JSON.stringify(pedidos)
+  );
+
+  return true;
+}
 
 }

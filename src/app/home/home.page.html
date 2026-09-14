@@ -145,61 +145,76 @@
     </div>
   </section>
 
-  <!-- DESTACADOS -->
-<section class="section products-section">
+    <!-- DESTACADOS -->
 
-  <div class="section-title">
-    <h2>Productos destacados</h2>
-    <span (click)="irAlCatalogo()">Ver catálogo</span>
-  </div>
+  <section class="section products-section">
 
-  <div class="products">
+    <div class="section-title">
 
-    <div class="product-card" (click)="verProducto(1)">
-      <div class="product-image">
-        <img
-          src="assets/productos/Capilar/AceiteCapilar.jpg"
-          alt="Aceite Capilar">
-      </div>
+      <h2>
+        Productos destacados
+      </h2>
 
-      <div class="product-info">
-        <p>CAPILAR</p>
-        <h3>Aceite Capilar</h3>
-        <strong>$13.000</strong>
-      </div>
+      <span
+        (click)="irAlCatalogo()">
+
+        Ver catálogo
+
+      </span>
+
     </div>
 
-    <div class="product-card" (click)="verProducto(8)">
-      <div class="product-image">
-        <img
-          src="assets/productos/CrecimientoPersonal/diario.jpg"
-          alt="Diario de Agradecimiento">
+
+    <div class="products">
+
+      <div
+        class="product-card"
+        *ngFor="let producto of productosDestacados"
+        (click)="verProducto(producto.id)">
+
+        <div class="product-image">
+
+          <img
+            [src]="producto.imagen"
+            [alt]="producto.nombre">
+
+
+          <div
+            class="home-stock-badge"
+            [class.agotado]="producto.stock === 0">
+
+            {{
+              producto.stock === 0
+                ? 'Agotado'
+                : producto.stock + ' disponibles'
+            }}
+
+          </div>
+
+        </div>
+
+
+        <div class="product-info">
+
+          <p>
+            {{ producto.categoria }}
+          </p>
+
+          <h3>
+            {{ producto.nombre }}
+          </h3>
+
+          <strong>
+            ${{ producto.precio | number:'1.0-0' }}
+          </strong>
+
+        </div>
+
       </div>
 
-      <div class="product-info">
-        <p>CRECIMIENTO PERSONAL</p>
-        <h3>Diario de Agradecimiento</h3>
-        <strong>$30.000</strong>
-      </div>
     </div>
 
-    <div class="product-card" (click)="verProducto(12)">
-      <div class="product-image">
-        <img
-          src="assets/productos/Corporal/crema.png"
-          alt="Crema Corporal">
-      </div>
-
-      <div class="product-info">
-        <p>CUIDADO CORPORAL</p>
-        <h3>Crema Corporal</h3>
-        <strong>$15.000</strong>
-      </div>
-    </div>
-
-  </div>
-
-</section>
+  </section>
 
   <!-- FRASE -->
   <section class="brand-message">

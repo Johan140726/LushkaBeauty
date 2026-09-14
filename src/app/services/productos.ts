@@ -281,6 +281,55 @@ export class ProductosService {
     return true;
   }
 
+  descontarStock(
+  id: number,
+  cantidad: number
+): boolean {
+
+  const producto =
+    this.obtenerProductoPorId(id);
+
+  if (!producto) {
+    return false;
+  }
+
+  if (
+    cantidad <= 0 ||
+    producto.stock < cantidad
+  ) {
+    return false;
+  }
+
+  producto.stock -= cantidad;
+
+  this.guardarProductos();
+
+  return true;
+}
+
+reponerStock(
+  id: number,
+  cantidad: number
+): boolean {
+
+  const producto =
+    this.obtenerProductoPorId(id);
+
+  if (!producto) {
+    return false;
+  }
+
+  if (cantidad <= 0) {
+    return false;
+  }
+
+  producto.stock += cantidad;
+
+  this.guardarProductos();
+
+  return true;
+}
+
 
   private guardarProductos() {
 

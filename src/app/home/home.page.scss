@@ -476,3 +476,34 @@ ion-content {
     opacity: 0.7;
   }
 }
+
+.product-image {
+  position: relative;
+}
+
+.home-stock-badge {
+  position: absolute;
+
+  right: 9px;
+  top: 9px;
+
+  padding: 5px 8px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: #55735d;
+
+  border-radius: 15px;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+
+  text-transform: uppercase;
+}
+
+.home-stock-badge.agotado {
+  background: #8e183a;
+  color: #ffffff;
+}

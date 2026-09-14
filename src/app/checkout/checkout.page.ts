@@ -6,6 +6,8 @@ import { AuthService, Usuario } from '../services/auth';
 import { CarritoService, ProductoCarrito } from '../services/carrito';
 import { PedidosService } from '../services/pedidos';
 
+import { ProductosService } from '../services/productos';
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
@@ -38,6 +40,7 @@ export class CheckoutPage {
     private authService: AuthService,
     private carritoService: CarritoService,
     private pedidosService: PedidosService,
+    private productosService: ProductosService,
     private router: Router,
     private toastController: ToastController
   ) {}
@@ -210,6 +213,13 @@ export class CheckoutPage {
 
     }
 
+    const stockValido =
+      await this.validarStockDisponible();
+
+    if (!stockValido) {
+      return;
+    }
+
 
     if (this.productos.length === 0) {
 
@@ -272,26 +282,68 @@ export class CheckoutPage {
 
     });
 
+    for (const producto of this.productos) {
+
+      this.productosService.descontarStock(
+        producto.id,
+        producto.cantidad
+      );
+
+    }
 
     // Limpiamos el carrito después de guardar
     // correctamente el pedido.
     this.carritoService.vaciarCarrito();
 
-
     await this.mostrarMensaje(
       'Pedido realizado correctamente.',
       'success'
     );
-
-
+    
     this.procesandoPedido = false;
-
 
     this.router.navigate([
       '/mis-pedidos'
     ]);
 
   }
+
+  private async validarStockDisponible():
+  Promise<boolean> {
+
+  for (const productoCarrito of this.productos) {
+
+    const productoActual =
+      this.productosService
+        .obtenerProductoPorId(
+          productoCarrito.id
+        );
+
+    if (!productoActual) {
+
+      await this.mostrarMensaje(
+        `${productoCarrito.nombre} ya no está disponible.`
+      );
+
+      return false;
+    }
+
+    if (
+      productoActual.stock <
+      productoCarrito.cantidad
+    ) {
+
+      await this.mostrarMensaje(
+        `No hay suficiente stock de ${productoActual.nombre}. Disponibles: ${productoActual.stock}.`
+      );
+
+      return false;
+    }
+
+  }
+
+  return true;
+}
 
 
   volverAlCarrito() {

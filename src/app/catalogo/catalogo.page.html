@@ -99,6 +99,18 @@
             {{ producto.categoria }}
           </div>
 
+          <div
+            class="stock-badge"
+            [class.agotado]="producto.stock === 0">
+
+            {{
+              producto.stock === 0
+                ? 'Agotado'
+                : producto.stock + ' disponibles'
+            }}
+
+          </div>
+
         </div>
 
         <div class="product-info">

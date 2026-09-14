@@ -9,6 +9,8 @@ import {
   EstadoPedido
 } from '../services/pedidos';
 
+import { ProductosService } from '../services/productos';
+
 @Component({
   selector: 'app-admin-pedidos',
   templateUrl: './admin-pedidos.page.html',
@@ -34,7 +36,8 @@ export class AdminPedidosPage {
     private authService: AuthService,
     private pedidosService: PedidosService,
     private router: Router,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private productosService: ProductosService
   ) {}
 
   ionViewWillEnter() {
@@ -66,11 +69,66 @@ export class AdminPedidosPage {
     nuevoEstado: EstadoPedido
   ) {
 
+    /*
+    * Si el pedido se está cancelando
+    * y todavía no hemos devuelto el stock,
+    * devolvemos las unidades al inventario.
+    */
+    if (
+      nuevoEstado === 'Cancelado' &&
+      !pedido.stockDevuelto
+    ) {
+
+      for (const productoPedido of pedido.productos) {
+
+        const productoActual =
+          this.productosService
+            .obtenerProductoPorId(
+              productoPedido.id
+            );
+
+        if (!productoActual) {
+
+          await this.mostrarMensaje(
+            `No se encontró ${productoPedido.nombre} en el inventario.`
+          );
+
+          return;
+        }
+
+      }
+
+
+      /*
+      * Como comprobamos primero que todos
+      * los productos existen, ahora sí
+      * podemos devolver el stock.
+      */
+      for (const productoPedido of pedido.productos) {
+
+        this.productosService.reponerStock(
+          productoPedido.id,
+          productoPedido.cantidad
+        );
+
+      }
+
+
+      this.pedidosService.marcarStockDevuelto(
+        pedido.id
+      );
+
+      pedido.stockDevuelto = true;
+
+    }
+
+
     const actualizado =
       this.pedidosService.actualizarEstado(
         pedido.id,
         nuevoEstado
       );
+
 
     if (!actualizado) {
 
@@ -81,7 +139,20 @@ export class AdminPedidosPage {
       return;
     }
 
+
     pedido.estado = nuevoEstado;
+
+
+    if (nuevoEstado === 'Cancelado') {
+
+      await this.mostrarMensaje(
+        'Pedido cancelado y stock devuelto al inventario.',
+        'success'
+      );
+
+      return;
+    }
+
 
     await this.mostrarMensaje(
       'Estado actualizado correctamente.',

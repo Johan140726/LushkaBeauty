@@ -105,10 +105,47 @@ ion-content {
 .availability {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #5c514d;
+  gap: 7px;
+
+  margin-bottom: 18px;
+
   font-size: 12px;
-  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.availability .dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+.availability strong {
+  margin-left: 4px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.availability.available {
+  color: #55735d;
+}
+
+.availability.available .dot {
+  background: #6f9878;
+}
+
+.availability.unavailable {
+  color: #a52e4d;
+}
+
+.availability.unavailable .dot {
+  background: #a52e4d;
+}
+
+.quantity-control button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .dot {
@@ -164,6 +201,10 @@ ion-content {
   font-size: 12px;
   letter-spacing: 1.5px;
   font-weight: 700;
+}
+
+.add-cart-button.button-disabled {
+  opacity: 0.55;
 }
 
 @media (min-width: 768px) {

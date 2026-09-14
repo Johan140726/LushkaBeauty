@@ -10,50 +10,70 @@
     </ion-buttons>
 
     <div class="header-logo">
-      <img src="assets/logo/logo_lushka.png" alt="Lushka Beauty">
+      <img
+        src="assets/logo/logo_lushka.png"
+        alt="Lushka Beauty">
     </div>
 
     <ion-buttons slot="end">
       <ion-button>
-        🛒
+        <ion-icon name="cart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
 
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
 
   <section class="cart-container">
 
     <div class="cart-title">
-      <p>TU SELECCIÓN</p>
-      <h1>Mi carrito</h1>
+
+      <p>
+        TU SELECCIÓN
+      </p>
+
+      <h1>
+        Mi carrito
+      </h1>
+
       <span>
         {{ productos.length }}
-        {{ productos.length === 1 ? 'producto' : 'productos' }}
+        {{
+          productos.length === 1
+            ? 'producto'
+            : 'productos'
+        }}
       </span>
+
     </div>
 
-    <!-- CARRITO CON PRODUCTOS -->
 
-    <div class="cart-products" *ngIf="productos.length > 0">
+    <div
+      class="cart-products"
+      *ngIf="productos.length > 0">
 
       <article
         class="cart-product"
         *ngFor="let producto of productos">
 
         <div class="product-image">
+
           <img
             [src]="producto.imagen"
             [alt]="producto.nombre">
+
         </div>
+
 
         <div class="product-data">
 
           <div class="product-top">
 
             <div>
+
               <span class="category">
                 {{ producto.categoria }}
               </span>
@@ -61,15 +81,23 @@
               <h2>
                 {{ producto.nombre }}
               </h2>
+
             </div>
 
+
             <button
+              type="button"
               class="delete-button"
               (click)="eliminar(producto.id)">
-              ×
+
+              <ion-icon
+                name="close-outline">
+              </ion-icon>
+
             </button>
 
           </div>
+
 
           <div
             class="product-price"
@@ -79,6 +107,7 @@
 
           </div>
 
+
           <div
             class="product-price pending"
             *ngIf="producto.precio === 0">
@@ -87,13 +116,49 @@
 
           </div>
 
+
+          <div
+            class="stock-info"
+            [class.stock-error]="stockInsuficiente(producto)">
+
+            <span *ngIf="obtenerStock(producto.id) > 0">
+              Disponibles:
+              {{ obtenerStock(producto.id) }}
+            </span>
+
+            <span *ngIf="obtenerStock(producto.id) === 0">
+              Agotado
+            </span>
+
+          </div>
+
+
+          <div
+            class="stock-warning"
+            *ngIf="stockInsuficiente(producto)">
+
+            <ion-icon
+              name="alert-circle-outline">
+            </ion-icon>
+
+            La cantidad seleccionada supera
+            el stock disponible.
+
+          </div>
+
+
           <div class="product-bottom">
 
             <div class="quantity-control">
 
               <button
+                type="button"
                 (click)="disminuir(producto.id)">
-                −
+
+                <ion-icon
+                  name="remove-outline">
+                </ion-icon>
+
               </button>
 
               <strong>
@@ -101,17 +166,31 @@
               </strong>
 
               <button
-                (click)="aumentar(producto.id)">
-                +
+                type="button"
+                (click)="aumentar(producto.id)"
+                [disabled]="
+                  producto.cantidad >=
+                  obtenerStock(producto.id)
+                ">
+
+                <ion-icon
+                  name="add-outline">
+                </ion-icon>
+
               </button>
 
             </div>
+
 
             <strong
               class="subtotal"
               *ngIf="producto.precio > 0">
 
-              ${{ producto.precio * producto.cantidad | number:'1.0-0' }}
+              ${{
+                producto.precio *
+                producto.cantidad
+                | number:'1.0-0'
+              }}
 
             </strong>
 
@@ -121,22 +200,34 @@
 
       </article>
 
-      <!-- RESUMEN -->
 
       <section class="summary">
 
         <div class="summary-title">
-          <p>RESUMEN</p>
-          <h2>Tu pedido</h2>
+
+          <p>
+            RESUMEN
+          </p>
+
+          <h2>
+            Tu pedido
+          </h2>
+
         </div>
 
+
         <div class="summary-row">
-          <span>Subtotal</span>
+
+          <span>
+            Subtotal
+          </span>
 
           <strong>
             ${{ subtotal | number:'1.0-0' }}
           </strong>
+
         </div>
+
 
         <div class="summary-row shipping">
 
@@ -150,7 +241,9 @@
 
         </div>
 
+
         <div class="divider"></div>
+
 
         <div class="summary-row total-row">
 
@@ -163,20 +256,42 @@
           </strong>
 
         </div>
+
+
+        <div
+          class="checkout-warning"
+          *ngIf="hayProblemasDeStock">
+
+          <ion-icon
+            name="alert-circle-outline">
+          </ion-icon>
+
+          Ajusta las cantidades antes de continuar.
+
+        </div>
+
+
         <ion-button
           expand="block"
           class="checkout-button"
-          routerLink="/checkout">
+          (click)="irACheckout()"
+          [disabled]="hayProblemasDeStock">
 
           CONTINUAR CON EL PEDIDO
 
         </ion-button>
 
+
         <button
+          type="button"
           class="continue-shopping"
           routerLink="/catalogo">
 
-          ← Seguir comprando
+          <ion-icon
+            name="arrow-back-outline">
+          </ion-icon>
+
+          Seguir comprando
 
         </button>
 
@@ -185,17 +300,21 @@
     </div>
 
 
-    <!-- CARRITO VACÍO -->
-
     <section
       class="empty-cart"
       *ngIf="productos.length === 0">
 
       <div class="empty-icon">
-        🛍️
+
+        <ion-icon
+          name="bag-handle-outline">
+        </ion-icon>
+
       </div>
 
-      <p>LUSHKA BEAUTY</p>
+      <p>
+        LUSHKA BEAUTY
+      </p>
 
       <h2>
         Tu carrito está vacío
