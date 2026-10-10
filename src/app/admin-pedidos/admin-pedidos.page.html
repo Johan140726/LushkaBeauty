@@ -282,6 +282,7 @@
 
           <ion-select
             interface="popover"
+            [disabled]="guardandoPedidoId !== null"
             [value]="pedido.estado"
             (ionChange)="cambiarEstado(
               pedido,
@@ -289,7 +290,7 @@
             )">
 
             <ion-select-option
-              *ngFor="let estado of estados"
+              *ngFor="let estado of estadosDisponibles(pedido)"
               [value]="estado">
 
               {{ estado }}
@@ -297,6 +298,21 @@
             </ion-select-option>
 
           </ion-select>
+
+          <p class="inventario-aviso" *ngIf="pedido.inventarioDescontado === true">
+            Inventario descontado para este pedido.
+          </p>
+          <p class="inventario-aviso" *ngIf="pedido.estado === 'Cancelado' && pedido.stockDevuelto === true">
+            Unidades reintegradas al inventario.
+          </p>
+          <div class="inventario-legacy" *ngIf="requiereRegularizacion(pedido)">
+            <p>Este pedido fue confirmado con la versión anterior y todavía no tiene descuento de inventario registrado.</p>
+            <ion-button size="small" fill="outline" color="warning"
+              [disabled]="guardandoPedidoId !== null"
+              (click)="regularizarPedido(pedido)">
+              Aplicar descuento de inventario
+            </ion-button>
+          </div>
 
         </div>
 

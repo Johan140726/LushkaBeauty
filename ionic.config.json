@@ -1,7 +1,1 @@
-{
-  "name": "lushka-beauty",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
+{ "name": "Lushka Beauty", "integrations": {}, "type": "angular" }

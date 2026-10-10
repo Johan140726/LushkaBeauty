@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { collection, getDocs, doc, getDoc, setDoc, deleteDoc, updateDoc, query, limit, writeBatch } from 'firebase/firestore';
+import { db, auth } from './firebase';
+import { cloudinaryWorkerUrl } from '../../environments/cloudinary-config';
 
 export interface Producto {
   id: number;
@@ -10,358 +13,113 @@ export interface Producto {
   stock: number;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ProductosService {
-
-  private claveProductos = 'lushkaProductos';
-
   private productos: Producto[] = [];
 
-  private productosIniciales: Producto[] = [
+  obtenerProductos(): Producto[] { return this.productos; }
+  obtenerProductoPorId(id: number): Producto | undefined { return this.productos.find(p => p.id === id); }
 
-    {
-      id: 1,
-      nombre: 'Aceite Capilar',
-      categoria: 'Capilar',
-      precio: 13000,
-      imagen: 'assets/productos/Capilar/AceiteCapilar.jpg',
-      descripcion: 'Producto para el cuidado y nutrición del cabello.',
-      stock: 0
-    },
-
-    {
-      id: 2,
-      nombre: 'Acondicionador',
-      categoria: 'Capilar',
-      precio: 15000,
-      imagen: 'assets/productos/Capilar/Acondicionador.png',
-      descripcion: 'Acondicionador para complementar tu rutina capilar.',
-      stock: 0
-    },
-
-    {
-      id: 3,
-      nombre: 'Tratamiento de Aguacate',
-      categoria: 'Capilar',
-      precio: 15000,
-      imagen: 'assets/productos/Capilar/Aguacate.jpg',
-      descripcion: 'Tratamiento capilar con aguacate.',
-      stock: 0
-    },
-
-    {
-      id: 4,
-      nombre: 'Crema para Peinar',
-      categoria: 'Capilar',
-      precio: 13000,
-      imagen: 'assets/productos/Capilar/CremaPeinar.png',
-      descripcion: 'Crema para peinar y cuidar tu cabello.',
-      stock: 0
-    },
-
-    {
-      id: 5,
-      nombre: 'Shampoo',
-      categoria: 'Capilar',
-      precio: 20000,
-      imagen: 'assets/productos/Capilar/shampoo.png',
-      descripcion: 'Shampoo para complementar tu rutina de cuidado capilar.',
-      stock: 0
-    },
-
-    {
-      id: 6,
-      nombre: 'Espuma Facial',
-      categoria: 'Facial',
-      precio: 15000,
-      imagen: 'assets/productos/Facial/espuma.jpg',
-      descripcion: 'Espuma para la limpieza y cuidado facial.',
-      stock: 0
-    },
-
-    {
-      id: 7,
-      nombre: 'Tratamiento para Pestañas y Cejas',
-      categoria: 'Facial',
-      precio: 12000,
-      imagen: 'assets/productos/Facial/pestañas.jpg',
-      descripcion: 'Producto para el cuidado de pestañas y cejas.',
-      stock: 0
-    },
-
-    {
-      id: 8,
-      nombre: 'Crema Corporal',
-      categoria: 'Corporal',
-      precio: 15000,
-      imagen: 'assets/productos/Corporal/crema.png',
-      descripcion: 'Crema para hidratar y cuidar la piel.',
-      stock: 0
-    },
-
-    {
-      id: 9,
-      nombre: 'Aceite Corporal de Almendra',
-      categoria: 'Corporal',
-      precio: 18000,
-      imagen: 'assets/productos/Corporal/almendra.jpg',
-      descripcion: 'Aceite corporal con aroma de almendra.',
-      stock: 0
-    },
-
-    {
-      id: 10,
-      nombre: 'Aceite Corporal de Chocolate',
-      categoria: 'Corporal',
-      precio: 18000,
-      imagen: 'assets/productos/Corporal/chocolate.jpg',
-      descripcion: 'Aceite corporal con aroma de chocolate.',
-      stock: 0
-    },
-
-    {
-      id: 11,
-      nombre: 'Aceite Corporal de Coco',
-      categoria: 'Corporal',
-      precio: 18000,
-      imagen: 'assets/productos/Corporal/coco.jpg',
-      descripcion: 'Aceite corporal con aroma de coco.',
-      stock: 0
-    },
-
-    {
-      id: 12,
-      nombre: 'Diario de Agradecimiento',
-      categoria: 'Crecimiento personal',
-      precio: 30000,
-      imagen: 'assets/productos/CrecimientoPersonal/diario.jpg',
-      descripcion: 'Diario de agradecimiento para acompañar momentos de reflexión y crecimiento personal.',
-      stock: 0
-    },
-
-    {
-      id: 13,
-      nombre: 'Kit Bucal',
-      categoria: 'Combos',
-      precio: 25000,
-      imagen: 'assets/productos/Combos/bucal.jpg',
-      descripcion: 'Combo especial para el cuidado personal.',
-      stock: 0
-    },
-
-    {
-      id: 14,
-      nombre: 'Caja Capilar',
-      categoria: 'Combos',
-      precio: 35000,
-      imagen: 'assets/productos/Combos/CajaCapilar.jpg',
-      descripcion: 'Combo especial para el cuidado del cabello.',
-      stock: 0
-    },
-
-    {
-      id: 15,
-      nombre: 'Shine Box',
-      categoria: 'Combos',
-      precio: 30000,
-      imagen: 'assets/productos/Combos/shineBox.jpg',
-      descripcion: 'Combo especial de productos Lushka.',
-      stock: 0
-    }
-
-  ];
-
-  constructor() {
-    this.cargarProductos();
-  }
-
-
-  obtenerProductos(): Producto[] {
+  async cargarProductos(): Promise<Producto[]> {
+    const snap = await getDocs(collection(db, 'productos'));
+    this.productos = snap.docs.map(s => ({ ...s.data(), id: Number(s.id) } as Producto))
+      .sort((a, b) => a.nombre.localeCompare(b.nombre));
     return this.productos;
   }
 
-
-  obtenerProductoPorId(
-    id: number
-  ): Producto | undefined {
-
-    return this.productos.find(
-      producto => producto.id === id
-    );
+  async cargarProducto(id: number): Promise<Producto | undefined> {
+    const snap = await getDoc(doc(db, 'productos', String(id)));
+    if (!snap.exists()) { return undefined; }
+    const producto = { ...snap.data(), id } as Producto;
+    this.productos = [...this.productos.filter(p => p.id !== id), producto];
+    return producto;
   }
 
-
-  crearProducto(
-    producto: Omit<Producto, 'id'>
-  ): Producto {
-
-    const nuevoProducto: Producto = {
-      ...producto,
-      id: Date.now()
-    };
-
-    this.productos.push(
-      nuevoProducto
-    );
-
-    this.guardarProductos();
-
-    return nuevoProducto;
+  async crearProducto(producto: Omit<Producto, 'id'>): Promise<Producto> {
+    const nuevo = { ...producto, id: Date.now() };
+    await setDoc(doc(db, 'productos', String(nuevo.id)), nuevo);
+    await this.cargarProductos();
+    return nuevo;
   }
-
-
-  actualizarProducto(
-    productoActualizado: Producto
-  ): boolean {
-
-    const indice =
-      this.productos.findIndex(
-        producto =>
-          producto.id === productoActualizado.id
-      );
-
-    if (indice === -1) {
-      return false;
-    }
-
-    this.productos[indice] = {
-      ...productoActualizado
-    };
-
-    this.guardarProductos();
-
+  async actualizarProducto(producto: Producto): Promise<boolean> {
+    await setDoc(doc(db, 'productos', String(producto.id)), producto);
+    await this.cargarProductos();
+    return true;
+  }
+  async eliminarProducto(id: number): Promise<boolean> {
+    await deleteDoc(doc(db, 'productos', String(id)));
+    await this.cargarProductos();
+    return true;
+  }
+  async actualizarStock(id: number, nuevoStock: number): Promise<boolean> {
+    await updateDoc(doc(db, 'productos', String(id)), { stock: Math.max(0, nuevoStock) });
+    await this.cargarProductos();
     return true;
   }
 
+  async cargarCatalogoInicial(): Promise<number> {
+    if (!auth.currentUser) throw new Error('Debes iniciar sesión como administrador.');
+    // No sobrescribir catálogo existente ni cambios hechos por el administrador.
+    const existente = await getDocs(query(collection(db, 'productos'), limit(1)));
+    if (!existente.empty) throw new Error('Ya existen productos; no se sobrescribió el catálogo.');
+    const respuesta = await fetch('assets/catalogo-inicial.json');
+    if (!respuesta.ok) throw new Error('No se encuentra el catálogo de demostración.');
+    const productos: Producto[] = await respuesta.json();
+    if (!Array.isArray(productos) || !productos.length) {
+      throw new Error('El catálogo inicial está vacío o tiene formato incorrecto.');
+    }
+    const lote = writeBatch(db);
+    for (const producto of productos) {
+      lote.set(doc(db, 'productos', String(producto.id)), producto);
+    }
+    await lote.commit();
+    await this.cargarProductos();
+    return productos.length;
+  }
 
-  eliminarProducto(
-    id: number
-  ): boolean {
-
-    const cantidadAnterior =
-      this.productos.length;
-
-    this.productos =
-      this.productos.filter(
-        producto => producto.id !== id
-      );
-
-    if (
-      this.productos.length ===
-      cantidadAnterior
-    ) {
-      return false;
+  async subirImagen(file: File): Promise<string> {
+    const tipos = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!tipos.includes(file.type)) {
+      throw new Error('Solo se permiten imágenes JPG, PNG y WEBP.');
+    }
+    if (file.size === 0 || file.size > 5 * 1024 * 1024) {
+      throw new Error('La imagen no debe estar vacía ni superar 5 MB.');
     }
 
-    this.guardarProductos();
+    const usuario = auth.currentUser;
+    if (!usuario) throw new Error('Debes iniciar sesión para subir imágenes.');
 
-    return true;
-  }
+    // Forzamos la actualización del token para incorporar admin:true.
+    const token = await usuario.getIdToken(true);
+    const formulario = new FormData();
+    formulario.append('file', file, file.name);
 
-
-  actualizarStock(
-    id: number,
-    nuevoStock: number
-  ): boolean {
-
-    const producto =
-      this.obtenerProductoPorId(id);
-
-    if (!producto) {
-      return false;
+    let respuesta: Response;
+    try {
+      respuesta = await fetch(`${cloudinaryWorkerUrl}/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formulario
+      });
+    } catch {
+      throw new Error('No se pudo conectar con el servicio de imágenes. Comprueba Internet y CORS.');
     }
 
-    producto.stock =
-      Math.max(0, nuevoStock);
-
-    this.guardarProductos();
-
-    return true;
-  }
-
-  descontarStock(
-  id: number,
-  cantidad: number
-): boolean {
-
-  const producto =
-    this.obtenerProductoPorId(id);
-
-  if (!producto) {
-    return false;
-  }
-
-  if (
-    cantidad <= 0 ||
-    producto.stock < cantidad
-  ) {
-    return false;
-  }
-
-  producto.stock -= cantidad;
-
-  this.guardarProductos();
-
-  return true;
-}
-
-reponerStock(
-  id: number,
-  cantidad: number
-): boolean {
-
-  const producto =
-    this.obtenerProductoPorId(id);
-
-  if (!producto) {
-    return false;
-  }
-
-  if (cantidad <= 0) {
-    return false;
-  }
-
-  producto.stock += cantidad;
-
-  this.guardarProductos();
-
-  return true;
-}
-
-
-  private guardarProductos() {
-
-    localStorage.setItem(
-      this.claveProductos,
-      JSON.stringify(this.productos)
-    );
-
-  }
-
-
-  private cargarProductos() {
-
-    const productosGuardados =
-      localStorage.getItem(
-        this.claveProductos
-      );
-
-    if (productosGuardados) {
-
-      this.productos =
-        JSON.parse(productosGuardados);
-
-      return;
+    let resultado: { ok?: boolean; url?: string; error?: string };
+    try {
+      resultado = await respuesta.json();
+    } catch {
+      throw new Error('El servicio de imágenes respondió con un formato inesperado.');
     }
 
-    this.productos =
-      this.productosIniciales.map(
-        producto => ({ ...producto })
-      );
-
-    this.guardarProductos();
+    if (!respuesta.ok || resultado.ok !== true || typeof resultado.url !== 'string') {
+      throw new Error(resultado.error || `Error al subir la imagen (HTTP ${respuesta.status}).`);
+    }
+    // Guardamos exclusivamente la URL pública HTTPS suministrada por Cloudinary.
+    const url = new URL(resultado.url);
+    if (url.protocol !== 'https:' || url.hostname !== 'res.cloudinary.com') {
+      throw new Error('Cloudinary devolvió una URL no válida.');
+    }
+    return resultado.url;
   }
-
 }

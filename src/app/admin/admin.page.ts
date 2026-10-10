@@ -27,10 +27,10 @@ export class AdminPage {
     private router: Router
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     this.usuarioActual =
-      this.authService.obtenerUsuarioActual();
+      await this.authService.esperarSesion();
 
     if (
       !this.usuarioActual ||
@@ -40,14 +40,14 @@ export class AdminPage {
       return;
     }
 
-    this.cargarResumen();
+    await this.cargarResumen();
 
   }
 
-  cargarResumen() {
+  async cargarResumen() {
 
     this.pedidos =
-      this.pedidosService.obtenerPedidos();
+      await this.pedidosService.obtenerPedidos();
 
     this.totalPedidos =
       this.pedidos.length;
@@ -72,9 +72,11 @@ export class AdminPage {
 
   }
 
-  cerrarSesion() {
+  irA(ruta: string): void { void this.router.navigate([ruta]); }
 
-    this.authService.cerrarSesion();
+  async cerrarSesion() {
+
+    await this.authService.cerrarSesion();
 
     this.router.navigate(['/login']);
 

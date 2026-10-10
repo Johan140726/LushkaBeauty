@@ -388,3 +388,5 @@ ion-content {
   }
 
 }
+.option-card:focus-visible { outline: 3px solid #8e183a; outline-offset: 2px; }
+.option-icon ion-icon, .stat-icon ion-icon { display: block; }

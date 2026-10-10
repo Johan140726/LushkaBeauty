@@ -21,10 +21,10 @@ export class MisPedidosPage {
     private router: Router
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     this.usuarioActual =
-      this.authService.obtenerUsuarioActual();
+      await this.authService.esperarSesion();
 
     if (!this.usuarioActual) {
 
@@ -34,7 +34,7 @@ export class MisPedidosPage {
     }
 
     this.pedidos =
-      this.pedidosService.obtenerPedidosPorUsuario(
+      await this.pedidosService.obtenerPedidosPorUsuario(
         this.usuarioActual.id
       );
 

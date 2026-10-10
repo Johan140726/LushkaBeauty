@@ -543,3 +543,7 @@ ion-content {
   }
 
 }
+/* Señales visuales para movimientos de stock */
+.inventario-aviso { font-size: 12px; color: #376a50; margin: 10px 0 0; }
+.inventario-legacy { margin-top: 12px; padding: 12px; background: #fff8e8; border: 1px solid #f4deb0; border-radius: 10px; }
+.inventario-legacy p { margin: 0 0 10px; font-size: 12px; color: #78511c; line-height: 1.45; }

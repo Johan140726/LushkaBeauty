@@ -1,0 +1,165 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function loggedIn() { return request.auth != null; }
+    function admin() { return loggedIn() && request.auth.token.get('admin', false) == true; }
+    function own(uid) { return loggedIn() && request.auth.uid == uid; }
+
+    // En la versión gratuita los clientes envían solicitudes de pedido, no pagos.
+    // Validamos cada producto y su precio/stock actual contra el catálogo.
+    function itemValido(i) {
+      let item = request.resource.data.productos[i];
+      let actual = get(/databases/$(database)/documents/productos/$(item.id)).data;
+      return item is map
+        && item.keys().hasOnly(['id', 'nombre', 'precio', 'imagen', 'categoria', 'cantidad'])
+        && item.keys().hasAll(['id', 'nombre', 'precio', 'imagen', 'categoria', 'cantidad'])
+        && item.id is int && item.id > 0
+        && item.cantidad is int && item.cantidad >= 1 && item.cantidad <= 100
+        && actual.nombre == item.nombre
+        && actual.precio == item.precio
+        && actual.imagen == item.imagen
+        && actual.categoria == item.categoria
+        && actual.stock >= item.cantidad;
+    }
+    function valorItem(i) {
+      return request.resource.data.productos.size() > i
+        ? request.resource.data.productos[i].precio * request.resource.data.productos[i].cantidad
+        : 0;
+    }
+    function carritoValido() {
+      return request.resource.data.productos is list
+        && request.resource.data.productos.size() >= 1
+        && request.resource.data.productos.size() <= 10
+        && itemValido(0)
+        && (request.resource.data.productos.size() <= 1 || itemValido(1)) &&
+          (request.resource.data.productos.size() <= 2 || itemValido(2)) &&
+          (request.resource.data.productos.size() <= 3 || itemValido(3)) &&
+          (request.resource.data.productos.size() <= 4 || itemValido(4)) &&
+          (request.resource.data.productos.size() <= 5 || itemValido(5)) &&
+          (request.resource.data.productos.size() <= 6 || itemValido(6)) &&
+          (request.resource.data.productos.size() <= 7 || itemValido(7)) &&
+          (request.resource.data.productos.size() <= 8 || itemValido(8)) &&
+          (request.resource.data.productos.size() <= 9 || itemValido(9));
+    }
+    function totalValido() {
+      return request.resource.data.subtotal is number
+        && request.resource.data.subtotal == (
+          valorItem(0) +
+          valorItem(1) +
+          valorItem(2) +
+          valorItem(3) +
+          valorItem(4) +
+          valorItem(5) +
+          valorItem(6) +
+          valorItem(7) +
+          valorItem(8) +
+          valorItem(9)
+        )
+        && request.resource.data.envio in [0, 8500]
+        && request.resource.data.total == request.resource.data.subtotal + request.resource.data.envio;
+    }
+    function textoValido(v, n) { return v is string && v.size() > 0 && v.size() <= n; }
+    function pedidoValido() {
+      return request.resource.data.keys().hasOnly([
+          'id', 'usuarioId', 'nombreCliente', 'cedula', 'correoCliente', 'telefonoCliente',
+          'productos', 'ciudad', 'direccion', 'barrio', 'observaciones',
+          'subtotal', 'envio', 'total', 'fecha', 'estado', 'stockDevuelto'
+        ])
+        && request.resource.data.keys().hasAll([
+          'id', 'usuarioId', 'nombreCliente', 'cedula', 'correoCliente', 'telefonoCliente',
+          'productos', 'ciudad', 'direccion', 'barrio', 'observaciones',
+          'subtotal', 'envio', 'total', 'fecha', 'estado', 'stockDevuelto'
+        ])
+        && request.resource.data.id is int && request.resource.data.id > 0
+        && request.resource.data.usuarioId == request.auth.uid
+        && request.resource.data.correoCliente == request.auth.token.email
+        && request.resource.data.estado == 'Pendiente'
+        && request.resource.data.stockDevuelto == false
+        && textoValido(request.resource.data.nombreCliente, 120)
+        && textoValido(request.resource.data.cedula, 30)
+        && textoValido(request.resource.data.telefonoCliente, 30)
+        && textoValido(request.resource.data.ciudad, 80)
+        && textoValido(request.resource.data.direccion, 180)
+        && textoValido(request.resource.data.barrio, 80)
+        && request.resource.data.observaciones is string
+        && request.resource.data.observaciones.size() <= 500
+        && request.resource.data.fecha is string
+        && request.resource.data.fecha.size() <= 35
+        && carritoValido() && totalValido();
+    }
+
+    // Los cambios de estado son progresivos. Un pedido cancelado o entregado no se reactiva.
+    // Un pedido anterior se regulariza con el MISMO estado y la marca de stock.
+    function cambioPedidoValido() {
+      let antes = resource.data.estado;
+      let despues = request.resource.data.estado;
+      let descontado = resource.data.get('inventarioDescontado', false);
+      let nuevoDescontado = request.resource.data.get('inventarioDescontado', false);
+      let devuelto = resource.data.get('stockDevuelto', false);
+      let nuevoDevuelto = request.resource.data.get('stockDevuelto', false);
+      return
+        (antes == 'Pendiente' && despues == 'Confirmado'
+          && descontado == false && nuevoDescontado == true && nuevoDevuelto == false)
+        || (antes == 'Pendiente' && despues == 'Cancelado'
+          && descontado == false && nuevoDescontado == false && nuevoDevuelto == false)
+        || (antes in ['Confirmado', 'En preparación', 'En camino']
+          && despues == 'Cancelado' && nuevoDescontado == false
+          && devuelto == false && nuevoDevuelto == descontado)
+        || (antes == 'Confirmado' && despues == 'En preparación'
+          && descontado == true && nuevoDescontado == true && nuevoDevuelto == devuelto)
+        || (antes == 'En preparación' && despues == 'En camino'
+          && descontado == true && nuevoDescontado == true && nuevoDevuelto == devuelto)
+        || (antes == 'En camino' && despues == 'Entregado'
+          && descontado == true && nuevoDescontado == true && nuevoDevuelto == devuelto)
+        || (antes in ['Confirmado', 'En preparación', 'En camino']
+          && antes == despues && descontado == false && nuevoDescontado == true
+          && devuelto == false && nuevoDevuelto == false);
+    }
+
+    match /usuarios/{uid} {
+      allow get: if own(uid) || admin();
+      allow list: if admin();
+      // Administrador creado en Firebase Console puede crear SU documento
+      // con rol admin solamente cuando su token firmado tiene admin:true.
+      allow create: if own(uid)
+        && request.resource.data.keys().hasOnly(['nombre','correo','telefono','rol','creadoEn'])
+        && request.resource.data.keys().hasAll(['nombre','correo','telefono','rol','creadoEn'])
+        && request.resource.data.rol == (admin() ? 'admin' : 'cliente')
+        && request.resource.data.correo == request.auth.token.email;
+      allow update: if own(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['nombre','telefono']);
+      allow delete: if false;
+    }
+
+    match /productos/{id} {
+      allow read: if true;
+      allow create, update, delete: if admin();
+    }
+
+    match /carritos/{uid} {
+      allow get: if own(uid);
+      allow list: if false;
+      allow create, update: if own(uid)
+        && request.resource.data.keys().hasOnly(['productos','actualizadoEn'])
+        && request.resource.data.productos is list
+        && request.resource.data.productos.size() <= 50;
+      allow delete: if own(uid);
+    }
+
+    match /pedidos/{id} {
+      allow get: if admin() || (loggedIn() && resource.data.usuarioId == request.auth.uid);
+      allow list: if admin() || (loggedIn() && resource.data.usuarioId == request.auth.uid);
+      allow create: if loggedIn() && pedidoValido();
+      // Solo el administrador actualiza el estado y las marcas de stock.
+      // La aplicación utiliza una transacción para aplicar los movimientos.
+      allow update: if admin()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['estado', 'inventarioDescontado', 'stockDevuelto'])
+        && request.resource.data.get('inventarioDescontado', false) is bool
+        && request.resource.data.get('stockDevuelto', false) is bool
+        && cambioPedidoValido();
+      allow delete: if false;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

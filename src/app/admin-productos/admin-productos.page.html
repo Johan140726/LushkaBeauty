@@ -198,8 +198,13 @@
       </h2>
 
       <p>
-        Crea el primer producto para comenzar.
+        Crea el primer producto o carga los 15 productos originales de demostración.
       </p>
+      <ion-button type="button" (click)="importarCatalogoInicial()"
+        [disabled]="importandoCatalogo" color="primary">
+        {{ importandoCatalogo ? 'Cargando catálogo...' : 'Cargar catálogo inicial (15 productos)' }}
+      </ion-button>
+      <p>Los productos de ejemplo empiezan con stock 0: edítalos para recibir pedidos.</p>
 
     </section>
 

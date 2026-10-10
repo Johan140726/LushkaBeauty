@@ -1,0 +1,34 @@
+LUSHKA BEAUTY - CORRECCION DE LOGIN Y REGISTRO DE CLIENTES
+
+PROBLEMA
+Una cuenta puede aparecer creada en Firebase Authentication mientras Firestore
+rechaza la creación de /usuarios/{uid}. Esto ocurría cuando el formulario de
+registro y el observador onAuthStateChanged intentaban escribir el mismo perfil
+simultáneamente. La segunda escritura se interpretaba como actualización y
+podía ser rechazada por las reglas (creadoEn no puede modificarse).
+
+CORRECCION
+En src/app/services/auth.ts:
+- El observador no crea perfiles mientras se registra un usuario.
+- Las lecturas y creaciones concurrentes del mismo perfil se comparten.
+- Se conserva el permiso admin solo por custom claims firmados.
+- Los usuarios creados directamente en Authentication pueden completar su perfil al iniciar sesión.
+
+COMO ACTUALIZAR EL PROYECTO
+1. Detener ionic serve (Ctrl+C).
+2. Copiar el contenido actualizado a la carpeta de tu proyecto Ionic. Si solo
+   quieres un cambio mínimo, sustituye src/app/services/auth.ts.
+3. Ejecutar `npx ionic serve`.
+4. En una ventana de incógnito, iniciar sesión con la cuenta la cuenta cliente registrada en Firebase Authentication
+   que YA creaste. No la registres por segunda vez.
+5. Ir a Firebase Console > Firestore > Datos > usuarios y comprobar que existe
+   un documento cuyo ID es el UID exacto que muestra Authentication.
+
+SI APARECE AUN "PERMISSION_DENIED"
+- Verificar en Firestore > Reglas que la versión publicada coincide con
+  firestore.rules incluido en este ZIP.
+- Confirmar que el UID exacto del usuario está en un documento usuarios/UID.
+- Revisar la consola del navegador F12 > Console para el mensaje de Firebase.
+- NO usar allow read, write: if true; ni asignar admin al cliente.
+
+NO es necesario cambiar Storage, Cloudinary, el Worker ni la cuenta admin.

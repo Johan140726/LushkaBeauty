@@ -1,0 +1,13 @@
+LUSHKA BEAUTY — PROYECTO ACTUALIZADO
+
+1) Abre README.md de esta carpeta: contiene TODOS los pasos.
+2) MUY IMPORTANTE: publica en Firebase el contenido de REGLAS_FIRESTORE_PARA_PEGAR.txt.
+3) Abre la carpeta en VS Code, ejecuta npm install y después ionic serve.
+4) Inicia sesión con tu usuario administrador ya creado (admin:true).
+5) En /admin-productos, si está vacío, pulsa "Cargar catálogo inicial".
+6) Edita el stock de los productos importados (originalmente stock 0).
+7) Sube fotos desde el formulario: se enviarán a tu Cloudflare Worker + Cloudinary.
+8) Los pedidos son SOLICITUDES, no cobros; el inventario se actualiza manualmente.
+
+Sin Firebase Storage ni Cloud Functions de pago para estas funciones.
+No se incluyen secretos ni contraseñas.

@@ -1,0 +1,82 @@
+<ion-header class="admin-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin" text="" icon="chevron-back-outline" aria-label="Volver al administrador"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>USUARIOS</ion-title>
+
+    <div class="header-logo">
+      <img src="assets/logo/logo_lushka.png" alt="Lushka Beauty" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <main class="users-container">
+    <section class="page-heading">
+      <p class="eyebrow">ADMINISTRACIÓN</p>
+      <h1>Usuarios registrados</h1>
+      <p class="subtitle">Consulta los perfiles asociados a Lushka Beauty.</p>
+    </section>
+
+    <section class="summary-row" aria-label="Resumen de usuarios">
+      <div class="summary-card">
+        <div class="summary-icon"><ion-icon name="people-outline" aria-hidden="true"></ion-icon></div>
+        <div>
+          <span>Total registrados</span>
+          <strong>{{ usuarios.length }}</strong>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-icon"><ion-icon name="shield-checkmark-outline" aria-hidden="true"></ion-icon></div>
+        <div>
+          <span>Administradores</span>
+          <strong>{{ totalAdministradores }}</strong>
+        </div>
+      </div>
+    </section>
+
+    <div class="search-panel">
+      <ion-searchbar
+        [(ngModel)]="filtro"
+        [debounce]="150"
+        placeholder="Buscar por nombre, correo o rol"
+        aria-label="Buscar usuarios"
+        showClearButton="focus">
+      </ion-searchbar>
+      <span class="results" *ngIf="!buscando">{{ filtrados.length }} resultados</span>
+    </div>
+
+    <div class="loading" *ngIf="buscando" role="status" aria-live="polite">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Cargando usuarios...</span>
+    </div>
+
+    <section class="users-list" *ngIf="!buscando" aria-label="Listado de usuarios">
+      <article class="user-card" *ngFor="let usuario of filtrados; trackBy: trackByUsuario">
+        <div class="user-avatar"><ion-icon name="person-outline" aria-hidden="true"></ion-icon></div>
+        <div class="user-info">
+          <strong>{{ usuario.nombre || 'Usuario sin nombre' }}</strong>
+          <span class="email">{{ usuario.correo }}</span>
+          <small>{{ usuario.telefono || 'Sin teléfono registrado' }}</small>
+        </div>
+        <span class="role-pill" [class.role-admin]="usuario.rol === 'admin'">
+          {{ usuario.rol === 'admin' ? 'Administrador' : 'Cliente' }}
+        </span>
+      </article>
+
+      <div *ngIf="filtrados.length === 0" class="empty-state">
+        <ion-icon name="people-outline" aria-hidden="true"></ion-icon>
+        <h2>Sin resultados</h2>
+        <p>{{ filtro ? 'No hay usuarios que coincidan con la búsqueda.' : 'Aún no hay usuarios registrados.' }}</p>
+      </div>
+    </section>
+
+    <p class="privacy-note">
+      <ion-icon name="shield-checkmark-outline" aria-hidden="true"></ion-icon>
+      Se muestran únicamente datos del perfil de Firestore, nunca contraseñas.
+      Los permisos de administrador se asignan desde un entorno seguro y no pueden cambiarse aquí.
+    </p>
+  </main>
+</ion-content>

@@ -22,8 +22,9 @@ export class HomePage {
     private productosService: ProductosService
   ) {}
 
-  ionViewWillEnter() {
-    this.usuarioActual = this.authService.obtenerUsuarioActual();
+  async ionViewWillEnter() {
+    this.usuarioActual = await this.authService.esperarSesion();
+    try { await this.productosService.cargarProductos(); } catch (error) { console.error('Error cargando productos', error); }
     
     this.productosDestacados = [
       this.productosService.obtenerProductoPorId(1),
@@ -47,8 +48,8 @@ export class HomePage {
     this.router.navigate(['/login']);
   }
 
-  cerrarSesion() {
-    this.authService.cerrarSesion();
+  async cerrarSesion() {
+    await this.authService.cerrarSesion();
     this.usuarioActual = null;
   }
 

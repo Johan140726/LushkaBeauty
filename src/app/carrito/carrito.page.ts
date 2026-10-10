@@ -28,9 +28,15 @@ export class CarritoPage {
     private toastController: ToastController
   ) {}
 
-  ionViewWillEnter() {
-    this.productos =
-      this.carritoService.obtenerCarrito();
+  async ionViewWillEnter() {
+    try {
+      await this.productosService.cargarProductos();
+      this.productos = await this.carritoService.cargarCarrito();
+    } catch (error) {
+      this.productos = [];
+      await this.mostrarMensaje((error as Error).message);
+      this.router.navigate(['/login']);
+    }
   }
 
   async aumentar(id: number) {
@@ -69,23 +75,23 @@ export class CarritoPage {
       return;
     }
 
-    this.carritoService.aumentarCantidad(id);
+    await this.carritoService.aumentarCantidad(id);
 
     this.productos =
       this.carritoService.obtenerCarrito();
   }
 
-  disminuir(id: number) {
+  async disminuir(id: number) {
 
-    this.carritoService.disminuirCantidad(id);
+    await this.carritoService.disminuirCantidad(id);
 
     this.productos =
       this.carritoService.obtenerCarrito();
   }
 
-  eliminar(id: number) {
+  async eliminar(id: number) {
 
-    this.carritoService.eliminarProducto(id);
+    await this.carritoService.eliminarProducto(id);
 
     this.productos =
       this.carritoService.obtenerCarrito();

@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'lushka-beauty',
+  appId: 'com.lushkabeauty.app',
+  appName: 'Lushka Beauty',
   webDir: 'www'
 };
 

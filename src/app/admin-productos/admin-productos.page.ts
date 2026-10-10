@@ -21,6 +21,7 @@ export class AdminProductosPage {
 
   usuarioActual: Usuario | null = null;
   productos: Producto[] = [];
+  importandoCatalogo = false;
 
   constructor(
     private authService: AuthService,
@@ -30,10 +31,10 @@ export class AdminProductosPage {
     private toastController: ToastController
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     this.usuarioActual =
-      this.authService.obtenerUsuarioActual();
+      await this.authService.esperarSesion();
 
     if (
       !this.usuarioActual ||
@@ -43,12 +44,26 @@ export class AdminProductosPage {
       return;
     }
 
-    this.cargarProductos();
+    await this.cargarProductos();
   }
 
-  cargarProductos() {
-    this.productos =
-      this.productosService.obtenerProductos();
+  async cargarProductos() {
+    try { this.productos = await this.productosService.cargarProductos(); }
+    catch (error) { await this.mostrarMensaje((error as Error).message); }
+  }
+
+  async importarCatalogoInicial() {
+    if (this.importandoCatalogo || this.productos.length) return;
+    this.importandoCatalogo = true;
+    try {
+      const cantidad = await this.productosService.cargarCatalogoInicial();
+      await this.cargarProductos();
+      await this.mostrarMensaje(`${cantidad} productos de ejemplo cargados. Edita el stock para comenzar a recibir pedidos.`, 'success');
+    } catch (error) {
+      await this.mostrarMensaje((error as Error).message);
+    } finally {
+      this.importandoCatalogo = false;
+    }
   }
 
   volverPanel() {
@@ -96,7 +111,7 @@ export class AdminProductosPage {
   ) {
 
     const eliminado =
-      this.productosService.eliminarProducto(
+      await this.productosService.eliminarProducto(
         producto.id
       );
 
@@ -109,7 +124,7 @@ export class AdminProductosPage {
       return;
     }
 
-    this.cargarProductos();
+    await this.cargarProductos();
 
     await this.mostrarMensaje(
       'Producto eliminado correctamente.',

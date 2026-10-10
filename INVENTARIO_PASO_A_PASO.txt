@@ -1,0 +1,10 @@
+INVENTARIO AUTOMÁTICO — LUSHKA BEAUTY
+
+1. PUBLICAR reglas: copiar REGLAS_FIRESTORE_PARA_PEGAR.txt completo en Firebase Console > Firestore Database > Reglas > Publicar.
+2. Respaldar tu carpeta LushkaBeauty_Firebase actual y extraer este ZIP.
+3. Abrir la carpeta con package.json en VS Code. npm install (si hace falta); npx ionic serve.
+4. En /admin-pedidos, el pedido anterior Confirmado muestra "Aplicar descuento de inventario". Pulsa solo si nunca descontaste esas unidades manualmente.
+5. Un pedido NUEVO: Pendiente -> Confirmado resta stock; Cancelado posterior lo devuelve una vez.
+6. No se puede confirmar si no hay stock. No reactivar pedidos cancelados.
+7. Si ves "Missing or insufficient permissions", verifica que PUBLICASTE las reglas actualizadas.
+NOTA: No se requiere Firebase Blaze.

@@ -34,7 +34,7 @@ export class LoginPage {
       return;
     }
 
-    const resultado = this.authService.iniciarSesion(
+    const resultado = await this.authService.iniciarSesion(
       this.correo,
       this.password
     );

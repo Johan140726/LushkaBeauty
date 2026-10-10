@@ -26,8 +26,11 @@ export class CatalogoPage {
   constructor(
     private router: Router,
     private productosService: ProductosService
-  ) {
-    this.productos = this.productosService.obtenerProductos();
+  ) {}
+
+  async ionViewWillEnter() {
+    try { this.productos = await this.productosService.cargarProductos(); }
+    catch (error) { console.error("Error cargando catálogo", error); }
   }
 
   seleccionarCategoria(categoria: string) {

@@ -27,14 +27,14 @@ export class ProductoPage {
     private productosService: ProductosService
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     const id = Number(
       this.route.snapshot.paramMap.get('id')
     );
 
     this.productoSeleccionado =
-      this.productosService.obtenerProductoPorId(id);
+      await this.productosService.cargarProducto(id);
 
     this.cantidad = 1;
   }
@@ -100,10 +100,12 @@ export class ProductoPage {
       return;
     }
 
-    this.carritoService.agregarProducto(
-      this.productoSeleccionado,
-      this.cantidad
-    );
+    try {
+      await this.carritoService.agregarProducto(this.productoSeleccionado, this.cantidad);
+    } catch (error) {
+      await this.mostrarMensaje((error as Error).message);
+      return;
+    }
 
     await this.mostrarMensaje(
       `${this.productoSeleccionado.nombre} agregado al carrito`,

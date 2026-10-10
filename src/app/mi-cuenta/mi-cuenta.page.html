@@ -33,7 +33,7 @@
       <p>{{ usuarioActual.correo }}</p>
 
       <span class="role-badge">
-        Cliente
+        {{ usuarioActual.rol === 'admin' ? 'Administrador' : 'Cliente' }}
       </span>
 
     </section>

@@ -34,7 +34,22 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* Lushka se presenta con su identidad clara en todos los dispositivos.
+   No importar dark.system.css: oscurecía la pantalla de usuarios. */
+:root {
+  color-scheme: light;
+  --ion-background-color: #faf7f5;
+  --ion-text-color: #382d2a;
+  --ion-color-primary: #8e183a;
+  --ion-color-primary-rgb: 142, 24, 58;
+  --ion-color-primary-contrast: #fff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #7d1533;
+  --ion-color-primary-tint: #992f4e;
+  --ion-toolbar-background: #faf7f5;
+  --ion-item-background: #ffffff;
+  --ion-card-background: #ffffff;
+}
 
 /* =====================================================
    TOASTS - LUSHKA BEAUTY

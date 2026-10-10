@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { AdminGuard, SesionGuard } from './guards/admin.guard';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -47,6 +48,7 @@ const routes: Routes = [
 
   {
     path: 'mi-cuenta',
+    canActivate: [SesionGuard],
     loadChildren: () =>
       import('./mi-cuenta/mi-cuenta.module')
         .then(m => m.MiCuentaPageModule)
@@ -54,6 +56,7 @@ const routes: Routes = [
 
   {
     path: 'checkout',
+    canActivate: [SesionGuard],
     loadChildren: () =>
       import('./checkout/checkout.module')
         .then(m => m.CheckoutPageModule)
@@ -61,6 +64,7 @@ const routes: Routes = [
 
   {
     path: 'mis-pedidos',
+    canActivate: [SesionGuard],
     loadChildren: () =>
       import('./mis-pedidos/mis-pedidos.module')
         .then(m => m.MisPedidosPageModule)
@@ -68,6 +72,7 @@ const routes: Routes = [
 
   {
     path: 'admin',
+    canActivate: [AdminGuard],
     loadChildren: () =>
       import('./admin/admin.module')
         .then(m => m.AdminPageModule)
@@ -75,6 +80,7 @@ const routes: Routes = [
 
   {
     path: 'admin-pedidos',
+    canActivate: [AdminGuard],
     loadChildren: () =>
       import('./admin-pedidos/admin-pedidos.module')
         .then(m => m.AdminPedidosPageModule)
@@ -82,6 +88,7 @@ const routes: Routes = [
 
   {
     path: 'admin-productos',
+    canActivate: [AdminGuard],
     loadChildren: () =>
       import('./admin-productos/admin-productos.module')
         .then(m => m.AdminProductosPageModule)
@@ -89,6 +96,7 @@ const routes: Routes = [
 
   {
     path: 'admin-producto/nuevo',
+    canActivate: [AdminGuard],
     loadChildren: () =>
       import('./admin-producto-form/admin-producto-form.module')
         .then(m => m.AdminProductoFormPageModule)
@@ -96,9 +104,16 @@ const routes: Routes = [
 
   {
     path: 'admin-producto/editar/:id',
+    canActivate: [AdminGuard],
     loadChildren: () =>
       import('./admin-producto-form/admin-producto-form.module')
         .then(m => m.AdminProductoFormPageModule)
+  },
+
+  {
+    path: 'admin-usuarios',
+    canActivate: [AdminGuard],
+    loadChildren: () => import('./admin-usuarios/admin-usuarios.module').then(m => m.AdminUsuariosPageModule)
   },
 
   {

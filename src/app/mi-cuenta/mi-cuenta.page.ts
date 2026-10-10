@@ -17,16 +17,16 @@ export class MiCuentaPage {
     private router: Router
   ) {}
 
-  ionViewWillEnter() {
-    this.usuarioActual = this.authService.obtenerUsuarioActual();
+  async ionViewWillEnter() {
+    this.usuarioActual = await this.authService.esperarSesion();
 
     if (!this.usuarioActual) {
       this.router.navigate(['/login']);
     }
   }
 
-  cerrarSesion() {
-    this.authService.cerrarSesion();
+  async cerrarSesion() {
+    await this.authService.cerrarSesion();
     this.router.navigate(['/home']);
   }
 

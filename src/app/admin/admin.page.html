@@ -157,6 +157,10 @@
 
       <article
         class="option-card"
+        role="link"
+        tabindex="0"
+        (keydown.enter)="irA('/admin-pedidos')"
+        (keydown.space)="irA('/admin-pedidos'); $event.preventDefault()"
         routerLink="/admin-pedidos">
 
         <div class="option-icon">
@@ -189,6 +193,10 @@
 
       <article
         class="option-card"
+        role="link"
+        tabindex="0"
+        (keydown.enter)="irA('/admin-productos')"
+        (keydown.space)="irA('/admin-productos'); $event.preventDefault()"
         routerLink="/admin-productos">
 
         <div class="option-icon">
@@ -218,6 +226,11 @@
 
       </article>
 
+      <article class="option-card" role="link" tabindex="0" (keydown.enter)="irA('/admin-usuarios')" (keydown.space)="irA('/admin-usuarios'); $event.preventDefault()" routerLink="/admin-usuarios">
+        <div class="option-icon"><ion-icon name="people-outline"></ion-icon></div>
+        <div class="option-info"><strong>Usuarios registrados</strong><span>Consulta las cuentas almacenadas en Firebase.</span></div>
+        <ion-icon class="arrow" name="chevron-forward-outline"></ion-icon>
+      </article>
     </section>
 
   </div>

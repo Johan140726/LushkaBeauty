@@ -128,7 +128,7 @@
       <div class="form-group">
 
         <label>
-          Ruta de imagen
+          Imagen del producto
         </label>
 
         <ion-input
@@ -137,11 +137,18 @@
         </ion-input>
 
         <small>
-          Por ahora usamos imágenes guardadas en assets.
+          Puedes pegar una URL o subir una imagen JPG, PNG o WEBP (máx. 5 MB).
         </small>
 
       </div>
 
+
+      <div class="form-group">
+        <label for="imagenNueva">Subir imagen a Cloudinary (gratis)</label>
+        <input id="imagenNueva" type="file" accept="image/jpeg,image/png,image/webp"
+          (change)="seleccionarImagen($event)" [disabled]="subiendoImagen || guardando" />
+        <small *ngIf="subiendoImagen">Subiendo imagen, no cierres esta vista...</small>
+      </div>
 
       <div
         class="image-preview"
@@ -187,7 +194,7 @@
         <button
           type="button"
           class="save-button"
-          (click)="guardarProducto()">
+          (click)="guardarProducto()" [disabled]="guardando || subiendoImagen">
 
           <ion-icon
             name="save-outline">

@@ -59,7 +59,7 @@ export class RegistroPage {
       return;
     }
 
-    const resultado = this.authService.registrarUsuario(
+    const resultado = await this.authService.registrarUsuario(
       this.nombre,
       this.correo,
       this.telefono,
@@ -72,7 +72,7 @@ export class RegistroPage {
     );
 
     if (resultado.ok) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     }
   }
 

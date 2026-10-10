@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 
 import { AuthService, Usuario } from '../services/auth';
+import { permiteRegularizar } from '../services/inventario';
 import {
   Pedido,
   PedidosService,
   EstadoPedido
 } from '../services/pedidos';
 
-import { ProductosService } from '../services/productos';
 
 @Component({
   selector: 'app-admin-pedidos',
@@ -22,6 +22,7 @@ export class AdminPedidosPage {
   usuarioActual: Usuario | null = null;
 
   pedidos: Pedido[] = [];
+  guardandoPedidoId: number | null = null;
 
   estados: EstadoPedido[] = [
     'Pendiente',
@@ -37,13 +38,13 @@ export class AdminPedidosPage {
     private pedidosService: PedidosService,
     private router: Router,
     private toastController: ToastController,
-    private productosService: ProductosService
+    private alertController: AlertController
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     this.usuarioActual =
-      this.authService.obtenerUsuarioActual();
+      await this.authService.esperarSesion();
 
     if (
       !this.usuarioActual ||
@@ -53,111 +54,81 @@ export class AdminPedidosPage {
       return;
     }
 
-    this.cargarPedidos();
+    await this.cargarPedidos();
   }
 
-  cargarPedidos() {
-
-    this.pedidos =
-      this.pedidosService.obtenerPedidos()
-        .sort((a, b) => b.id - a.id);
-
+  async cargarPedidos() {
+    try { this.pedidos = await this.pedidosService.obtenerPedidos(); }
+    catch (error) { await this.mostrarMensaje((error as Error).message); }
   }
 
-  async cambiarEstado(
-    pedido: Pedido,
-    nuevoEstado: EstadoPedido
-  ) {
+  estadosDisponibles(pedido: Pedido): EstadoPedido[] {
+    return this.pedidosService.estadosPermitidos(pedido);
+  }
 
-    /*
-    * Si el pedido se está cancelando
-    * y todavía no hemos devuelto el stock,
-    * devolvemos las unidades al inventario.
-    */
-    if (
-      nuevoEstado === 'Cancelado' &&
-      !pedido.stockDevuelto
-    ) {
+  requiereRegularizacion(pedido: Pedido): boolean {
+    return permiteRegularizar(pedido.estado, pedido.inventarioDescontado === true, pedido.stockDevuelto === true);
+  }
 
-      for (const productoPedido of pedido.productos) {
+  async cambiarEstado(pedido: Pedido, nuevoEstado: EstadoPedido) {
+    if (pedido.estado === nuevoEstado || this.guardandoPedidoId !== null) return;
 
-        const productoActual =
-          this.productosService
-            .obtenerProductoPorId(
-              productoPedido.id
-            );
+    const advertencia = pedido.estado === 'Pendiente' && nuevoEstado === 'Confirmado'
+      ? 'Se descontarán automáticamente las unidades del inventario. Si no hay stock suficiente, la operación se rechazará.'
+      : nuevoEstado === 'Cancelado'
+        ? (pedido.inventarioDescontado === true
+            ? 'Se cancelará el pedido y se devolverán sus unidades al inventario.'
+            : 'Se cancelará el pedido. No se devolverá stock porque no consta un descuento anterior.')
+        : `Se cambiará el estado a ${nuevoEstado}.`;
 
-        if (!productoActual) {
-
-          await this.mostrarMensaje(
-            `No se encontró ${productoPedido.nombre} en el inventario.`
-          );
-
-          return;
-        }
-
-      }
-
-
-      /*
-      * Como comprobamos primero que todos
-      * los productos existen, ahora sí
-      * podemos devolver el stock.
-      */
-      for (const productoPedido of pedido.productos) {
-
-        this.productosService.reponerStock(
-          productoPedido.id,
-          productoPedido.cantidad
-        );
-
-      }
-
-
-      this.pedidosService.marcarStockDevuelto(
-        pedido.id
-      );
-
-      pedido.stockDevuelto = true;
-
+    const confirmar = await this.confirmarAccion('Actualizar pedido', advertencia);
+    if (!confirmar) { await this.cargarPedidos(); return; }
+    this.guardandoPedidoId = pedido.id;
+    try {
+      await this.pedidosService.actualizarEstado(pedido.id, nuevoEstado);
+      await this.cargarPedidos();
+      await this.mostrarMensaje('Estado e inventario actualizados.', 'success');
+    } catch (error) {
+      await this.mostrarMensaje((error as Error).message);
+      await this.cargarPedidos();
+    } finally {
+      this.guardandoPedidoId = null;
     }
+  }
 
-
-    const actualizado =
-      this.pedidosService.actualizarEstado(
-        pedido.id,
-        nuevoEstado
-      );
-
-
-    if (!actualizado) {
-
-      await this.mostrarMensaje(
-        'No fue posible actualizar el pedido.'
-      );
-
-      return;
-    }
-
-
-    pedido.estado = nuevoEstado;
-
-
-    if (nuevoEstado === 'Cancelado') {
-
-      await this.mostrarMensaje(
-        'Pedido cancelado y stock devuelto al inventario.',
-        'success'
-      );
-
-      return;
-    }
-
-
-    await this.mostrarMensaje(
-      'Estado actualizado correctamente.',
-      'success'
+  async regularizarPedido(pedido: Pedido) {
+    if (this.guardandoPedidoId !== null || !this.requiereRegularizacion(pedido)) return;
+    const confirmar = await this.confirmarAccion(
+      'Descontar inventario pendiente',
+      `El pedido #${pedido.id} se confirmó antes de instalar esta función. ` +
+      'Se restarán sus unidades del stock actual una sola vez. ¿Continuar?'
     );
+    if (!confirmar) return;
+    this.guardandoPedidoId = pedido.id;
+    try {
+      await this.pedidosService.regularizarInventario(pedido.id);
+      await this.cargarPedidos();
+      await this.mostrarMensaje('Inventario regularizado correctamente.', 'success');
+    } catch (error) {
+      await this.mostrarMensaje((error as Error).message);
+      await this.cargarPedidos();
+    } finally {
+      this.guardandoPedidoId = null;
+    }
+  }
+
+  private async confirmarAccion(titulo: string, mensaje: string): Promise<boolean> {
+    const alerta = await this.alertController.create({
+      header: titulo,
+      message: mensaje,
+      buttons: [
+        { text: 'Volver', role: 'cancel' },
+        { text: 'Continuar', role: 'confirm' }
+      ]
+    });
+    await alerta.present();
+    const { role } = await alerta.onDidDismiss();
+    return role === 'confirm';
   }
 
   volverPanel() {

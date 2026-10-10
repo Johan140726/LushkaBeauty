@@ -1,0 +1,12 @@
+LUSHKA BEAUTY — VERSION FINAL DISEÑO + DOCUMENTACION
+
+1) Extraer el ZIP y abrir LushkaBeauty_Firebase (donde esta package.json).
+2) Ejecutar npm install (si esta carpeta aun no tiene node_modules).
+3) Ejecutar npx ionic serve.
+4) Iniciar sesion con las cuentas de Firebase ya existentes.
+5) No debes volver a crear productos, usuarios, pedidos ni cambiar reglas: el proyecto mantiene la MISMA configuracion y la base de datos EXISTENTE.
+6) Abrir /admin-usuarios para comprobar el nuevo estilo y /admin para los iconos.
+7) README.md contiene instalacion, arquitectura, colecciones, CRUD, pruebas y evidencias.
+
+NO CAMBIAR CONFIGURACION EN CLOUDINARY, CLOUDFLARE NI FIREBASE SI SIGUE FUNCIONANDO.
+La contrasena y el API Secret NO van dentro del ZIP.

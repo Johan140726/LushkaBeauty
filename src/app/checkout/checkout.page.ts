@@ -46,10 +46,10 @@ export class CheckoutPage {
   ) {}
 
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     this.usuarioActual =
-      this.authService.obtenerUsuarioActual();
+      await this.authService.esperarSesion();
 
     // Si no hay sesión iniciada
     if (!this.usuarioActual) {
@@ -69,9 +69,12 @@ export class CheckoutPage {
     this.telefonoCliente =
       this.usuarioActual.telefono;
 
+    try { await this.productosService.cargarProductos(); }
+    catch (error) { await this.mostrarMensaje((error as Error).message); return; }
+
     // Obtenemos los productos actuales del carrito
-    this.productos =
-      this.carritoService.obtenerCarrito();
+    try { this.productos = await this.carritoService.cargarCarrito(); }
+    catch (error) { await this.mostrarMensaje((error as Error).message); this.router.navigate(['/login']); return; }
 
     // Si el carrito está vacío
     if (this.productos.length === 0) {
@@ -237,7 +240,8 @@ export class CheckoutPage {
     this.calcularTotales();
 
 
-    this.pedidosService.crearPedido({
+    try {
+    await this.pedidosService.crearPedido({
 
       usuarioId:
         this.usuarioActual.id,
@@ -281,26 +285,12 @@ export class CheckoutPage {
         this.total
 
     });
-
-    for (const producto of this.productos) {
-
-      this.productosService.descontarStock(
-        producto.id,
-        producto.cantidad
-      );
-
-    }
-
-    // Limpiamos el carrito después de guardar
-    // correctamente el pedido.
-    this.carritoService.vaciarCarrito();
-
-    await this.mostrarMensaje(
-      'Pedido realizado correctamente.',
-      'success'
-    );
-    
-    this.procesandoPedido = false;
+      await this.carritoService.vaciarCarrito();
+      await this.mostrarMensaje('Solicitud enviada. El administrador confirmará precio, disponibilidad y entrega.', 'success');
+    } catch (error) {
+      await this.mostrarMensaje((error as Error).message);
+      return;
+    } finally { this.procesandoPedido = false; }
 
     this.router.navigate([
       '/mis-pedidos'

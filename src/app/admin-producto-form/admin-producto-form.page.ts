@@ -24,6 +24,8 @@ export class AdminProductoFormPage {
   stock: number | null = null;
   imagen = '';
   descripcion = '';
+  subiendoImagen = false;
+  guardando = false;
 
   categorias: string[] = [
     'Capilar',
@@ -41,10 +43,10 @@ export class AdminProductoFormPage {
     private toastController: ToastController
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     this.usuarioActual =
-      this.authService.obtenerUsuarioActual();
+      await this.authService.esperarSesion();
 
     if (
       !this.usuarioActual ||
@@ -54,10 +56,10 @@ export class AdminProductoFormPage {
       return;
     }
 
-    this.cargarModoFormulario();
+    await this.cargarModoFormulario();
   }
 
-  cargarModoFormulario() {
+  async cargarModoFormulario() {
 
     const id =
       this.route.snapshot.paramMap.get('id');
@@ -72,7 +74,7 @@ export class AdminProductoFormPage {
     this.productoId = Number(id);
 
     const producto =
-      this.productosService.obtenerProductoPorId(
+      await this.productosService.cargarProducto(
         this.productoId
       );
 
@@ -90,6 +92,7 @@ export class AdminProductoFormPage {
   }
 
   async guardarProducto() {
+    if (this.guardando || this.subiendoImagen) return;
 
     if (!this.nombre.trim()) {
       await this.mostrarMensaje(
@@ -139,6 +142,8 @@ export class AdminProductoFormPage {
       return;
     }
 
+    this.guardando = true;
+    try {
     if (
       this.modoEdicion &&
       this.productoId !== null
@@ -155,7 +160,7 @@ export class AdminProductoFormPage {
       };
 
       const actualizado =
-        this.productosService.actualizarProducto(
+        await this.productosService.actualizarProducto(
           productoActualizado
         );
 
@@ -173,7 +178,7 @@ export class AdminProductoFormPage {
 
     } else {
 
-      this.productosService.crearProducto({
+      await this.productosService.crearProducto({
         nombre: this.nombre.trim(),
         categoria: this.categoria,
         precio: Number(this.precio),
@@ -188,15 +193,25 @@ export class AdminProductoFormPage {
       );
     }
 
-    this.router.navigate([
-      '/admin-productos'
-    ]);
+    this.router.navigate(['/admin-productos']);
+    } catch (error) {
+      await this.mostrarMensaje((error as Error).message);
+    } finally { this.guardando = false; }
+  }
+
+  async seleccionarImagen(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    this.subiendoImagen = true;
+    try {
+      this.imagen = await this.productosService.subirImagen(file);
+      await this.mostrarMensaje('Imagen subida correctamente a Cloudinary.', 'success');
+    } catch (error) { await this.mostrarMensaje((error as Error).message); }
+    finally { this.subiendoImagen = false; }
   }
 
   cancelar() {
-    this.router.navigate([
-      '/admin-productos'
-    ]);
+    this.router.navigate(['/admin-productos']);
   }
 
   private limpiarFormulario() {

@@ -1,151 +1,58 @@
 import { Injectable } from '@angular/core';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import { auth, db } from './firebase';
 
 export interface ProductoCarrito {
-  id: number;
-  nombre: string;
-  precio: number;
-  imagen: string;
-  categoria: string;
-  cantidad: number;
+  id: number; nombre: string; precio: number; imagen: string; categoria: string; cantidad: number;
 }
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CarritoService {
-
   private carrito: ProductoCarrito[] = [];
+  private uid: string | null = null;
 
-  constructor() {
-    this.cargarCarrito();
+  obtenerCarrito(): ProductoCarrito[] { return [...this.carrito]; }
+  private validarUsuario(): string {
+    const uid = auth.currentUser?.uid;
+    if (!uid) { throw new Error('Inicia sesión para usar el carrito.'); }
+    return uid;
   }
-
-  obtenerCarrito(): ProductoCarrito[] {
-    return this.carrito;
+  async cargarCarrito(): Promise<ProductoCarrito[]> {
+    const uid = this.validarUsuario();
+    if (uid !== this.uid) { this.carrito = []; this.uid = uid; }
+    const snap = await getDoc(doc(db, 'carritos', uid));
+    this.carrito = (snap.data()?.['productos'] || []) as ProductoCarrito[];
+    return this.obtenerCarrito();
   }
-
-  agregarProducto(producto: any, cantidad: number) {
-
-    const productoExistente = this.carrito.find(
-      item => item.id === producto.id
-    );
-
-    if (productoExistente) {
-
-    productoExistente.nombre = producto.nombre;
-    productoExistente.precio = producto.precio;
-    productoExistente.imagen = producto.imagen;
-    productoExistente.categoria = producto.categoria;
-    productoExistente.cantidad = cantidad;
-
-  } else {
-
-      this.carrito.push({
-        id: producto.id,
-        nombre: producto.nombre,
-        precio: producto.precio,
-        imagen: producto.imagen,
-        categoria: producto.categoria,
-        cantidad: cantidad
-      });
-
+  private async guardar(): Promise<void> {
+    const uid = this.validarUsuario();
+    await setDoc(doc(db, 'carritos', uid), { productos: this.carrito, actualizadoEn: new Date().toISOString() });
+  }
+  async agregarProducto(producto: Omit<ProductoCarrito, 'cantidad'>, cantidad: number): Promise<void> {
+    await this.cargarCarrito();
+    const item = this.carrito.find(p => p.id === producto.id);
+    if (item) { item.cantidad = cantidad; }
+    else { this.carrito.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio,
+      imagen: producto.imagen, categoria: producto.categoria, cantidad }); }
+    await this.guardar();
+  }
+  async aumentarCantidad(id: number): Promise<void> {
+    const item = this.carrito.find(p => p.id === id);
+    if (item) { item.cantidad++; await this.guardar(); }
+  }
+  async disminuirCantidad(id: number): Promise<void> {
+    const item = this.carrito.find(p => p.id === id);
+    if (item) {
+      if (item.cantidad > 1) { item.cantidad--; } else { this.carrito = this.carrito.filter(p => p.id !== id); }
+      await this.guardar();
     }
-
-    this.guardarCarrito();
   }
-
-  aumentarCantidad(id: number) {
-
-    const producto = this.carrito.find(
-      item => item.id === id
-    );
-
-    if (producto) {
-      producto.cantidad++;
-      this.guardarCarrito();
-    }
-
+  async eliminarProducto(id: number): Promise<void> {
+    this.carrito = this.carrito.filter(p => p.id !== id); await this.guardar();
   }
-
-  disminuirCantidad(id: number) {
-
-    const producto = this.carrito.find(
-      item => item.id === id
-    );
-
-    if (!producto) {
-      return;
-    }
-
-    if (producto.cantidad > 1) {
-
-      producto.cantidad--;
-
-    } else {
-
-      this.eliminarProducto(id);
-
-    }
-
-    this.guardarCarrito();
+  async vaciarCarrito(): Promise<void> {
+    const uid = this.validarUsuario(); this.carrito = [];
+    await deleteDoc(doc(db, 'carritos', uid));
   }
-
-  eliminarProducto(id: number) {
-
-    this.carrito = this.carrito.filter(
-      item => item.id !== id
-    );
-
-    this.guardarCarrito();
-  }
-
-  vaciarCarrito() {
-
-    this.carrito = [];
-    this.guardarCarrito();
-
-  }
-
-  obtenerCantidadTotal(): number {
-
-    return this.carrito.reduce(
-      (total, producto) => total + producto.cantidad,
-      0
-    );
-
-  }
-
-  obtenerTotal(): number {
-
-    return this.carrito.reduce(
-      (total, producto) =>
-        total + (producto.precio * producto.cantidad),
-      0
-    );
-
-  }
-
-  private guardarCarrito() {
-
-    localStorage.setItem(
-      'lushkaCarrito',
-      JSON.stringify(this.carrito)
-    );
-
-  }
-
-  private cargarCarrito() {
-
-    const carritoGuardado =
-      localStorage.getItem('lushkaCarrito');
-
-    if (carritoGuardado) {
-
-      this.carrito =
-        JSON.parse(carritoGuardado);
-
-    }
-
-  }
-
+  obtenerCantidadTotal(): number { return this.carrito.reduce((n, p) => n + p.cantidad, 0); }
+  obtenerTotal(): number { return this.carrito.reduce((n, p) => n + p.precio * p.cantidad, 0); }
 }
