@@ -84,7 +84,7 @@ Los registros de usuarios se almacenan en `usuarios/{uid}` sin contraseñas (las
 | `/admin` | Resumen administrativo | Administrador |
 | `/admin-productos` | Consultar/eliminar productos | Administrador |
 | `/admin-producto/nuevo` | Crear producto y subir fotografía | Administrador |
-| `/admin-producto/editar/:id` | Editar precio/stock/descripción | Administrador |
+| `/admin-producto/editar/:id` | Editar precio/stock/descripción y activar productos destacados | Administrador |
 | `/admin-pedidos` | Consultar estados y mover inventario | Administrador |
 | `/admin-usuarios` | Perfiles y filtro por nombre/correo/rol | Administrador |
 
@@ -95,13 +95,13 @@ Las rutas privilegiadas están protegidas por `AdminGuard`; el **servidor Firest
 | Colección/documento | Campos principales | Lectura/escritura |
 |---|---|---|
 | `usuarios/{uid}` | `nombre`, `correo`, `telefono`, `rol`, `creadoEn` | Dueño consulta/edita datos permitidos; admin consulta perfiles |
-| `productos/{id}` | `id`, `nombre`, `categoria`, `descripcion`, `precio`, `stock`, `imagen` | Público lee, administrador ejecuta CRUD |
+| `productos/{id}` | `id`, `nombre`, `categoria`, `descripcion`, `precio`, `stock`, `imagen`, `destacado` (boolean) | Público lee, administrador ejecuta CRUD |
 | `carritos/{uid}` | `productos[]`, `actualizadoEn` | Solo el usuario dueño |
 | `pedidos/{id}` | `usuarioId`, contacto, entrega, `productos[]`, `subtotal`, `envio`, `total`, `fecha`, `estado`, `stockDevuelto`, `inventarioDescontado` | Cliente crea y consulta los suyos; admin consulta y actualiza estado/inventario |
 
 Las colecciones se generan a partir de la primera escritura autorizada. No son tablas SQL. Reglas desplegables: `firestore.rules`; copia legible: `REGLAS_FIRESTORE_PARA_PEGAR.txt`.
 
-**CRUD de productos (módulo `src/app/services/productos.ts`):** `crearProducto`, `cargarProductos`/`cargarProducto`, `actualizarProducto`, `eliminarProducto`. El panel presenta mensajes, indicadores condicionales, vistas vacías, controles de carga y estados de inventario.
+**CRUD de productos (módulo `src/app/services/productos.ts`):** `crearProducto`, `cargarProductos`/`cargarProducto`, `actualizarProducto`, `eliminarProducto`. El campo `destacado` se activa al crear o editar un producto y determina si aparece en la sección de destacados del inicio; productos previos sin ese campo se consideran no destacados. El panel presenta mensajes, indicadores condicionales, vistas vacías, controles de carga y estados de inventario.
 
 **Inventario transaccional (servicios `pedidos.ts` e `inventario.ts`):**
 - **Pendiente → Confirmado:** valida stock actual y lo descuenta una sola vez dentro de una transacción.

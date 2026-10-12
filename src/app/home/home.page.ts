@@ -36,14 +36,9 @@ export class HomePage {
     catch (error) { console.error('Error cargando carrito', error); }
     try { await this.productosService.cargarProductos(); } catch (error) { console.error('Error cargando productos', error); }
 
-    this.productosDestacados = [
-      this.productosService.obtenerProductoPorId(1),
-      this.productosService.obtenerProductoPorId(12),
-      this.productosService.obtenerProductoPorId(8)
-    ].filter(
-      (producto): producto is Producto =>
-        producto !== undefined
-    );
+    this.productosDestacados = this.productosService
+      .obtenerProductos()
+      .filter((producto: Producto) => producto.destacado);
   }
 
   irAlCatalogo() {

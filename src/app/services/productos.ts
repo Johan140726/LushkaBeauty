@@ -11,6 +11,7 @@ export interface Producto {
   imagen: string;
   descripcion: string;
   stock: number;
+  destacado: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -22,7 +23,11 @@ export class ProductosService {
 
   async cargarProductos(): Promise<Producto[]> {
     const snap = await getDocs(collection(db, 'productos'));
-    this.productos = snap.docs.map(s => ({ ...s.data(), id: Number(s.id) } as Producto))
+    this.productos = snap.docs.map(s => ({
+      ...s.data(),
+      id: Number(s.id),
+      destacado: s.data()['destacado'] === true
+    } as Producto))
       .sort((a, b) => a.nombre.localeCompare(b.nombre));
     return this.productos;
   }
@@ -30,7 +35,11 @@ export class ProductosService {
   async cargarProducto(id: number): Promise<Producto | undefined> {
     const snap = await getDoc(doc(db, 'productos', String(id)));
     if (!snap.exists()) { return undefined; }
-    const producto = { ...snap.data(), id } as Producto;
+    const producto = {
+      ...snap.data(),
+      id,
+      destacado: snap.data()['destacado'] === true
+    } as Producto;
     this.productos = [...this.productos.filter(p => p.id !== id), producto];
     return producto;
   }
@@ -64,10 +73,14 @@ export class ProductosService {
     if (!existente.empty) throw new Error('Ya existen productos; no se sobrescribió el catálogo.');
     const respuesta = await fetch('assets/catalogo-inicial.json');
     if (!respuesta.ok) throw new Error('No se encuentra el catálogo de demostración.');
-    const productos: Producto[] = await respuesta.json();
-    if (!Array.isArray(productos) || !productos.length) {
+    const datos: unknown = await respuesta.json();
+    if (!Array.isArray(datos) || !datos.length) {
       throw new Error('El catálogo inicial está vacío o tiene formato incorrecto.');
     }
+    const productos: Producto[] = datos.map((producto: Producto) => ({
+      ...producto,
+      destacado: producto.destacado === true
+    }));
     const lote = writeBatch(db);
     for (const producto of productos) {
       lote.set(doc(db, 'productos', String(producto.id)), producto);

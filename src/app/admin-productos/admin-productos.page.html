@@ -110,6 +110,10 @@
             {{ producto.nombre }}
           </h2>
 
+          <span class="featured-status" *ngIf="producto.destacado">
+            Destacado en inicio
+          </span>
+
           <p>
             {{ producto.descripcion }}
           </p>

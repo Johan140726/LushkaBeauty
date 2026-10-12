@@ -208,6 +208,30 @@ ion-content {
 
 }
 
+.featured-toggle {
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #eee2de;
+  border-radius: 12px;
+  background: #faf7f5;
+
+  ion-toggle {
+    --track-background: #dfd2ce;
+    --track-background-checked: #8e183a;
+    --handle-background-checked: #ffffff;
+    color: #51413d;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  small {
+    display: block;
+    margin: 6px 0 0;
+    color: #9b8983;
+    font-size: 10px;
+  }
+}
+
 .image-preview {
 
   margin:

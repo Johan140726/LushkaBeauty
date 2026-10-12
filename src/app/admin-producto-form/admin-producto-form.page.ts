@@ -24,6 +24,7 @@ export class AdminProductoFormPage {
   stock: number | null = null;
   imagen = '';
   descripcion = '';
+  destacado = false;
   subiendoImagen = false;
   guardando = false;
 
@@ -89,6 +90,7 @@ export class AdminProductoFormPage {
     this.stock = producto.stock;
     this.imagen = producto.imagen;
     this.descripcion = producto.descripcion;
+    this.destacado = producto.destacado;
   }
 
   async guardarProducto() {
@@ -156,7 +158,8 @@ export class AdminProductoFormPage {
         precio: Number(this.precio),
         stock: Number(this.stock),
         imagen: this.imagen.trim(),
-        descripcion: this.descripcion.trim()
+        descripcion: this.descripcion.trim(),
+        destacado: this.destacado
       };
 
       const actualizado =
@@ -184,7 +187,8 @@ export class AdminProductoFormPage {
         precio: Number(this.precio),
         stock: Number(this.stock),
         imagen: this.imagen.trim(),
-        descripcion: this.descripcion.trim()
+        descripcion: this.descripcion.trim(),
+        destacado: this.destacado
       });
 
       await this.mostrarMensaje(
@@ -223,6 +227,7 @@ export class AdminProductoFormPage {
     this.stock = null;
     this.imagen = '';
     this.descripcion = '';
+    this.destacado = false;
 
   }
 
