@@ -15,6 +15,7 @@ import { CarritoService } from '../services/carrito';
 })
 export class HomePage {
 
+  private cancelarSuscripcionProductos: (() => void) | null = null;
   usuarioActual: Usuario | null = null;
   categorias = [
     { nombre: 'Capilar', icono: 'assets/icon/capilar.png' },
@@ -31,14 +32,26 @@ export class HomePage {
   ) { }
 
   async ionViewWillEnter() {
+    this.cancelarSuscripcionProductos?.();
+    this.actualizarProductosDestacados(this.productosService.obtenerProductos());
+    this.cancelarSuscripcionProductos =
+      this.productosService.suscribirProductos(
+        productos => this.actualizarProductosDestacados(productos),
+        error => console.error('Error sincronizando productos destacados', error)
+      );
+
     this.usuarioActual = await this.authService.esperarSesion();
     try { await this.carritoService.cargarCarritoSiAutenticado(); }
     catch (error) { console.error('Error cargando carrito', error); }
-    try { await this.productosService.cargarProductos(); } catch (error) { console.error('Error cargando productos', error); }
+  }
 
-    this.productosDestacados = this.productosService
-      .obtenerProductos()
-      .filter((producto: Producto) => producto.destacado);
+  ionViewWillLeave() {
+    this.cancelarSuscripcionProductos?.();
+    this.cancelarSuscripcionProductos = null;
+  }
+
+  private actualizarProductosDestacados(productos: Producto[]) {
+    this.productosDestacados = productos.filter(producto => producto.destacado);
   }
 
   irAlCatalogo() {

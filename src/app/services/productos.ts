@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, getDocs, doc, getDoc, setDoc, deleteDoc, updateDoc, query, limit, writeBatch } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, setDoc, deleteDoc, updateDoc, query, limit, writeBatch, onSnapshot } from 'firebase/firestore';
 import { db, auth } from './firebase';
 import { cloudinaryWorkerUrl } from '../../environments/cloudinary-config';
 
@@ -23,23 +23,35 @@ export class ProductosService {
 
   async cargarProductos(): Promise<Producto[]> {
     const snap = await getDocs(collection(db, 'productos'));
-    this.productos = snap.docs.map(s => ({
-      ...s.data(),
-      id: Number(s.id),
-      destacado: s.data()['destacado'] === true
-    } as Producto))
+    this.productos = snap.docs.map(s => this.mapearProducto(s.id, s.data()))
       .sort((a, b) => a.nombre.localeCompare(b.nombre));
     return this.productos;
+  }
+
+  suscribirProductos(
+    alActualizar: (productos: Producto[]) => void,
+    alError: (error: Error) => void
+  ): () => void {
+    return onSnapshot(collection(db, 'productos'), snapshot => {
+      this.productos = snapshot.docs
+        .map(s => this.mapearProducto(s.id, s.data()))
+        .sort((a, b) => a.nombre.localeCompare(b.nombre));
+      alActualizar([...this.productos]);
+    }, alError);
+  }
+
+  private mapearProducto(id: string, datos: Record<string, unknown>): Producto {
+    return {
+      ...datos,
+      id: Number(id),
+      destacado: datos['destacado'] === true
+    } as Producto;
   }
 
   async cargarProducto(id: number): Promise<Producto | undefined> {
     const snap = await getDoc(doc(db, 'productos', String(id)));
     if (!snap.exists()) { return undefined; }
-    const producto = {
-      ...snap.data(),
-      id,
-      destacado: snap.data()['destacado'] === true
-    } as Producto;
+    const producto = this.mapearProducto(String(id), snap.data());
     this.productos = [...this.productos.filter(p => p.id !== id), producto];
     return producto;
   }
