@@ -23,6 +23,14 @@ export class CarritoService {
     this.carrito = (snap.data()?.['productos'] || []) as ProductoCarrito[];
     return this.obtenerCarrito();
   }
+  async cargarCarritoSiAutenticado(): Promise<void> {
+    if (!auth.currentUser) {
+      this.carrito = [];
+      this.uid = null;
+      return;
+    }
+    await this.cargarCarrito();
+  }
   private async guardar(): Promise<void> {
     const uid = this.validarUsuario();
     await setDoc(doc(db, 'carritos', uid), { productos: this.carrito, actualizadoEn: new Date().toISOString() });
@@ -53,6 +61,7 @@ export class CarritoService {
     const uid = this.validarUsuario(); this.carrito = [];
     await deleteDoc(doc(db, 'carritos', uid));
   }
+  obtenerCantidadProductos(): number { return this.carrito.length; }
   obtenerCantidadTotal(): number { return this.carrito.reduce((n, p) => n + p.cantidad, 0); }
   obtenerTotal(): number { return this.carrito.reduce((n, p) => n + p.precio * p.cantidad, 0); }
 }

@@ -5,6 +5,7 @@ import {
   Producto,
   ProductosService
 } from '../services/productos';
+import { CarritoService } from '../services/carrito';
 
 @Component({
   selector: 'app-home',
@@ -25,11 +26,14 @@ export class HomePage {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private carritoService: CarritoService,
     private productosService: ProductosService
   ) { }
 
   async ionViewWillEnter() {
     this.usuarioActual = await this.authService.esperarSesion();
+    try { await this.carritoService.cargarCarritoSiAutenticado(); }
+    catch (error) { console.error('Error cargando carrito', error); }
     try { await this.productosService.cargarProductos(); } catch (error) { console.error('Error cargando productos', error); }
 
     this.productosDestacados = [
@@ -71,6 +75,10 @@ export class HomePage {
     }
 
     return this.usuarioActual.nombre.split(' ')[0];
+  }
+
+  get cantidadCarrito(): number {
+    return this.carritoService.obtenerCantidadProductos();
   }
 
   productosDestacados: Producto[] = [];

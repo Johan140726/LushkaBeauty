@@ -14,8 +14,14 @@
     </div>
 
     <ion-buttons slot="end">
-      <ion-button routerLink="/carrito">
-        <span class="cart-icon">🛒</span>
+      <ion-button
+        class="cart-button"
+        routerLink="/carrito"
+        aria-label="Ver carrito">
+        <span class="cart-icon" aria-hidden="true">🛒</span>
+        <span class="cart-badge" *ngIf="cantidadCarrito > 0" aria-hidden="true">
+          {{ cantidadCarrito }}
+        </span>
       </ion-button>
     </ion-buttons>
 

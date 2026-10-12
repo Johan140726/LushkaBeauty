@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
+import { AuthService } from '../services/auth';
 import { CarritoService } from '../services/carrito';
 import {
   ProductosService,
@@ -22,12 +23,19 @@ export class ProductoPage {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private carritoService: CarritoService,
     private toastController: ToastController,
     private productosService: ProductosService
   ) {}
 
   async ionViewWillEnter() {
+    try {
+      await this.authService.esperarSesion();
+      await this.carritoService.cargarCarritoSiAutenticado();
+    } catch (error) {
+      console.error('Error cargando carrito', error);
+    }
 
     const id = Number(
       this.route.snapshot.paramMap.get('id')
@@ -121,6 +129,10 @@ export class ProductoPage {
       this.productoSeleccionado.stock <= 0
     );
 
+  }
+
+  get cantidadCarrito(): number {
+    return this.carritoService.obtenerCantidadProductos();
   }
 
 

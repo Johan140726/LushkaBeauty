@@ -124,6 +124,10 @@ export class CarritoPage {
     return this.carritoService.obtenerTotal();
   }
 
+  get cantidadCarrito(): number {
+    return this.carritoService.obtenerCantidadProductos();
+  }
+
   get hayProblemasDeStock(): boolean {
 
     return this.productos.some(
