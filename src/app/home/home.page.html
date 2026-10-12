@@ -1,3 +1,4 @@
+
 <ion-header class="main-header">
   <ion-toolbar>
 
@@ -22,76 +23,83 @@
 
 <ion-content [fullscreen]="true">
 
+  <!-- BARRA DE SESIÓN -->
   <section class="session-bar">
 
-  <!-- Usuario no autenticado -->
-  <div
-    class="session-content"
-    *ngIf="!usuarioActual">
-
-    <div class="session-info">
-
-      <div class="session-icon">
-        <ion-icon name="person-outline"></ion-icon>
-      </div>
-
-      <div>
-        <span>Mi cuenta</span>
-        <strong>Inicia sesión para continuar</strong>
-      </div>
-
-    </div>
-
-    <button
-      type="button"
-      class="session-action"
-      (click)="irALogin()">
-      Iniciar sesión
-    </button>
-
-  </div>
-
-
-  <!-- Usuario autenticado -->
-  <div
-    class="session-content"
-    *ngIf="usuarioActual">
-
+    <!-- Usuario no autenticado -->
     <div
-      class="session-info clickable"
-      routerLink="/mi-cuenta">
+      class="session-content"
+      *ngIf="!usuarioActual">
 
-      <div class="session-icon logged">
-        <ion-icon name="person-outline"></ion-icon>
+      <div class="session-info">
+
+        <div class="session-icon">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+
+        <div>
+          <span>Mi cuenta</span>
+          <strong>Inicia sesión para continuar</strong>
+        </div>
+
       </div>
 
-      <div>
-        <span>Bienvenida</span>
-        <strong>Hola, {{ primerNombre }} 💗</strong>
-      </div>
+      <button
+        type="button"
+        class="session-action"
+        (click)="irALogin()">
+        Iniciar sesión
+      </button>
 
     </div>
 
-    <button
-      type="button"
-      class="logout-button"
-      (click)="cerrarSesion()">
+    <!-- Usuario autenticado -->
+    <div
+      class="session-content"
+      *ngIf="usuarioActual">
 
-      <ion-icon name="log-out-outline"></ion-icon>
-      <span>Cerrar sesión</span>
+      <div
+        class="session-info clickable"
+        routerLink="/mi-cuenta">
 
-    </button>
+        <div class="session-icon logged">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
 
-  </div>
+        <div>
+          <span>Bienvenida</span>
+          <strong>Hola, {{ primerNombre }} 💗</strong>
+        </div>
 
-</section>
+      </div>
+
+      <button
+        type="button"
+        class="logout-button"
+        (click)="cerrarSesion()">
+
+        <ion-icon name="log-out-outline"></ion-icon>
+        <span>Cerrar sesión</span>
+
+      </button>
+
+    </div>
+
+  </section>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-content">
-      <p class="eyebrow">BELLEZA · CUIDADO · ESTILO</p>
 
-      <h1>Tu belleza,<br>tu esencia.</h1>
+    <div class="hero-content">
+
+      <p class="eyebrow">
+        BELLEZA · CUIDADO · ESTILO
+      </p>
+
+      <h1>
+        Tu belleza,<br>
+        tu esencia.
+      </h1>
 
       <p class="hero-text">
         Descubre productos pensados para resaltar
@@ -104,49 +112,53 @@
         (click)="irAlCatalogo()">
         VER CATÁLOGO
       </ion-button>
+
     </div>
+
   </section>
 
   <!-- CATEGORÍAS -->
   <section class="section">
+
     <div class="section-title">
+
       <h2>Explora por categoría</h2>
-      <span>Ver todo</span>
+
+      <button
+        type="button"
+        (click)="irAlCatalogo()">
+        Ver todo
+      </button>
+
     </div>
 
     <div class="categories">
 
-      <div class="category-card">
-        <div class="category-icon">💄</div>
-        <h3>Maquillaje</h3>
-      </div>
+      <button
+        type="button"
+        class="category-card"
+        *ngFor="let categoria of categorias"
+        (click)="irACategoria(categoria.nombre)">
 
-      <div class="category-card">
-        <div class="category-icon">✨</div>
-        <h3>Cuidado facial</h3>
-      </div>
+        <!-- Imagen personalizada de la categoría -->
+        <div class="category-icon">
 
-      <div class="category-card">
-        <div class="category-icon">🧴</div>
-        <h3>Cuidado corporal</h3>
-      </div>
+          <img
+            [src]="categoria.icono"
+            [alt]="categoria.nombre"
+            loading="lazy">
 
-      <div class="category-card">
-        <div class="category-icon">💇‍♀️</div>
-        <h3>Cabello</h3>
-      </div>
+        </div>
 
-      
-      <div class="category-card">
-        <div class="category-icon">🌈</div>
-        <h3>Crecimiento Personal</h3>
-      </div>
+        <h3>{{ categoria.nombre }}</h3>
+
+      </button>
 
     </div>
+
   </section>
 
-    <!-- DESTACADOS -->
-
+  <!-- PRODUCTOS DESTACADOS -->
   <section class="section products-section">
 
     <div class="section-title">
@@ -157,13 +169,10 @@
 
       <span
         (click)="irAlCatalogo()">
-
         Ver catálogo
-
       </span>
 
     </div>
-
 
     <div class="products">
 
@@ -178,7 +187,6 @@
             [src]="producto.imagen"
             [alt]="producto.nombre">
 
-
           <div
             class="home-stock-badge"
             [class.agotado]="producto.stock === 0">
@@ -192,7 +200,6 @@
           </div>
 
         </div>
-
 
         <div class="product-info">
 
@@ -216,11 +223,18 @@
 
   </section>
 
-  <!-- FRASE -->
+  <!-- MENSAJE DE MARCA -->
   <section class="brand-message">
+
     <span>✦</span>
-    <h2>La belleza comienza<br>cuando te eliges.</h2>
+
+    <h2>
+      La belleza comienza<br>
+      cuando te eliges.
+    </h2>
+
     <p>LUSHKA BEAUTY</p>
+
   </section>
 
 </ion-content>

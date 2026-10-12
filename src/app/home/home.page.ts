@@ -15,17 +15,23 @@ import {
 export class HomePage {
 
   usuarioActual: Usuario | null = null;
-
+  categorias = [
+    { nombre: 'Capilar', icono: 'assets/icon/capilar.png' },
+    { nombre: 'Facial', icono: 'assets/icon/facial.png' },
+    { nombre: 'Corporal', icono: 'assets/icon/corporal.png' },
+    { nombre: 'Combos', icono: 'assets/icon/combos.png' },
+    { nombre: 'Crecimiento personal', icono: 'assets/icon/crecimiento-personal.png' }
+  ];
   constructor(
     private router: Router,
     private authService: AuthService,
     private productosService: ProductosService
-  ) {}
+  ) { }
 
   async ionViewWillEnter() {
     this.usuarioActual = await this.authService.esperarSesion();
     try { await this.productosService.cargarProductos(); } catch (error) { console.error('Error cargando productos', error); }
-    
+
     this.productosDestacados = [
       this.productosService.obtenerProductoPorId(1),
       this.productosService.obtenerProductoPorId(12),
@@ -38,6 +44,12 @@ export class HomePage {
 
   irAlCatalogo() {
     this.router.navigate(['/catalogo']);
+  }
+
+  irACategoria(categoria: string) {
+    this.router.navigate(['/catalogo'], {
+      queryParams: { categoria }
+    });
   }
 
   verProducto(id: number) {
@@ -61,6 +73,6 @@ export class HomePage {
     return this.usuarioActual.nombre.split(' ')[0];
   }
 
-    productosDestacados: Producto[] = [];
+  productosDestacados: Producto[] = [];
 
 }

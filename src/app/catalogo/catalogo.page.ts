@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService, Producto } from '../services/productos';
 
 @Component({
@@ -24,11 +24,17 @@ export class CatalogoPage {
   productos: Producto[] = [];
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private productosService: ProductosService
   ) {}
 
   async ionViewWillEnter() {
+    const categoria = this.route.snapshot.queryParamMap.get('categoria');
+    this.categoriaSeleccionada = categoria && this.categorias.includes(categoria)
+      ? categoria
+      : 'Todos';
+
     try { this.productos = await this.productosService.cargarProductos(); }
     catch (error) { console.error("Error cargando catálogo", error); }
   }

@@ -137,6 +137,16 @@ ion-content {
   cursor: pointer;
 }
 
+.section-title button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #8a6d67;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
 /* CATEGORÍAS */
 
 .categories {
@@ -166,6 +176,9 @@ ion-content {
   background: white;
   border-radius: 18px;
   padding: 18px 12px;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
 
   box-shadow: 0 3px 15px rgba(60, 40, 35, 0.05);
 }
@@ -506,4 +519,18 @@ ion-content {
 .home-stock-badge.agotado {
   background: #8e183a;
   color: #ffffff;
+}
+.category-icon {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
