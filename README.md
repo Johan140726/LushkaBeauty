@@ -132,36 +132,6 @@ Formulario para registrar productos, asignar categorías, establecer precios, co
   <img src="docs/evidencias/formulario-crear.png" alt="Formulario de creación de productos" width="650">
 </p>
 
-### 5.5. Catálogo y persistencia
-
-<p align="center">
-  <img src="docs/evidencias/catalogo-publico.png" alt="Catálogo público" width="650">
-</p>
-
-### 5.6. Inventario
-
-<p align="center">
-  <img src="docs/evidencias/producto-inventario.png" alt="Gestión del inventario" width="650">
-</p>
-
-### 5.7. Carrito de compras
-
-<p align="center">
-  <img src="docs/evidencias/carrito-firebase.png" alt="Persistencia del carrito en Firebase" width="650">
-</p>
-
-### 5.8. Gestión de pedidos
-
-<p align="center">
-  <img src="docs/evidencias/pedidos-historial.png" alt="Historial de pedidos" width="650">
-</p>
-
-### 5.9. Administración de usuarios
-
-<p align="center">
-  <img src="docs/evidencias/usuarios-perfiles.png" alt="Administración de usuarios" width="650">
-</p>
-
 ## 6. Arquitectura del sistema
 
 La aplicación utiliza una arquitectura basada en módulos y servicios, separando las responsabilidades de presentación, autenticación, persistencia y gestión de información.
