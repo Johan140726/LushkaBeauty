@@ -1,252 +1,407 @@
-# Lushka Beauty · Tienda híbrida con Firebase y Cloudinary
+# LUSHKA BEAUTY 💄
+### Aplicación híbrida para la comercialización y gestión de productos de belleza
 
-**Versión 2.1.0 · Ionic + Angular · Corte 2 — Desarrollo de Aplicaciones Móviles Híbridas**
+<p align="center">
+  <img src="src/assets/logo/logo_lushka.png" alt="Logo Lushka Beauty" width="180">
+</p>
 
-Aplicación de catálogo y gestión de pedidos de belleza. Los clientes pueden registrarse, consultar productos, mantener su carrito y realizar solicitudes de compra. El administrador puede gestionar productos, imágenes, usuarios, pedidos e inventario.
+<p align="center">
+  **Proyecto Integrador · Desarrollo de Aplicaciones Móviles Híbridas**
+  
+  Fundación Universitaria Compensar
+</p>
 
-> **Estado de esta entrega:** se actualizaron el aspecto de la pantalla de usuarios, el tema claro y el registro de los iconos de Ionic. Los flujos del proyecto anterior se preservaron. Las capturas de las pruebas funcionales corresponden a las ejecuciones realizadas por el usuario antes de este cambio visual; el aspecto renovado debe verificarse tras iniciarlo.
+<p align="center">
+  **🎥 VIDEO DEMOSTRATIVO:** [Ver presentación y funcionamiento de Lushka Beauty](PEGAR_AQUI_EL_ENLACE_DEL_VIDEO)
+  
+  **💻 REPOSITORIO:** [GitHub – LushkaBeauty](https://github.com/Johan140726/LushkaBeauty)
+</p>
 
-## 1. Resumen técnico
+---
 
-| Capa | Herramienta / función |
+## 1. Descripción del proyecto
+
+Lushka Beauty es una aplicación híbrida de comercio electrónico diseñada para facilitar la comercialización de productos de belleza y mejorar la gestión de pedidos de la marca.
+
+La aplicación permite a los clientes explorar un catálogo organizado por categorías, consultar información de los productos, registrarse, iniciar sesión, administrar su carrito de compras y realizar pedidos.
+
+Adicionalmente, cuenta con un módulo administrativo que permite gestionar productos, imágenes, inventario, usuarios y pedidos desde una interfaz intuitiva.
+
+El proyecto está desarrollado utilizando Ionic Framework, Angular, TypeScript, Firebase y Capacitor, permitiendo su ejecución en entornos web y su preparación para dispositivos móviles Android.
+
+## 2. Objetivos del proyecto
+
+### Objetivo general
+
+Desarrollar una aplicación híbrida que facilite el proceso de compra de los clientes de Lushka Beauty y optimice la administración de productos, inventario y pedidos mediante herramientas tecnológicas multiplataforma.
+
+### Objetivos específicos
+
+- Diseñar una interfaz intuitiva y adaptable a dispositivos móviles.
+- Implementar autenticación de usuarios mediante Firebase.
+- Desarrollar un catálogo de productos organizado por categorías.
+- Implementar un carrito de compras y gestión de pedidos.
+- Construir un módulo administrativo para operaciones CRUD.
+- Integrar servicios de almacenamiento de imágenes.
+- Gestionar el inventario mediante operaciones seguras en Firestore.
+- Preparar la aplicación para su ejecución en Android mediante Capacitor.
+
+## 3. Tecnologías utilizadas
+
+| Tecnología | Aplicación dentro del proyecto |
 |---|---|
-| Interfaz | Ionic 8 + Angular 20 + TypeScript + SCSS |
-| Autenticación | Firebase Authentication (email/contraseña) |
-| Persistencia | Cloud Firestore (colecciones NoSQL) |
-| Imágenes | Cloudinary, preset firmado `lushka_productos` |
-| API de imágenes | Cloudflare Worker que verifica `admin: true` antes de subir |
-| Autorización | Custom claims de Firebase, Guards de rutas y reglas de Firestore |
-| Inventario | Transacciones Firestore al confirmar/cancelar pedidos |
-| Pruebas locales | `npm run test:static`, `npm run test:worker`, `npm run test:inventory`, `npm run test:ui` |
+| Ionic Framework 8 | Componentes e interfaz híbrida |
+| Angular 20 | Arquitectura y desarrollo frontend |
+| TypeScript | Lógica de programación |
+| HTML5 | Estructura de las vistas |
+| SCSS | Diseño y estilos |
+| Capacitor 8 | Integración con dispositivos móviles |
+| Firebase Authentication | Registro e inicio de sesión |
+| Cloud Firestore | Almacenamiento y persistencia de datos |
+| Cloudinary | Almacenamiento de imágenes |
+| Cloudflare Workers | Servicio de carga segura de imágenes |
+| Git y GitHub | Control de versiones y colaboración |
+| Android Studio | Compilación y pruebas de Android |
 
-El proyecto está configurado con estos **identificadores públicos**:
+## 4. Funcionalidades principales
 
-- **Proyecto Firebase:** `lushka-d4238`
-- **Cloudinary Cloud Name:** `me0wenpd`
-- **URL del Worker:** `https://lushka-imagenes-api.josrojaslouni.workers.dev`
-- **Ruta Firebase principal:** base de datos `(default)`
+### Módulo de clientes
 
-Las API Keys web de Firebase sirven para identificar el proyecto, **no** sustituyen las reglas de autorización. El **API Secret de Cloudinary** y las contraseñas **no** se incluyen en el repositorio.
+- Registro de nuevos usuarios.
+- Inicio de sesión con correo electrónico y contraseña.
+- Inicio de sesión con Google en la versión web.
+- Visualización del catálogo de productos.
+- Consulta de categorías y productos destacados.
+- Visualización del detalle de cada producto.
+- Administración del carrito de compras.
+- Realización de pedidos.
+- Consulta del historial y estado de los pedidos.
+- Consulta y actualización de información de la cuenta.
 
-## 2. Instalación y ejecución paso a paso
+### Módulo administrativo
 
-Requisitos: Windows/macOS/Linux, Node.js 22 LTS recomendado, npm, Visual Studio Code, conexión a Internet y servicios externos ya configurados.
+- Acceso restringido mediante roles y permisos.
+- Consulta general de productos.
+- Creación de productos.
+- Edición de información, precios y existencias.
+- Eliminación de productos.
+- Carga de fotografías mediante Cloudinary.
+- Administración de categorías y productos destacados.
+- Consulta y gestión de pedidos.
+- Actualización de estados de pedidos.
+- Administración de usuarios.
+- Consulta y control del inventario.
 
-1. Extraer el ZIP y **abrir `LushkaBeauty_Firebase`**, la carpeta que contiene `package.json`.
-2. En una terminal de Visual Studio Code ejecutar:
+## 5. Capturas de pantalla de la aplicación
 
-   ```bash
-   npm install
-   npx ionic serve
-   ```
+Las siguientes imágenes corresponden a las interfaces implementadas en la versión web de Lushka Beauty.
 
-3. Abrir `http://localhost:8100` (dirección habitual mostrada por Ionic).
-4. Iniciar sesión con las cuentas **ya registradas** en Firebase Authentication; no hace falta volver a crear usuarios ni productos.
-5. Como administrador visitar `/admin` y después `/admin-usuarios` para comprobar la nueva interfaz.
+### 5.1. Inicio de sesión
 
-**No vuelvas a desplegar reglas, regenerar claves, crear una base de datos ni cambiar el Worker solamente por instalar este ZIP.** Conserva el Firebase, el Worker y las reglas que ya probaste. Si se publica este proyecto en otro Firebase, sí será necesario reconfigurar las credenciales y desplegar reglas adecuadas.
+Permite a los usuarios acceder mediante correo electrónico y contraseña o utilizar su cuenta de Google.
 
-> Si abres la carpeta padre (donde no está `package.json`), `npm install` no se ejecutará sobre la app. Comprueba la ruta con `dir package.json` (PowerShell).
+<p align="center">
+  <img src="docs/evidencias/pantallaLoginContraseña.png" alt="Inicio de sesión con contraseña" width="420">
+</p>
 
-## 3. Arquitectura y flujo de información
+<p align="center">
+  <img src="docs/evidencias/PantallaGoogle.png" alt="Inicio de sesión con Google" width="420">
+</p>
+
+### 5.2. Catálogo de productos
+
+Permite consultar los productos disponibles y explorar las diferentes categorías de la tienda.
+
+<p align="center">
+  <img src="docs/evidencias/pantallaCatalogo.png" alt="Catálogo de Lushka Beauty" width="650">
+</p>
+
+### 5.3. Panel administrativo
+
+Interfaz destinada a la administración general de la aplicación.
+
+<p align="center">
+  <img src="docs/evidencias/pantallaAdmin.png" alt="Panel administrativo de Lushka Beauty" width="650">
+</p>
+
+### 5.4. Gestión de productos
+
+Formulario para registrar productos, asignar categorías, establecer precios, controlar existencias y cargar imágenes.
+
+<p align="center">
+  <img src="docs/evidencias/formulario-crear.png" alt="Formulario de creación de productos" width="650">
+</p>
+
+### 5.5. Catálogo y persistencia
+
+<p align="center">
+  <img src="docs/evidencias/catalogo-publico.png" alt="Catálogo público" width="650">
+</p>
+
+### 5.6. Inventario
+
+<p align="center">
+  <img src="docs/evidencias/producto-inventario.png" alt="Gestión del inventario" width="650">
+</p>
+
+### 5.7. Carrito de compras
+
+<p align="center">
+  <img src="docs/evidencias/carrito-firebase.png" alt="Persistencia del carrito en Firebase" width="650">
+</p>
+
+### 5.8. Gestión de pedidos
+
+<p align="center">
+  <img src="docs/evidencias/pedidos-historial.png" alt="Historial de pedidos" width="650">
+</p>
+
+### 5.9. Administración de usuarios
+
+<p align="center">
+  <img src="docs/evidencias/usuarios-perfiles.png" alt="Administración de usuarios" width="650">
+</p>
+
+## 6. Arquitectura del sistema
+
+La aplicación utiliza una arquitectura basada en módulos y servicios, separando las responsabilidades de presentación, autenticación, persistencia y gestión de información.
+
+### Arquitectura general
 
 ```text
-Cliente / Administrador — Ionic Angular
-             |
-      Firebase Authentication
-             | (token Firebase con UID y, para admin, custom claim admin:true)
-             +--------> Firestore: usuarios, productos, carritos, pedidos
-             |              ^
-             |      Reglas + transacciones de inventario
-             |
-             +--------> Cloudflare Worker /upload (solo admin autenticado)
-                              |
-                         Cloudinary
-                              |
-                      URL HTTPS de imagen
-                              |
-                     Firestore/productos
+                  LUSHKA BEAUTY
+                        |
+                 Ionic + Angular
+                        |
+              ---------------------
+              |                   |
+         Módulo Cliente      Módulo Admin
+              |                   |
+              --------- ----------
+                       |
+                 Servicios Angular
+                       |
+          -----------------------------
+          |             |             |
+       Firebase      Firestore     Cloudflare
+       Auth                         Worker
+                       |             |
+                   Productos     Cloudinary
+                   Usuarios
+                   Carritos
+                   Pedidos
+                   Inventario
 ```
 
-Los registros de usuarios se almacenan en `usuarios/{uid}` sin contraseñas (las contraseñas son gestionadas por Firebase Authentication). El campo visible `rol` sirve para la interfaz; los permisos administrativos reales se comprueban mediante `request.auth.token.get('admin', false)`.
+### Persistencia de información
 
-## 4. Pantallas y rutas relevantes
+Se utiliza Cloud Firestore como base de datos NoSQL para almacenar y consultar la información de la aplicación.
 
-| Ruta | Función | Acceso |
-|---|---|---|
-| `/home` | Portada e inicio | Público |
-| `/catalogo` | Catálogo y categorías | Público |
-| `/producto/:id` | Detalle de producto | Público |
-| `/login` y `/registro` | Inicio de sesión y creación de cuentas | Público |
-| `/carrito` | Carrito; requiere cuenta para guardar cambios | Cliente autenticado para operar |
-| `/checkout` | Solicitud de compra | Autenticado |
-| `/mis-pedidos` y `/mi-cuenta` | Historial y perfil | Autenticado |
-| `/admin` | Resumen administrativo | Administrador |
-| `/admin-productos` | Consultar/eliminar productos | Administrador |
-| `/admin-producto/nuevo` | Crear producto y subir fotografía | Administrador |
-| `/admin-producto/editar/:id` | Editar precio/stock/descripción y activar productos destacados | Administrador |
-| `/admin-pedidos` | Consultar estados y mover inventario | Administrador |
-| `/admin-usuarios` | Perfiles y filtro por nombre/correo/rol | Administrador |
+Las principales colecciones son:
 
-Las rutas privilegiadas están protegidas por `AdminGuard`; el **servidor Firestore** vuelve a validar permisos independientemente del navegador.
-
-## 5. Esquema de Firestore (NoSQL)
-
-| Colección/documento | Campos principales | Lectura/escritura |
-|---|---|---|
-| `usuarios/{uid}` | `nombre`, `correo`, `telefono`, `rol`, `creadoEn` | Dueño consulta/edita datos permitidos; admin consulta perfiles |
-| `productos/{id}` | `id`, `nombre`, `categoria`, `descripcion`, `precio`, `stock`, `imagen`, `destacado` (boolean) | Público lee, administrador ejecuta CRUD |
-| `carritos/{uid}` | `productos[]`, `actualizadoEn` | Solo el usuario dueño |
-| `pedidos/{id}` | `usuarioId`, contacto, entrega, `productos[]`, `subtotal`, `envio`, `total`, `fecha`, `estado`, `stockDevuelto`, `inventarioDescontado` | Cliente crea y consulta los suyos; admin consulta y actualiza estado/inventario |
-
-Las colecciones se generan a partir de la primera escritura autorizada. No son tablas SQL. Reglas desplegables: `firestore.rules`; copia legible: `REGLAS_FIRESTORE_PARA_PEGAR.txt`.
-
-**CRUD de productos (módulo `src/app/services/productos.ts`):** `crearProducto`, `cargarProductos`/`cargarProducto`, `actualizarProducto`, `eliminarProducto`. El campo `destacado` se activa al crear o editar un producto y determina si aparece en la sección de destacados del inicio; productos previos sin ese campo se consideran no destacados. El panel presenta mensajes, indicadores condicionales, vistas vacías, controles de carga y estados de inventario.
-
-**Inventario transaccional (servicios `pedidos.ts` e `inventario.ts`):**
-- **Pendiente → Confirmado:** valida stock actual y lo descuenta una sola vez dentro de una transacción.
-- **Confirmado → estados de preparación/entrega:** no repite el descuento.
-- **Pedido con stock descontado → Cancelado:** reintegra las unidades una sola vez.
-- **Pedidos antiguos:** regularización explícita; no presionar si ya se modificó el stock manualmente.
-- Las solicitudes Pendientes **no reservan** unidades. Si faltan existencias al confirmar, se impide la confirmación.
-
-> Este flujo es para fines académicos y **no procesa cobros reales**. Para producción haría falta mayor control de inventario, pagos, auditoría y protección contra manipulación de datos en un backend confiable.
-
-## 6. API HTTP y servicios asíncronos
-
-La interfaz usa **Firebase SDK** para Authentication y Firestore; esas llamadas no son endpoints REST implementados por el proyecto. Para subir imágenes sí existe esta API HTTP:
-
-| Método y ruta | Acceso | Petición | Respuesta principal |
-|---|---|---|---|
-| `GET /health` | Público | Sin cuerpo | `200 {"ok":true,"servicio":"Lushka Imágenes"}` |
-| `POST /upload` | Firebase ID token con claim admin | `Authorization: Bearer <ID_TOKEN>` + `multipart/form-data`, campo `file` | `200 {"ok":true,"url":"https://...","publicId":"..."}` |
-
-Posibles errores de `/upload`: **400** archivo inválido o tipo no admitido, **401** sesión ausente/inválida, **403** no administrador/origen no permitido, **413** tamaño excesivo, **500** variables ausentes y **502** error del proveedor de imágenes. Acepta JPG, PNG o WebP de hasta 5 MB.
-
-Código fuente: `cloudflare-worker/lushka-imagenes-api.worker.js`. Variables requeridas **en Cloudflare Production**:
-
-```text
-CLOUDINARY_CLOUD_NAME   = me0wenpd
-CLOUDINARY_API_KEY      = [guardar en Cloudflare]
-CLOUDINARY_API_SECRET   = [guardar como Secret en Cloudflare]
-FIREBASE_PROJECT_ID     = lushka-d4238
-```
-
-**Nunca** colocar `CLOUDINARY_API_SECRET` en Angular, README público o Firestore. Si se muestra accidentalmente en una captura, rotar la clave en Cloudinary y actualizar el Secret en Cloudflare.
-
-## 7. Interfaces reactivas, accesibilidad y mejoras visuales
-
-- Se unificó `/admin-usuarios` con los tonos **crema `#faf7f5` y vinotinto `#8e183a`**, encabezado, logo, tarjetas y buscador del resto del proyecto.
-- Se evita el cambio automático al tema oscuro que provocaba fondo negro en la pantalla de usuarios.
-- Se registran explícitamente los íconos de Ionicons en `src/app/app.component.ts`, evitando contenedores de iconos vacíos.
-- Se añadieron estados de carga, contador de usuarios, mensajes de resultados vacíos, insignias de roles y diseño responsive para móviles.
-- Las tarjetas del administrador permiten navegación mediante teclado (`Tab`, `Enter`, `Espacio`) además de ratón.
-- Los formularios y listados utilizan clases dinámicas según estado, como producto agotado o rol de usuario, y retroalimentación con componentes de Ionic.
-
-## 8. Evidencias visuales del proyecto
-
-Las siguientes capturas corresponden a las **pruebas reales del proyecto anterior realizadas en la conversación**. Se ocultan datos personales en algunas. No son una simulación de la versión visual actualizada.
-
-**Crear producto** (nombre, categoría, stock e imagen):
-
-![Formulario de creación de producto](docs/evidencias/formulario-crear.png)
-
-**Consultar y actualizar inventario** (stock modificado tras operación):
-
-![Productos y stock](docs/evidencias/producto-inventario.png)
-
-**Consultar catálogo público:**
-
-![Catálogo público](docs/evidencias/catalogo-publico.png)
-
-**Persistencia del carrito en Firestore:**
-
-![Colección de carritos en Firestore](docs/evidencias/carrito-firebase.png)
-
-**Pedido y estado visible al cliente:**
-
-![Historial de pedido](docs/evidencias/pedidos-historial.png)
-
-**Consulta de usuarios por rol** (interfaz anterior, antes de unificación):
-
-![Perfiles de usuarios](docs/evidencias/usuarios-perfiles.png)
-
-**Prueba de eliminación:** se creó un producto temporal, luego se eliminó y el listado regresó a un producto. El flujo fue verificado durante las pruebas guiadas; una captura de confirmación del botón eliminar no se aportó.
-
-## 9. Evidencias y resultado de pruebas
-
-| Prueba | Resultado observado durante la ejecución guiada |
+| Colección | Información almacenada |
 |---|---|
-| Registro e ingreso en Firebase | Usuario cliente creado y acceso posterior logrado |
-| Panel de administración | Acceso con custom claim `admin: true` |
-| Crear, consultar, editar y eliminar productos | Operaciones verificadas en la aplicación |
-| Subida de imagen a Cloudinary | Imagen visible en catálogo y panel |
-| Catálogo público | Producto visible desde ventana privada |
-| Carrito | Documento observado en Firestore y conservado tras recargar |
-| Pedido | Solicitud guardada en `pedidos`, visible en cliente y admin |
-| Estado de pedido | Cliente visualizó `Confirmado` tras cambio admin |
-| Inventario al confirmar | Stock bajó de 20 a 15 |
-| Inventario al cancelar | Stock volvió de 15 a 20 |
-| Pantalla usuarios | Dos perfiles visibles con rol admin/cliente |
-| Nueva interfaz visual e iconos | **Pendiente de verificar en el equipo tras instalar este ZIP** |
+| usuarios | Datos y roles de los usuarios |
+| productos | Catálogo, precios, categorías e inventario |
+| carritos | Productos seleccionados por cada cliente |
+| pedidos | Información de las compras y sus estados |
 
-Para las evidencias de corrección de íconos y el nuevo tema agrega una captura después de ejecutar la versión actualizada. Si la entrega requiere GIF de edición/eliminación, grábalo desde el equipo durante una nueva prueba con producto temporal.
+### Seguridad
 
-## 10. Comandos de verificación local
+- Firebase Authentication administra las credenciales de acceso.
+- Los usuarios cuentan con roles diferenciados.
+- Las rutas administrativas utilizan mecanismos de protección.
+- Las reglas de Firestore controlan los permisos de lectura y escritura.
+- El servicio de imágenes verifica el token de Firebase y los permisos administrativos antes de permitir una carga.
+
+## 7. Servicios externos e integración
+
+### Firebase
+
+Se utiliza para la autenticación de usuarios y la persistencia de información mediante Cloud Firestore.
+
+Proyecto configurado: `lushka-d4238`.
+
+### Cloudinary
+
+Se utiliza para almacenar las fotografías de los productos y obtener sus URL públicas.
+
+### Cloudflare Workers
+
+Se implementó un servicio HTTP para gestionar la carga de imágenes, verificando la autenticación y los permisos del usuario administrador.
+
+Servicio:
+
+`https://lushka-imagenes-api.josrojaslouni.workers.dev`
+
+La API dispone de las siguientes operaciones:
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/health` | Verificación del servicio |
+| POST | `/upload` | Carga de imágenes autorizada |
+
+Las imágenes admitidas son JPG, PNG y WEBP, con un tamaño máximo de 5 MB.
+
+**Seguridad:** las claves privadas y los secretos de Cloudinary se almacenan en los servicios correspondientes y no deben publicarse en el repositorio.
+
+## 8. Gestión de inventario y pedidos
+
+El sistema implementa operaciones transaccionales en Firestore para mantener la consistencia del inventario.
+
+El funcionamiento contempla:
+
+1. El cliente genera un pedido.
+2. El pedido queda registrado con estado pendiente.
+3. El administrador revisa y confirma el pedido.
+4. El sistema valida las existencias disponibles.
+5. Al confirmar, se descuentan las unidades correspondientes.
+6. Si el pedido se cancela después de descontar el inventario, las unidades se reintegran una sola vez.
+
+Los pedidos pendientes no reservan unidades automáticamente.
+
+**Nota:** el proyecto gestiona solicitudes de compra y pedidos, pero no incluye procesamiento de pagos electrónicos reales.
+
+## 9. Instalación y ejecución del proyecto
+
+### Requisitos previos
+
+- Node.js.
+- npm.
+- Visual Studio Code.
+- Git.
+- Android Studio y Android SDK para pruebas móviles.
+- Acceso a los servicios de Firebase y Cloudinary configurados para el proyecto.
+
+### Clonar el repositorio
 
 ```bash
-npm run test:static
-npm run test:worker
-npm run test:inventory
-npm run test:ui
+git clone https://github.com/Johan140726/LushkaBeauty.git
+```
+
+Ingresar a la carpeta:
+
+```bash
+cd LushkaBeauty
+```
+
+### Instalar dependencias
+
+```bash
+npm install
+```
+
+### Ejecutar en entorno web
+
+```bash
+npm run ionic:serve
+```
+
+También se puede utilizar:
+
+```bash
+npm start
+```
+
+La dirección local se mostrará en la terminal.
+
+### Compilar el proyecto
+
+```bash
 npm run build
 ```
 
-- `test:static`: comprueba la sintaxis/consistencia de archivos y catálogo inicial.
-- `test:worker`: pruebas simuladas de autenticación/firma (no sube a Cloudinary real).
-- `test:inventory`: simulaciones de transacciones y estados.
-- `test:ui`: verifica que todos los nombres de iconos en plantillas estén registrados, estilo claro y evidencias existentes.
-- `npm run build`: **compilación de Angular real**, exige `npm install` y no puede sustituirse por una prueba estática.
+### Sincronizar con Android
 
-## 11. Estructura principal
-
-```text
-LushkaBeauty_Firebase/
-├── src/
-│   ├── app/
-│   │   ├── admin/                 # Resumen administrativo
-│   │   ├── admin-usuarios/        # Vista unificada de perfiles
-│   │   ├── admin-productos/       # Listado de catálogo
-│   │   ├── admin-producto-form/   # Crear y actualizar
-│   │   ├── admin-pedidos/         # Pedidos + estados
-│   │   ├── login/ registro/       # Authentication
-│   │   ├── catalogo/ carrito/     # Tienda
-│   │   ├── checkout/ mis-pedidos/ # Compra e historial
-│   │   ├── guards/                # SesionGuard / AdminGuard
-│   │   └── services/              # auth, productos, carrito, pedidos, inventario, firebase
-│   ├── environments/              # Configuración pública
-│   └── assets/                    # Logotipo y catálogo original
-├── cloudflare-worker/             # Endpoint seguro de imágenes
-├── docs/evidencias/              # Capturas reales con datos parcialmente ocultos
-├── tests/                        # Simulaciones y tests de integridad
-├── scripts/                      # Verificación y herramientas adicionales
-├── firestore.rules               # Reglas de acceso
-├── LEER_PRIMERO.txt               # Inicio rápido
-├── README.md
-└── package.json
+```bash
+npx cap sync android
 ```
 
-## 12. Requisitos del Corte 2 y colaboración
+### Abrir Android Studio
 
-La actividad **Corte 2 — Proyecto integrador: desarrollo de producto, CRUD y persistencia** evalúa código funcional (**60 %**) y documentación técnica en README (**40 %**). Los requisitos se abordan mediante servicios asíncronos, CRUD Firestore, clases reactivas, retroalimentación Ionic, descripción de arquitectura y evidencias visuales. Ver además `docs/ENTREGA_CORTE_2.md`.
+```bash
+npx cap open android
+```
 
-Para la entrega académica, completar antes de presentar: **integrantes y roles del equipo** (máximo 3), **enlace del repositorio** y evidencias verificables de **commits Git de cada integrante**, ya que estos datos no se pueden inferir de los archivos aportados.
+Desde Android Studio se puede seleccionar un emulador o dispositivo físico para ejecutar la aplicación.
 
-## 13. Aspectos pendientes y precauciones
+## 10. Pruebas y validación
 
-- Las reglas de Firestore **deben permanecer publicadas** en el Firebase real y la clave privada debe seguir guardada como Secret en Cloudflare; instalar ZIP nuevo no cambia estos servicios.
-- La pantalla nueva y el conjunto de iconos registrados **necesitan prueba final en Windows con `ionic serve`**. Los servicios de terceros no son accesibles de extremo a extremo desde el entorno de preparación.
-- No publicar capturas que incluyan contraseñas, secretos o direcciones/teléfonos reales de clientes.
-- No hay cobro electrónico integrado; las compras son solicitudes. Puede haber cambios de stock mientras un pedido está pendiente.
-- Si se despliega a un dominio público, agregar el origen a `ALLOWED_ORIGINS` del Worker y probar CORS.
-- Para una aplicación comercial real, revisar transacciones, auditoría, restricciones antiabuso y cumplimiento de datos personales.
+Durante el desarrollo se realizaron pruebas funcionales sobre los principales módulos.
+
+| Funcionalidad | Validación realizada |
+|---|---|
+| Registro de usuarios | Verificada en web |
+| Inicio de sesión con correo | Verificada en web |
+| Inicio de sesión con Google | Verificada en web |
+| Creación de productos | Verificada |
+| Actualización de productos | Verificada |
+| Eliminación de productos | Verificada |
+| Carga de imágenes | Verificada |
+| Consulta del catálogo | Verificada |
+| Gestión del carrito | Verificada |
+| Gestión de pedidos | Verificada |
+| Actualización del inventario | Verificada |
+| Ejecución Android | Verificada |
+| Autenticación Google en Android | Verificada |
+
+### Scripts de pruebas disponibles
+
+```bash
+npm run test:static
+```
+
+```bash
+npm run test:worker
+```
+
+```bash
+npm run test:inventory
+```
+
+```bash
+npm run test:ui
+```
+
+```bash
+npm run lint:ts
+```
+
+Los resultados de cada prueba deben verificarse en el entorno de ejecución antes de presentar la aplicación como completamente validada.
+
+## 11. Estructura del repositorio
+
+```text
+LushkaBeauty/
+│
+├── android/
+│
+├── cloudflare-worker/
+│
+├── docs/
+│   └── evidencias/
+│
+├── scripts/
+│
+├── tests/
+│
+├── src/
+│   ├── app/
+│   │   ├── admin/
+│   │   ├── admin-pedidos/
+│   │   ├── admin-producto-form/
+│   │   ├── admin-productos/
+│   │   ├── admin-usuarios/
+│   │   ├── carrito/
+│   │   ├── catalogo/
+│   │   ├── checkout/
+│   │   ├── guards/
+│   │   ├── home/
+│   │   ├── login/
+│   │   ├── mi-cuenta/
+│   │   ├── mis-pedidos/
+│   │   ├── producto/
+│   │   ├── registro/
+│   │   └── services/
+│   │
+│   ├── assets
