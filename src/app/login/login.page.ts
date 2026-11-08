@@ -55,6 +55,23 @@ export class LoginPage {
     }
   }
 
+  async iniciarSesionGoogle() {
+    const resultado = await this.authService.iniciarSesionConGoogle();
+
+    await this.mostrarMensaje(
+      resultado.mensaje,
+      resultado.ok ? 'success' : 'error'
+    );
+
+    if (resultado.ok && resultado.usuario) {
+      if (resultado.usuario.rol === 'admin') {
+        await this.router.navigate(['/admin']);
+      } else {
+        await this.router.navigate(['/home']);
+      }
+    }
+  }
+
   irARegistro() {
     this.router.navigate(['/registro']);
   }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   User,
+  GoogleAuthProvider,
+  signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -160,6 +162,29 @@ export class AuthService {
       return { ok: true, mensaje: 'Inicio de sesión exitoso.', usuario };
     } catch (error) {
       return { ok: false, mensaje: mensajeFirebase(error) };
+    }
+  }
+
+  async iniciarSesionConGoogle(): Promise<ResultadoAuth> {
+    try {
+      const provider = new GoogleAuthProvider();
+
+      const credential = await signInWithPopup(auth, provider);
+
+      const usuario = await this.leerPerfil(credential.user);
+
+      this.usuarioActual = usuario;
+
+      return {
+        ok: true,
+        mensaje: 'Inicio de sesión con Google exitoso.',
+        usuario
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        mensaje: mensajeFirebase(error)
+      };
     }
   }
 

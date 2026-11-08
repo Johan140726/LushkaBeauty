@@ -1,3 +1,5 @@
+
+/* Fondo y distribución */
 .login-content {
   --background: #faf7f5;
 }
@@ -11,6 +13,7 @@
   align-items: center;
 }
 
+/* Marca */
 .brand {
   text-align: center;
   margin-bottom: 25px;
@@ -37,6 +40,7 @@
   }
 }
 
+/* Tarjeta del login */
 .login-card {
   width: 100%;
   max-width: 440px;
@@ -63,6 +67,7 @@
   }
 }
 
+/* Campos del formulario */
 .form-group {
   margin-bottom: 18px;
 
@@ -105,14 +110,57 @@
   }
 }
 
-.password-button {
-  --color: #806b66;
-  --padding-start: 8px;
-  --padding-end: 4px;
-  margin: 0;
-  height: 42px;
+/* Campo de contraseña */
+.password-input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 48px;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #302523;
+  font-family: inherit;
+  font-size: 14px;
 }
 
+.password-input::placeholder {
+  color: #aa9994;
+}
+
+.password-input::-ms-reveal,
+.password-input::-ms-clear {
+  display: none;
+}
+
+/* Botón para mostrar y ocultar contraseña */
+.password-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: #8e183a;
+  cursor: pointer;
+}
+
+.password-toggle svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  color: #8e183a;
+  stroke: currentColor;
+}
+
+/* Recuperación de contraseña */
 .forgot-password {
   margin-top: -5px;
   margin-bottom: 22px;
@@ -126,13 +174,13 @@
   }
 }
 
+/* Botón principal */
 .login-button {
   --background: #8e183a;
   --background-hover: #76142f;
   --color: #ffffff;
   --border-radius: 14px;
   --box-shadow: none;
-
   height: 52px;
   margin: 0;
   font-size: 14px;
@@ -140,6 +188,36 @@
   text-transform: none;
 }
 
+/* Inicio de sesión con Google */
+.google-login {
+  margin-top: 22px;
+}
+
+.google-separator {
+  text-align: center;
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.google-button {
+  --background: #ffffff;
+  --color: #3c4043;
+  --border-color: #dadce0;
+  --border-radius: 12px;
+  font-weight: 500;
+  text-transform: none;
+  min-height: 48px;
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 8px;
+}
+
+/* Registro */
 .register {
   margin-top: 22px;
   display: flex;
@@ -161,6 +239,7 @@
   }
 }
 
+/* Regresar al inicio */
 .back-home {
   margin-top: 22px;
   display: flex;
@@ -175,6 +254,7 @@
   }
 }
 
+/* Diseño adaptable */
 @media (min-width: 768px) {
   .login-container {
     justify-content: center;
