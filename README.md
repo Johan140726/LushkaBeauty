@@ -1,377 +1,311 @@
-# LUSHKA BEAUTY 💄
+# Lushka Beauty 💄
+
 ### Aplicación híbrida para la comercialización y gestión de productos de belleza
 
 <p align="center">
-  <img src="src/assets/logo/logo_lushka.png" alt="Logo Lushka Beauty" width="180">
+  <img src="src/assets/logo/logo_lushka.png" alt="Logotipo de Lushka Beauty" width="170">
 </p>
 
 <p align="center">
-  **Proyecto Integrador · Desarrollo de Aplicaciones Móviles Híbridas**
-  
-  Fundación Universitaria Compensar
+  <strong>Proyecto integrador · Desarrollo de Aplicaciones Móviles Híbridas</strong><br>
+  Fundación Universitaria Compensar · Ingeniería de Software · Corte 3
 </p>
 
-<p align="center">
-  **🎥 VIDEO DEMOSTRATIVO:** [Ver presentación y funcionamiento de Lushka Beauty](PEGAR_AQUI_EL_ENLACE_DEL_VIDEO)
-  
-  **💻 REPOSITORIO:** [GitHub – LushkaBeauty](https://github.com/Johan140726/LushkaBeauty)
-</p>
+> 🎥 **Video demostrativo (entrega final):** pendiente de agregar la URL pública de la sustentación. Al publicarlo, sustituir este aviso por un enlace verificable a YouTube, Loom o Drive con acceso de lectura para el evaluador.
+>
+> 💻 **Repositorio:** [Johan140726/LushkaBeauty](https://github.com/Johan140726/LushkaBeauty)
 
----
+## 1. Descripción y alcance
 
-## 1. Descripción del proyecto
+**Lushka Beauty** es una aplicación híbrida de comercio electrónico para explorar productos de belleza, registrarse, iniciar sesión, administrar un carrito, generar solicitudes de pedido y consultar su estado. Su módulo administrativo permite gestionar el catálogo, las fotografías, los usuarios, las existencias y los estados de los pedidos.
 
-Lushka Beauty es una aplicación híbrida de comercio electrónico diseñada para facilitar la comercialización de productos de belleza y mejorar la gestión de pedidos de la marca.
+La solución utiliza **Ionic, Angular, TypeScript y Capacitor** para compartir el código de interfaz entre **Web y Android**. La información de negocio se conserva en **Cloud Firestore**, la autenticación se realiza con **Firebase Authentication**, las imágenes se almacenan en **Cloudinary** y las cargas se autorizan mediante un servicio de **Cloudflare Workers**.
 
-La aplicación permite a los clientes explorar un catálogo organizado por categorías, consultar información de los productos, registrarse, iniciar sesión, administrar su carrito de compras y realizar pedidos.
+**Alcance actual:** se registran solicitudes de pedido; no se implementa una pasarela de cobro electrónico. El stock se verifica y descuenta al confirmar un pedido, y se devuelve al cancelarlo cuando corresponde. Los pedidos pendientes no reservan inventario.
 
-Adicionalmente, cuenta con un módulo administrativo que permite gestionar productos, imágenes, inventario, usuarios y pedidos desde una interfaz intuitiva.
+## 2. Objetivos
 
-El proyecto está desarrollado utilizando Ionic Framework, Angular, TypeScript, Firebase y Capacitor, permitiendo su ejecución en entornos web y su preparación para dispositivos móviles Android.
+**General.** Desarrollar una tienda híbrida que facilite la compra de productos de belleza y permita gestionar centralizadamente catálogo, inventario y pedidos.
 
-## 2. Objetivos del proyecto
+**Específicos.** Diseñar vistas adaptables para Web y Android; implementar autenticación y permisos; almacenar datos en Firestore; ofrecer operaciones CRUD de productos; gestionar el carrito y los pedidos; integrar un servicio externo para fotografías; y compilar la aplicación para Android con Capacitor.
 
-### Objetivo general
+## 3. Equipo
 
-Desarrollar una aplicación híbrida que facilite el proceso de compra de los clientes de Lushka Beauty y optimice la administración de productos, inventario y pedidos mediante herramientas tecnológicas multiplataforma.
+- **Johan Stivens Rojas Lozano**
+- **Leidy Vanessa Zambrano Bogoya**
+- **Danna Valentina Pulido Guavita**
 
-### Objetivos específicos
+.
 
-- Diseñar una interfaz intuitiva y adaptable a dispositivos móviles.
-- Implementar autenticación de usuarios mediante Firebase.
-- Desarrollar un catálogo de productos organizado por categorías.
-- Implementar un carrito de compras y gestión de pedidos.
-- Construir un módulo administrativo para operaciones CRUD.
-- Integrar servicios de almacenamiento de imágenes.
-- Gestionar el inventario mediante operaciones seguras en Firestore.
-- Preparar la aplicación para su ejecución en Android mediante Capacitor.
+## 4. Tecnologías
 
-## 3. Tecnologías utilizadas
-
-| Tecnología | Aplicación dentro del proyecto |
+| Tecnología | Uso en Lushka Beauty |
 |---|---|
-| Ionic Framework 8 | Componentes e interfaz híbrida |
-| Angular 20 | Arquitectura y desarrollo frontend |
-| TypeScript | Lógica de programación |
-| HTML5 | Estructura de las vistas |
-| SCSS | Diseño y estilos |
-| Capacitor 8 | Integración con dispositivos móviles |
-| Firebase Authentication | Registro e inicio de sesión |
-| Cloud Firestore | Almacenamiento y persistencia de datos |
-| Cloudinary | Almacenamiento de imágenes |
-| Cloudflare Workers | Servicio de carga segura de imágenes |
-| Git y GitHub | Control de versiones y colaboración |
-| Android Studio | Compilación y pruebas de Android |
+| Ionic Framework + Angular | Interfaz híbrida, navegación, formularios y vistas |
+| TypeScript, HTML y SCSS | Lógica, estructura y estilos |
+| Capacitor + Android Studio | Empaquetado, sincronización y ejecución en Android |
+| Firebase Authentication | Registro, acceso por correo/contraseña y proveedor de Google en Web |
+| Firebase ID tokens (JWT) | Credenciales de sesión firmadas, usadas también para autorizar el servicio de imágenes |
+| Cloud Firestore | Datos persistentes: usuarios, productos, carritos y pedidos |
+| Cloudflare Workers | API HTTP que autoriza la carga de imágenes |
+| Cloudinary | Almacenamiento, entrega y URLs HTTPS de las fotografías |
+| Git y GitHub | Versionamiento e historial de colaboración |
 
-## 4. Funcionalidades principales
+## 5. Funcionalidades
 
-### Módulo de clientes
+### Cliente
 
-- Registro de nuevos usuarios.
-- Inicio de sesión con correo electrónico y contraseña.
-- Inicio de sesión con Google en la versión web.
-- Visualización del catálogo de productos.
-- Consulta de categorías y productos destacados.
-- Visualización del detalle de cada producto.
-- Administración del carrito de compras.
-- Realización de pedidos.
-- Consulta del historial y estado de los pedidos.
-- Consulta y actualización de información de la cuenta.
+- Registro e inicio de sesión con correo y contraseña; inicio de sesión con Google en la **versión web**.
+- Catálogo por categorías, fichas y fotografías de productos.
+- Carrito por usuario guardado en Firestore.
+- Formulario de entrega, cálculo de subtotal y envío, y creación de solicitudes de pedido.
+- Historial personal y seguimiento del estado de cada pedido.
 
-### Módulo administrativo
+### Administrador
 
-- Acceso restringido mediante roles y permisos.
-- Consulta general de productos.
-- Creación de productos.
-- Edición de información, precios y existencias.
-- Eliminación de productos.
-- Carga de fotografías mediante Cloudinary.
-- Administración de categorías y productos destacados.
-- Consulta y gestión de pedidos.
-- Actualización de estados de pedidos.
-- Administración de usuarios.
-- Consulta y control del inventario.
+- Acceso a rutas y operaciones administrativas restringidas.
+- CRUD de productos: **crear, consultar, actualizar y eliminar**.
+- Carga de imágenes a Cloudinary mediante el Worker.
+- Consulta de perfiles de usuario y pedidos.
+- Cambio de estados; actualización de existencias con transacciones para evitar aplicar dos veces el mismo descuento o devolución.
 
-## 5. Capturas de pantalla de la aplicación
+## 6. Evidencias visuales · Web
 
-Las siguientes imágenes corresponden a las interfaces implementadas en la versión web de Lushka Beauty.
+Las siguientes imágenes muestran vistas del proyecto en navegador.
 
-### 5.1. Inicio de sesión
-
-Permite a los usuarios acceder mediante correo electrónico y contraseña o utilizar su cuenta de Google.
+### 6.1 Inicio de sesión y acceso con Google
 
 <p align="center">
-  <img src="docs/evidencias/pantallaLoginContraseña.png" alt="Inicio de sesión con contraseña" width="420">
+  <img src="docs/evidencias/pantallaLoginContraseña.png" alt="Pantalla de inicio de sesión Web" width="420">
+  <img src="docs/evidencias/PantallaGoogle.png" alt="Acceso con Google en Web" width="420">
 </p>
+
+### 6.2 Catálogo
 
 <p align="center">
-  <img src="docs/evidencias/PantallaGoogle.png" alt="Inicio de sesión con Google" width="420">
+  <img src="docs/evidencias/pantallaCatalogo.png" alt="Catálogo de productos en navegador" width="650">
 </p>
 
-### 5.2. Catálogo de productos
-
-Permite consultar los productos disponibles y explorar las diferentes categorías de la tienda.
+### 6.3 Panel administrativo y formulario de productos
 
 <p align="center">
-  <img src="docs/evidencias/pantallaCatalogo.png" alt="Catálogo de Lushka Beauty" width="650">
+  <img src="docs/evidencias/pantallaAdmin.png" alt="Panel administrativo Web" width="650">
+  <img src="docs/evidencias/formulario-crear.png" alt="Formulario CRUD de productos" width="650">
 </p>
 
-### 5.3. Panel administrativo
+## 7. Evidencias visuales · Android (Capacitor)
 
-Interfaz destinada a la administración general de la aplicación.
+Estas capturas documentan las interfaces de Lushka Beauty dentro del entorno Android. Se deben conservar los archivos PNG dentro de **`docs/evidencias/android/`** con estos mismos nombres, para que las imágenes se visualicen en GitHub.
 
-<p align="center">
-  <img src="docs/evidencias/pantallaAdmin.png" alt="Panel administrativo de Lushka Beauty" width="650">
-</p>
+### 7.1 Inicio de sesión Android
 
-### 5.4. Gestión de productos
+<p align="center"><img src="docs/evidencias/android/login-android.png" alt="Pantalla de acceso de Lushka Beauty en Android" width="300"></p>
 
-Formulario para registrar productos, asignar categorías, establecer precios, controlar existencias y cargar imágenes.
+### 7.2 Catálogo de productos Android
 
-<p align="center">
-  <img src="docs/evidencias/formulario-crear.png" alt="Formulario de creación de productos" width="650">
-</p>
+<p align="center"><img src="docs/evidencias/android/catalogo-android.png" alt="Catálogo de Lushka Beauty en Android" width="300"></p>
 
-## 6. Arquitectura del sistema
+### 7.3 Carrito de compras Android
 
-La aplicación utiliza una arquitectura basada en módulos y servicios, separando las responsabilidades de presentación, autenticación, persistencia y gestión de información.
+<p align="center"><img src="docs/evidencias/android/carrito-android.png" alt="Carrito de compras en Android" width="300"></p>
 
-### Arquitectura general
+### 7.4 Historial de pedidos Android
+
+<p align="center"><img src="docs/evidencias/android/pedidos-android.png" alt="Historial de pedidos en Android" width="300"></p>
+
+### 7.5 Ejecución en Android Studio
+
+<p align="center"><img src="docs/evidencias/android/android-studio.png" alt="Android Studio mostrando la aplicación en el emulador" width="700"></p>
+
+
+
+## 8. Arquitectura y persistencia
 
 ```text
                   LUSHKA BEAUTY
-                        |
-                 Ionic + Angular
-                        |
-              ---------------------
-              |                   |
-         Módulo Cliente      Módulo Admin
-              |                   |
-              --------- ----------
-                       |
-                 Servicios Angular
-                       |
-          -----------------------------
-          |             |             |
-       Firebase      Firestore     Cloudflare
-       Auth                         Worker
-                       |             |
-                   Productos     Cloudinary
-                   Usuarios
-                   Carritos
-                   Pedidos
-                   Inventario
+             Ionic + Angular + Capacitor
+                         |
+              Servicios de la aplicación
+                 /          |          \
+      Firebase Auth     Firestore    Cloudflare Worker
+      (identidad)       (datos)        (autorización)
+                                          |
+                                      Cloudinary
+                                      (imágenes)
 ```
 
-### Persistencia de información
+**Colecciones principales de Firestore:**
 
-Se utiliza Cloud Firestore como base de datos NoSQL para almacenar y consultar la información de la aplicación.
-
-Las principales colecciones son:
-
-| Colección | Información almacenada |
+| Colección | Datos que mantiene |
 |---|---|
-| usuarios | Datos y roles de los usuarios |
-| productos | Catálogo, precios, categorías e inventario |
-| carritos | Productos seleccionados por cada cliente |
-| pedidos | Información de las compras y sus estados |
+| `usuarios` | Perfil, correo y rol visible del usuario |
+| `productos` | Nombre, precio, categoría, foto y stock |
+| `carritos` | Productos y cantidades por UID |
+| `pedidos` | Datos de entrega, productos, totales y estado |
 
-### Seguridad
+Los datos de Firestore se sincronizan entre las vistas de cliente y administrador. **Las fotos no se almacenan dentro de Firestore**: se guarda su URL de Cloudinary como campo del producto.
 
-- Firebase Authentication administra las credenciales de acceso.
-- Los usuarios cuentan con roles diferenciados.
-- Las rutas administrativas utilizan mecanismos de protección.
-- Las reglas de Firestore controlan los permisos de lectura y escritura.
-- El servicio de imágenes verifica el token de Firebase y los permisos administrativos antes de permitir una carga.
+## 9. Consumo de APIs externas y servicios de terceros
 
-## 7. Servicios externos e integración
+Esta integración es parte de la lógica de negocio: permite identificar usuarios, controlar el acceso a las imágenes y servir fotografías al catálogo.
 
-### Firebase
+### 9.1 Cloudflare Workers · API propia de integración
 
-Se utiliza para la autenticación de usuarios y la persistencia de información mediante Cloud Firestore.
+Se implementó una API HTTP desplegada en Cloudflare Workers:
 
-Proyecto configurado: `lushka-d4238`.
+**Base:** `https://lushka-imagenes-api.josrojaslouni.workers.dev`
 
-### Cloudinary
-
-Se utiliza para almacenar las fotografías de los productos y obtener sus URL públicas.
-
-### Cloudflare Workers
-
-Se implementó un servicio HTTP para gestionar la carga de imágenes, verificando la autenticación y los permisos del usuario administrador.
-
-Servicio:
-
-`https://lushka-imagenes-api.josrojaslouni.workers.dev`
-
-La API dispone de las siguientes operaciones:
-
-| Método | Ruta | Descripción |
+| Método | Endpoint | Uso |
 |---|---|---|
-| GET | `/health` | Verificación del servicio |
-| POST | `/upload` | Carga de imágenes autorizada |
+| `GET` | `/health` | Comprueba que el Worker está operativo |
+| `POST` | `/upload` | Recibe un archivo y un token Firebase; autoriza la carga y lo envía a Cloudinary |
 
-Las imágenes admitidas son JPG, PNG y WEBP, con un tamaño máximo de 5 MB.
+El formulario administrativo envía una solicitud `POST /upload` con el **ID token JWT de Firebase** en `Authorization: Bearer <token>` y la imagen en `multipart/form-data`. El Worker verifica criptográficamente el token, su proyecto emisor y el permiso personalizado `admin: true`. Cuando está autorizado, firma la solicitud con las credenciales privadas conservadas en Cloudflare y comunica la carga a Cloudinary. Se admiten JPG, PNG o WebP de hasta **5 MB**.
 
-**Seguridad:** las claves privadas y los secretos de Cloudinary se almacenan en los servicios correspondientes y no deben publicarse en el repositorio.
+Una respuesta exitosa devuelve la **URL HTTPS** y el identificador de la imagen. La aplicación usa esa URL en el documento del producto almacenado en Firestore.
 
-## 8. Gestión de inventario y pedidos
+### 9.2 Cloudinary · API de subida y entrega de recursos
 
-El sistema implementa operaciones transaccionales en Firestore para mantener la consistencia del inventario.
+Cloudinary es un **servicio externo de gestión de medios** utilizado para subir, almacenar y distribuir las fotografías. El Worker consume su endpoint de carga de imágenes; las vistas de catálogo consultan las URL públicas HTTPS devueltas por Cloudinary.
 
-El funcionamiento contempla:
+**Beneficio:** desacoplar las imágenes del almacenamiento de Firestore y disponer de recursos accesibles desde Web y Android. Se utiliza el preset firmado `lushka_productos`.
 
-1. El cliente genera un pedido.
-2. El pedido queda registrado con estado pendiente.
-3. El administrador revisa y confirma el pedido.
-4. El sistema valida las existencias disponibles.
-5. Al confirmar, se descuentan las unidades correspondientes.
-6. Si el pedido se cancela después de descontar el inventario, las unidades se reintegran una sola vez.
+### 9.3 Firebase Authentication y Firestore · SDK y servicios en la nube
 
-Los pedidos pendientes no reservan unidades automáticamente.
+La aplicación integra los **SDK de Firebase** para registro, autenticación, lectura y escritura de documentos. Firebase Authentication emite tokens ID en formato JWT, que se pueden verificar en el servidor; Firestore almacena el catálogo y el estado de los pedidos. El acceso con Google se integra como proveedor externo de identidad en la versión web.
 
-**Nota:** el proyecto gestiona solicitudes de compra y pedidos, pero no incluye procesamiento de pagos electrónicos reales.
 
-## 9. Instalación y ejecución del proyecto
+### 9.4 Flujo de carga de imágenes
 
-### Requisitos previos
+```text
+Administrador autenticado
+   -> selecciona imagen (hasta 5 MB)
+   -> Ionic envía ID token + archivo a Cloudflare POST /upload
+   -> Worker valida JWT y claim admin:true
+   -> Worker firma y llama a Cloudinary
+   -> Cloudinary devuelve secure_url
+   -> Firestore guarda la URL en el producto
+   -> el catálogo muestra la imagen en Web / Android
+```
 
-- Node.js.
-- npm.
-- Visual Studio Code.
-- Git.
-- Android Studio y Android SDK para pruebas móviles.
-- Acceso a los servicios de Firebase y Cloudinary configurados para el proyecto.
+**Seguridad:** `CLOUDINARY_API_SECRET` se conserva como **Secret** en Cloudflare. No se debe copiar a Angular, al README ni al repositorio. El rol `admin` mostrado en un documento no reemplaza el custom claim firmado.
 
-### Clonar el repositorio
+## 10. Autenticación, sesión y autorización
+
+- **Autenticación:** Firebase Authentication gestiona las credenciales e inicia sesión mediante correo/contraseña y Google (Web).
+- **JWT:** los ID tokens de Firebase se utilizan en solicitudes autenticadas, especialmente para validar el acceso al Worker.
+- **Rutas privadas:** un guard de Angular protege la navegación administrativa.
+- **Reglas de Firestore:** controlan lectura y escritura aunque alguien intente omitir el guard o manipular la interfaz.
+- **Cierre de sesión:** la aplicación debe terminar la sesión mediante el SDK de Firebase y limpiar cualquier estado sensible adicional que haya guardado localmente.
+- **Persistencia:** Firebase puede conservar el estado de autenticación según la plataforma y configuración. **No se afirma el uso de Capacitor Preferences/Storage ni limpieza manual de tokens sin comprobar el código**. Este punto debe verificarse expresamente para el criterio del Corte 3.
+
+## 11. Pedidos e inventario
+
+1. El cliente prepara su carrito y solicita un pedido.
+2. Firestore lo registra inicialmente como **Pendiente**.
+3. El administrador revisa el pedido y lo confirma.
+4. Una transacción valida la disponibilidad y descuenta las unidades; evita un descuento duplicado.
+5. Si el pedido confirmado se cancela y ya tenía stock descontado, la transacción devuelve las unidades una sola vez.
+
+**Límites funcionales:** no hay cobro en línea ni reserva anticipada del inventario mientras el pedido permanece Pendiente.
+
+## 12. Instalación, ejecución Web y Android
+
+**Requisitos:** Node.js y npm, Git, Android Studio con SDK de Android para pruebas nativas, y acceso a los servicios configurados.
+
+### Clonar e instalar
 
 ```bash
 git clone https://github.com/Johan140726/LushkaBeauty.git
-```
-
-Ingresar a la carpeta:
-
-```bash
 cd LushkaBeauty
-```
-
-### Instalar dependencias
-
-```bash
 npm install
 ```
 
-### Ejecutar en entorno web
+### Ejecutar en navegador
 
 ```bash
-npm run ionic:serve
+npx ionic serve
 ```
 
-También se puede utilizar:
+La URL local se muestra en la terminal (habitualmente `http://localhost:8100`).
 
-```bash
-npm start
-```
-
-La dirección local se mostrará en la terminal.
-
-### Compilar el proyecto
+### Compilar y sincronizar con Android
 
 ```bash
 npm run build
-```
-
-### Sincronizar con Android
-
-```bash
 npx cap sync android
-```
-
-### Abrir Android Studio
-
-```bash
 npx cap open android
 ```
 
-Desde Android Studio se puede seleccionar un emulador o dispositivo físico para ejecutar la aplicación.
+En Android Studio, seleccionar `app`, el emulador o el teléfono conectado y ejecutar con **Run**. **No volver a ejecutar `npx cap add android`** cuando la carpeta `android/` ya existe.
 
-## 10. Pruebas y validación
+### APK de depuración (opcional)
 
-Durante el desarrollo se realizaron pruebas funcionales sobre los principales módulos.
+Desde la raíz del proyecto, en PowerShell:
 
-| Funcionalidad | Validación realizada |
+```powershell
+cd android
+.\gradlew.bat assembleDebug
+```
+
+El APK de prueba se genera normalmente en `android/app/build/outputs/apk/debug/app-debug.apk`. Para publicar una versión definitiva se requiere un APK o AAB de release firmado.
+
+> Si se modifica el código Web, ejecutar otra vez `npm run build` y `npx cap sync android` antes de generar el APK.
+
+## 13. Pruebas y evidencias de validación
+
+| Flujo | Evidencia disponible / validación |
 |---|---|
-| Registro de usuarios | Verificada en web |
-| Inicio de sesión con correo | Verificada en web |
-| Inicio de sesión con Google | Verificada en web |
-| Creación de productos | Verificada |
-| Actualización de productos | Verificada |
-| Eliminación de productos | Verificada |
-| Carga de imágenes | Verificada |
-| Consulta del catálogo | Verificada |
-| Gestión del carrito | Verificada |
-| Gestión de pedidos | Verificada |
-| Actualización del inventario | Verificada |
-| Ejecución Android | Verificada |
-| Autenticación Google en Android | Verificada |
+| Registro e inicio de sesión por correo | Probado en Web; capturas de Login |
+| Login con Google | Captura de flujo Web; validar por separado en Android |
+| CRUD del catálogo | Pruebas de crear, actualizar, consultar y eliminar productos |
+| Carga de imágenes | Worker + Cloudinary + URL guardada en Firestore |
+| Carrito | Documento persistente por UID en Firestore |
+| Pedido | Documento creado y visible para cliente y administrador |
+| Estados de pedido | Cambio de estado visible en ambas vistas |
+| Inventario | Descuento al confirmar y devolución al cancelar comprobados durante pruebas |
+| Ejecución nativa | Capturas en `docs/evidencias/android/` y Android Studio |
 
-### Scripts de pruebas disponibles
+Scripts disponibles según la configuración del repositorio:
 
 ```bash
 npm run test:static
-```
-
-```bash
 npm run test:worker
-```
-
-```bash
 npm run test:inventory
-```
-
-```bash
 npm run test:ui
-```
-
-```bash
 npm run lint:ts
 ```
 
-Los resultados de cada prueba deben verificarse en el entorno de ejecución antes de presentar la aplicación como completamente validada.
+Los comandos y sus resultados deben verificarse en el entorno donde se presenta la solución.
 
-## 11. Estructura del repositorio
+## 14. Estructura relevante del repositorio
 
 ```text
 LushkaBeauty/
-│
-├── android/
-│
-├── cloudflare-worker/
-│
+├── android/                      # Proyecto nativo Capacitor
+├── cloudflare-worker/            # Servicio de imágenes
 ├── docs/
 │   └── evidencias/
-│
-├── scripts/
-│
-├── tests/
-│
+│       ├── pantallaLoginContraseña.png
+│       ├── PantallaGoogle.png
+│       ├── pantallaCatalogo.png
+│       ├── pantallaAdmin.png
+│       ├── formulario-crear.png
+│       └── android/
+│           ├── login-android.png
+│           ├── catalogo-android.png
+│           ├── carrito-android.png
+│           ├── pedidos-android.png
+│           └── android-studio.png
+├── scripts/                      # Utilidades y verificación
+├── tests/                        # Pruebas automatizadas
 ├── src/
-│   ├── app/
-│   │   ├── admin/
-│   │   ├── admin-pedidos/
-│   │   ├── admin-producto-form/
-│   │   ├── admin-productos/
-│   │   ├── admin-usuarios/
-│   │   ├── carrito/
-│   │   ├── catalogo/
-│   │   ├── checkout/
-│   │   ├── guards/
-│   │   ├── home/
-│   │   ├── login/
-│   │   ├── mi-cuenta/
-│   │   ├── mis-pedidos/
-│   │   ├── producto/
-│   │   ├── registro/
-│   │   └── services/
-│   │
-│   ├── assets
+│   ├── app/                      # Páginas, servicios y guards
+│   └── assets/                   # Recursos de interfaz
+├── firestore.rules               # Reglas del proyecto
+├── capacitor.config.ts
+├── package.json
+└── README.md
+```
+
+**Fundación Universitaria Compensar · Ingeniería de Software · Desarrollo de Aplicaciones Móviles Híbridas**
